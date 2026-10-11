@@ -311,7 +311,7 @@ export default function SiteNavbar() {
               id="unavScrollPrev"
               aria-label="Scroll navigation left"
               tabIndex={-1}
-              ref={(el) => scrollPrevRef.current = el}
+              ref={(el) => { scrollPrevRef.current = el; }}
               onClick={() => scrollContainerRef.current?.scrollBy({ left: -160, behavior: 'smooth' })}
             >
               <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
@@ -319,7 +319,7 @@ export default function SiteNavbar() {
               </svg>
             </button>
 
-            <div className="unav-links-scroll" id="unavLinksScroll" ref={(el) => scrollContainerRef.current = el}>
+            <div className="unav-links-scroll" id="unavLinksScroll" ref={(el) => { scrollContainerRef.current = el; }}>
               <div className="unav-links" role="list">
                 {items.map((navItem, i) => {
                   const isActive = window.location.pathname === navItem.href || window.location.pathname.startsWith((navItem.href ?? '#') + '/');
@@ -352,7 +352,7 @@ export default function SiteNavbar() {
                           id={`unavDd${i}`}
                           role="menu"
                           aria-label={`${navItem.label} menu`}
-                          ref={(el) => dropdownRefs.current.push(el)}
+                          ref={(el) => { if (el) dropdownRefs.current.push(el); }}
                         >
                           {navItem.dropdown.map((sub, j) => {
                             const subActive = window.location.pathname === sub.href || window.location.pathname.startsWith(sub.href!.substring(1) + '/');
@@ -395,7 +395,7 @@ export default function SiteNavbar() {
               id="unavScrollNext"
               aria-label="Scroll navigation right"
               tabIndex={-1}
-              ref={(el) => scrollNextRef.current = el}
+              ref={(el) => { scrollNextRef.current = el; return null; }}
               onClick={() => scrollContainerRef.current?.scrollBy({ left: 160, behavior: 'smooth' })}
             >
               <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
@@ -528,7 +528,7 @@ export default function SiteNavbar() {
                   </button>
 
                   {profileOpen && (
-                    <div className="unav-pd unav-open" id="unavProfileCard" role="menu" aria-label="Account menu" ref={(el) => dropdownRefs.current.push(el)}>
+                    <div className="unav-pd unav-open" id="unavProfileCard" role="menu" aria-label="Account menu" ref={(el) => { if (el) dropdownRefs.current.push(el); }}>
                       {/* Card header */}
                       <div className="unav-pd-head">
                         <div className="unav-pd-avatar" aria-hidden="true">

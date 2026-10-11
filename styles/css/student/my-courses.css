@@ -1851,7 +1851,7 @@ button {
 ================================================================ */
 @media (max-width: 640px) {
     .bc-nav-inner { padding: 0 1rem; height: 60px; }
-    --navbar-height: 60px;
+    :root { --navbar-height: 60px; }
 
     .mc-page {
         padding: calc(60px + 1rem) 1rem 2rem;

@@ -13,7 +13,7 @@ export function redirectAfter(
   extra: Record<string, string>,
   fallback: string,
 ): NextResponse {
-  const base = new URL(SITE_URL || "http://localhost");
+  const base = new URL(SITE_URL || "https://edulari-test.vercel.app");
   const target = new URL(fallback, base);
   const ref = req.headers.get("referer");
   if (ref) {
@@ -30,6 +30,6 @@ export function redirectAfter(
 
 /** Absolute redirect to a fixed page (used by the contact delete action). */
 export function redirectTo(path: string): NextResponse {
-  const base = new URL(SITE_URL || "http://localhost");
+  const base = new URL(SITE_URL || "https://edulari-test.vercel.app");
   return NextResponse.redirect(new URL(path, base), 303);
 }

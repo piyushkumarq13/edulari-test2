@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { sql } from "@/lib/db/client";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://edulari.example.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://edulari-test.vercel.app";
 
   let courses: Array<{ slug: string; updated_at: Date | null }> = [];
   let categories: Array<{ slug: string }> = [];

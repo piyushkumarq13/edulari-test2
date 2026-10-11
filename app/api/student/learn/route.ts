@@ -35,7 +35,7 @@ const certificateSchema = baseSchema.extend({ action: z.literal("generate_certif
 
 /** Post/Redirect/Get helper: 303 so the browser follows with GET. */
 function redirectTo(path: string, extra: Record<string, string> = {}) {
-  const url = new URL(path, process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000");
+  const url = new URL(path, process.env.NEXT_PUBLIC_SITE_URL ?? "https://edulari-test.vercel.app");
   for (const [k, v] of Object.entries(extra)) url.searchParams.set(k, v);
   return NextResponse.redirect(url, { status: 303 });
 }

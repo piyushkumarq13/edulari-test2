@@ -43,7 +43,7 @@ function redirectAfter(
   extra: Record<string, string>,
   fallback = "/admin/instructor-applications",
 ): NextResponse {
-  const base = new URL(SITE_URL || "http://localhost");
+  const base = new URL(SITE_URL || "https://edulari-test.vercel.app");
   const target = new URL(fallback, base);
   const ref = req.headers.get("referer");
   if (ref) {

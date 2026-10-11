@@ -55,7 +55,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <div className="ct-info-card">
             <h3>Email Support</h3>
             <p>Reply within 24 hours.</p>
-            <a href="mailto:support@edulari.example.com" className="ct-info-link">support@edulari.example.com</a>
+            <a href="mailto:support@edulari-test.vercel.app" className="ct-info-link">support@edulari-test.vercel.app</a>
           </div>
           <div className="ct-info-card">
             <h3>Report a Bug</h3>

@@ -128,7 +128,7 @@ export default function HelpCenterClient({ faqs }: { faqs: FAQ[] }) {
                   <div><div className="hc-contact-card-title">Email Support</div><div className="hc-contact-card-sub">Reply within 24 hours</div></div>
                 </div>
                 <p>Send us a detailed message and our team will get back to you within one business day.</p>
-                <a href="mailto:support@edulari.example.com" className="hc-contact-btn outline">Email Us</a>
+                <a href="mailto:support@edulari-test.vercel.app" className="hc-contact-btn outline">Email Us</a>
               </div>
               <div className="hc-contact-card">
                 <div className="hc-contact-card-head">

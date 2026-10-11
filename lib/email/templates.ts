@@ -1,6 +1,6 @@
 const SITE_NAME = "Edulari";
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/\/$/, "");
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "support@edulari.example.com";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "support@edulari-test.vercel.app";
 
 const esc = (v: string): string =>
   v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");

@@ -395,7 +395,7 @@ export default function SiteNavbar() {
               id="unavScrollNext"
               aria-label="Scroll navigation right"
               tabIndex={-1}
-              ref={(el) => { scrollNextRef.current = el; return null; }}
+              ref={(el) => { scrollNextRef.current = el; }}
               onClick={() => scrollContainerRef.current?.scrollBy({ left: 160, behavior: 'smooth' })}
             >
               <svg viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">

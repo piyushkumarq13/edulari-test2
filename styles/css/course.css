@@ -1,0 +1,2542 @@
+/* ============================================================
+   Edulari – Course Detail Page (course.css)
+   File: /public/assets/css/course.css
+
+   Inherits the exact same navy/purple/amber design system as
+   home.css. Every element on course.php is covered below.
+   Breakpoints: 1400 | 1200 | 1024 | 960 | 768 | 640 | 480 | 360
+   ============================================================ */
+
+/* ================================================================
+   1. CSS CUSTOM PROPERTIES  (identical palette to home.css)
+================================================================ */
+:root {
+    --primary:           #6c63ff;
+    --primary-dark:      #5449e6;
+    --primary-light:     #ede9fe;
+    --primary-glow:      rgba(108, 99, 255, 0.35);
+    --secondary:         #10b981;
+    --secondary-light:   #d1fae5;
+    --accent-orange:     #f59e0b;
+    --accent-orange-lt:  #fef3c7;
+    --accent-red:        #ef4444;
+    --accent-red-lt:     #fef2f2;
+    --accent-pink:       #ec4899;
+    --accent-purple:     #8b5cf6;
+
+    /* Surfaces */
+    --bg:                #f5f6fa;
+    --surface:           #ffffff;
+    --surface-2:         #f9fafb;
+    --surface-3:         #f0f1f8;
+    --hero-bg:           #0d1b2e;
+    --hero-bg-2:         #0f2040;
+
+    /* Text */
+    --text-primary:      #111827;
+    --text-secondary:    #6b7280;
+    --text-muted:        #9ca3af;
+    --text-inverse:      #ffffff;
+
+    /* Borders */
+    --border:            #e5e7eb;
+    --border-hover:      #d1d5db;
+
+    /* Shadows */
+    --shadow-xs:         0 1px 2px rgba(0,0,0,0.05);
+    --shadow-sm:         0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+    --shadow-lg:         0 10px 25px -5px rgba(0,0,0,0.1), 0 4px 10px -5px rgba(0,0,0,0.06);
+    --shadow-xl:         0 20px 40px -10px rgba(0,0,0,0.15);
+    --shadow-card:       0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-card-hover: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-primary:    0 8px 24px rgba(108,99,255,0.28);
+
+    /* Radius */
+    --radius-sm:         6px;
+    --radius-md:         10px;
+    --radius-lg:         16px;
+    --radius-xl:         24px;
+    --radius-2xl:        32px;
+    --radius-full:       9999px;
+
+    /* Layout */
+    --container-max:     1280px;
+    --navbar-height:     68px;
+
+    /* Transitions */
+    --transition:        0.2s ease;
+    --transition-slow:   0.35s ease;
+    --transition-bounce: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ================================================================
+   2. RESET & BASE
+================================================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+body {
+
+    background-color: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: 0 !important;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+ul, ol { list-style: none; }
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+svg {
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* ================================================================
+   3. PAGE WRAPPER & MAIN
+================================================================ */
+.cp-page-wrap {
+    min-height: 100vh;
+}
+
+.cp-main {
+    display: block;
+}
+
+/* ================================================================
+   4. ALERTS
+================================================================ */
+.cp-alert {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.875rem 1.25rem;
+    border-radius: var(--radius-lg);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 1.25rem auto 0;
+    max-width: 1400px;
+    animation: alertSlideIn 0.35s ease;
+}
+
+@keyframes alertSlideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.cp-alert svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.cp-alert--success {
+    background: var(--secondary-light);
+    color: #065f46;
+    border: 1px solid rgba(16,185,129,0.3);
+}
+
+.cp-alert--success svg { color: var(--secondary); }
+
+.cp-alert--error {
+    background: var(--accent-red-lt);
+    color: #991b1b;
+    border: 1px solid rgba(239,68,68,0.3);
+}
+
+.cp-alert--error svg { color: var(--accent-red); }
+
+/* ================================================================
+   5. BREADCRUMB BAR
+================================================================ */
+.cp-breadcrumb-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.625rem 1.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+.cp-breadcrumb-bar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.cp-bc-link {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color var(--transition);
+}
+
+.cp-bc-link:hover {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.cp-bc-sep {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: var(--text-muted);
+}
+
+.cp-bc-current {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+/* ================================================================
+   6. COURSE HERO BANNER
+================================================================ */
+.cp-hero {
+    position: relative;
+    background: linear-gradient(155deg, var(--hero-bg) 0%, #1a2744 40%, #0f1f3a 70%, #12112e 100%);
+    overflow: hidden;
+    padding: 3.5rem 0 3rem;
+    margin-top: 64px; /* offset for fixed navbar */
+}
+
+/* Decorative background grid (mirrors homepage hero grid) */
+.cp-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(108,99,255,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,99,255,0.055) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 90% 100% at 50% 50%, black 30%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Decorative glow blobs */
+.cp-hero::after {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -60px;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(108,99,255,0.22) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    animation: blobFloat1 12s ease-in-out infinite alternate;
+}
+
+@keyframes blobFloat1 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(30px, 25px) scale(1.08); }
+}
+
+.cp-hero-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* ── Hero Content (left) ── */
+.cp-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Category pill */
+.cp-hero-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    background: rgba(108,99,255,0.18);
+    border: 1px solid rgba(108,99,255,0.35);
+    color: #a78bfa;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.875rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 1.125rem;
+    text-decoration: none;
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+    width: fit-content;
+    backdrop-filter: blur(8px);
+}
+
+.cp-hero-cat:hover {
+    background: rgba(108,99,255,0.28);
+    border-color: rgba(108,99,255,0.55);
+    color: #c4b5fd;
+    text-decoration: none;
+}
+
+/* Course title */
+.cp-hero-title {
+
+    font-size: clamp(1.75rem, 3.5vw, 2.625rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--text-inverse);
+    margin-bottom: 1rem;
+}
+
+/* Short description subtitle */
+.cp-hero-subtitle {
+    font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+    color: rgba(255,255,255,0.72);
+    line-height: 1.7;
+    margin-bottom: 1.375rem;
+    max-width: 680px;
+}
+
+/* ── Meta row: rating · students · duration · lessons ── */
+.cp-hero-meta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.375rem;
+    font-size: 0.875rem;
+}
+
+.cp-hero-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.cp-rating-num {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--accent-orange);
+    line-height: 1;
+}
+
+.cp-rating-count {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1;
+}
+
+.cp-meta-sep {
+    color: rgba(255,255,255,0.28);
+    font-size: 1rem;
+    line-height: 1;
+    user-select: none;
+}
+
+.cp-hero-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.cp-hero-stat svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: rgba(255,255,255,0.45);
+}
+
+/* ── Bottom row: instructor + badges ── */
+.cp-hero-bottom-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+}
+
+.cp-hero-instructor {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.3;
+}
+
+.cp-hero-instructor strong {
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+}
+
+/* Small avatar in hero instructor */
+.cp-instructor-avatar-sm {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    border: 1.5px solid rgba(255,255,255,0.2);
+}
+
+/* Hero badges container */
+.cp-hero-badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* ── Badge system ── */
+.cp-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.625rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.cp-badge svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+
+/* Level badge variants */
+.cp-badge--level { text-transform: capitalize; }
+.cp-badge--beginner     { background: rgba(16,185,129,0.2);  color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+.cp-badge--intermediate { background: rgba(245,158,11,0.2);  color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+.cp-badge--advanced     { background: rgba(239,68,68,0.2);   color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+
+/* Language badge */
+.cp-badge--lang {
+    background: rgba(139,92,246,0.2);
+    color: #c4b5fd;
+    border: 1px solid rgba(139,92,246,0.3);
+}
+
+/* Certificate badge */
+.cp-badge--cert {
+    background: rgba(245,158,11,0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(245,158,11,0.3);
+}
+
+/* Updated badge */
+.cp-badge--updated {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.65);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ── Hero thumbnail (desktop right column) ── */
+.cp-hero-thumb {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+    aspect-ratio: 16/10;
+    flex-shrink: 0;
+    animation: cardFloat 6s ease-in-out infinite;
+    border: 1px solid rgba(255,255,255,0.12);
+}
+
+.cp-hero-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+}
+
+.cp-hero-thumb:hover img {
+    transform: scale(1.04);
+}
+
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+}
+
+/* ================================================================
+   7. TWO-COLUMN PAGE LAYOUT
+================================================================ */
+.cp-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    grid-template-rows: auto auto;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+/* ── Left top: above sidebar ── */
+.cp-body-top {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* ── Left bottom: below sidebar ── */
+.cp-body-bottom {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* ── Right: sticky sidebar spans both rows ── */
+.cp-sidebar {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    position: sticky;
+    top: 1.25rem;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* ================================================================
+   8. SECTION COMMON STYLES
+================================================================ */
+.cp-section {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 2rem 2rem 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition), border-color var(--transition);
+}
+
+.cp-section:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--border-hover);
+}
+
+.cp-section:last-child {
+    margin-bottom: 0;
+}
+
+/* Section title with icon */
+.cp-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+}
+
+.cp-section-title svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: var(--primary);
+}
+
+/* Section header (title + meta row) */
+.cp-section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.cp-section-header .cp-section-title {
+    margin-bottom: 0;
+}
+
+/* ================================================================
+   9. WHAT YOU'LL LEARN SECTION
+================================================================ */
+.cp-learn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.cp-learn-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.75rem 0.875rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    line-height: 1.55;
+    transition: border-color var(--transition), background var(--transition),
+                transform var(--transition), box-shadow var(--transition);
+}
+
+.cp-learn-item:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    transform: translateX(3px);
+    box-shadow: var(--shadow-sm);
+}
+
+.cp-learn-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+.cp-learn-check svg {
+    width: 11px;
+    height: 11px;
+}
+
+/* ================================================================
+   10. COURSE CONTENT / CURRICULUM
+================================================================ */
+.cp-curriculum-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    line-height: 1.4;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+
+.cp-meta-dot {
+    color: var(--text-muted);
+    user-select: none;
+}
+
+.cp-free-preview-note {
+    color: var(--secondary);
+    font-weight: 600;
+    background: var(--secondary-light);
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-full);
+}
+
+/* Curriculum list wrapper */
+.cp-curriculum-list {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--transition);
+}
+
+.cp-curriculum-list:hover {
+    border-color: var(--border-hover);
+}
+
+/* Accordion items */
+.cp-acc-item {
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    transition: background var(--transition);
+}
+
+.cp-acc-item:last-child {
+    border-bottom: none;
+}
+
+.cp-acc-item--open .cp-acc-icon svg {
+    transform: rotate(180deg);
+}
+
+.cp-acc-item--open .cp-acc-body {
+    display: block;
+}
+
+/* Accordion trigger */
+.cp-acc-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--transition);
+    font-family: inherit;
+}
+
+.cp-acc-trigger:hover {
+    background: var(--surface-2);
+}
+
+.cp-acc-item--open .cp-acc-trigger {
+    background: var(--primary-light);
+    border-bottom: 1px solid rgba(108,99,255,0.15);
+}
+
+/* Accordion icon (chevron) */
+.cp-acc-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background var(--transition);
+    color: var(--text-secondary);
+}
+
+.cp-acc-icon svg {
+    width: 14px;
+    height: 14px;
+    transition: transform var(--transition-slow);
+}
+
+.cp-acc-item--open .cp-acc-icon {
+    background: var(--primary);
+    color: var(--text-inverse);
+}
+
+.cp-acc-title {
+    flex: 1;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    min-width: 0;
+    transition: color var(--transition);
+}
+
+.cp-acc-item--open .cp-acc-title {
+    color: var(--primary);
+}
+
+.cp-acc-count {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    background: var(--surface-3);
+    padding: 0.2rem 0.625rem;
+    border-radius: var(--radius-full);
+}
+
+/* Accordion body */
+.cp-acc-body {
+    display: none;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border);
+}
+
+/* Lesson list */
+.cp-lesson-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+}
+
+.cp-lesson-item {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.625rem 1.375rem;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    transition: background var(--transition);
+}
+
+.cp-lesson-item:last-child {
+    border-bottom: none;
+}
+
+.cp-lesson-item:hover {
+    background: rgba(108,99,255,0.04);
+}
+
+/* Lesson type icons */
+.cp-lesson-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--surface-3);
+    color: var(--text-muted);
+    transition: background var(--transition), color var(--transition);
+}
+
+.cp-lesson-icon svg {
+    width: 13px;
+    height: 13px;
+}
+
+.cp-lesson-item:hover .cp-lesson-icon {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.cp-lesson-icon--video   { background: rgba(108,99,255,0.1); color: var(--primary); }
+.cp-lesson-icon--quiz    { background: rgba(245,158,11,0.12); color: var(--accent-orange); }
+.cp-lesson-icon--assignment { background: rgba(16,185,129,0.12); color: var(--secondary); }
+
+.cp-lesson-title {
+    flex: 1;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+    font-weight: 500;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cp-lesson-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.cp-lesson-preview {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--secondary);
+    background: var(--secondary-light);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border: 1px solid rgba(16,185,129,0.3);
+}
+
+.cp-lesson-dur {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ================================================================
+   11. REQUIREMENTS SECTION
+================================================================ */
+.cp-req-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cp-req-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding: 0.75rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition), background var(--transition),
+                transform var(--transition);
+}
+
+.cp-req-list li:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    transform: translateX(4px);
+}
+
+.cp-req-list li::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+    margin-top: 0.45rem;
+    transition: background var(--transition), transform var(--transition);
+}
+
+.cp-req-list li:hover::before {
+    background: var(--primary-dark);
+    transform: scale(1.3);
+}
+
+/* ================================================================
+   12. COURSE DESCRIPTION SECTION
+================================================================ */
+.cp-desc-body {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+.cp-desc-collapsed {
+    max-height: 9rem;
+    -webkit-mask-image: linear-gradient(180deg, black 40%, transparent 100%);
+    mask-image: linear-gradient(180deg, black 40%, transparent 100%);
+}
+
+.cp-desc-body br { display: block; content: ''; margin-bottom: 0.5rem; }
+
+.cp-desc-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.375rem 0;
+    transition: color var(--transition), gap var(--transition-bounce);
+    font-family: inherit;
+}
+
+.cp-desc-toggle svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    transition: transform var(--transition-slow);
+}
+
+.cp-desc-toggle:hover {
+    color: var(--primary-dark);
+    gap: 0.5rem;
+}
+
+.cp-desc-toggle:hover svg {
+    transform: translateY(2px);
+}
+
+/* ================================================================
+   13. INSTRUCTOR PROFILE SECTION
+================================================================ */
+.cp-instructor-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+/* Large avatar circle */
+.cp-instructor-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.375rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    letter-spacing: -0.03em;
+    box-shadow: 0 6px 20px var(--primary-glow);
+    border: 3px solid rgba(108,99,255,0.2);
+    transition: transform var(--transition-bounce), box-shadow var(--transition);
+}
+
+.cp-instructor-card:hover .cp-instructor-avatar {
+    transform: scale(1.05);
+    box-shadow: 0 10px 28px var(--primary-glow);
+}
+
+.cp-instructor-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.cp-instructor-name {
+
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+}
+
+.cp-instructor-role {
+    font-size: 0.8125rem;
+    color: var(--primary);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+}
+
+/* Instructor stats row */
+.cp-instructor-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0;
+}
+
+.cp-instr-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.cp-instr-stat svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: var(--primary);
+}
+
+.cp-instructor-bio {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-top: 0.25rem;
+}
+
+.cp-btn--view-profile {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    padding: 0.5rem 1.25rem;
+}
+
+/* ================================================================
+   14. STUDENT REVIEWS SECTION
+================================================================ */
+
+/* ── Rating summary (big number + bars) ── */
+.cp-rating-summary {
+    display: flex;
+    align-items: stretch;
+    gap: 2rem;
+    padding: 1.5rem;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    margin-bottom: 1.75rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.cp-rating-summary:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-sm);
+}
+
+.cp-rating-big {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    min-width: 110px;
+    padding-right: 2rem;
+    border-right: 1.5px solid var(--border);
+    flex-shrink: 0;
+}
+
+.cp-rating-big-num {
+
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent-orange);
+    letter-spacing: -0.05em;
+    line-height: 1;
+}
+
+.cp-rating-big-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.25rem;
+}
+
+/* Rating distribution bars */
+.cp-rating-bars {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    min-width: 0;
+}
+
+.cp-rating-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.cp-rbar-stars {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    min-width: 74px;
+}
+
+.cp-rbar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--surface-3);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    min-width: 0;
+}
+
+.cp-rbar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-orange) 0%, #fbbf24 100%);
+    border-radius: inherit;
+    transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cp-rbar-pct {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 2.75ch;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Review cards grid ── */
+.cp-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.cp-review-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 1.375rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--transition-slow), border-color var(--transition),
+                transform var(--transition-slow);
+}
+
+.cp-review-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+}
+
+.cp-review-header {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+}
+
+/* Review avatar circle */
+.cp-review-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px var(--primary-glow);
+}
+
+.cp-review-meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.cp-review-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cp-review-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.cp-review-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+}
+
+.cp-review-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0;
+    flex: 1;
+    position: relative;
+    padding-left: 0;
+}
+
+/* Empty state for reviews */
+.cp-reviews-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.cp-reviews-empty svg {
+    width: 48px;
+    height: 48px;
+    color: var(--text-muted);
+    opacity: 0.4;
+}
+
+.cp-reviews-empty p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ================================================================
+   15. WRITE A REVIEW FORM
+================================================================ */
+.cp-write-review {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1.5px solid var(--border);
+}
+
+.cp-write-review-title {
+
+    font-size: 1.0625rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    line-height: 1.3;
+}
+
+.cp-review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+}
+
+/* Star picker */
+.cp-star-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cp-star-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* CSS-only star rating (RTL trick) */
+.cp-star-inputs {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 0.25rem;
+}
+
+.cp-star-inputs input[type="radio"] {
+    display: none;
+}
+
+.cp-star-inputs label {
+    font-size: 2rem;
+    color: #d1d5db;
+    cursor: pointer;
+    transition: color var(--transition-bounce), transform var(--transition-bounce);
+    line-height: 1;
+    user-select: none;
+}
+
+.cp-star-inputs label:hover,
+.cp-star-inputs label:hover ~ label,
+.cp-star-inputs input[type="radio"]:checked ~ label {
+    color: var(--accent-orange);
+    transform: scale(1.15);
+}
+
+.cp-review-textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    font-size: 0.9375rem;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--surface);
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.6;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.cp-review-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+}
+
+.cp-review-textarea::placeholder {
+    color: var(--text-muted);
+}
+
+/* ================================================================
+   16. RELATED COURSES SECTION
+================================================================ */
+.cp-related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.125rem;
+}
+
+.cp-related-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--transition-slow), border-color var(--transition),
+                transform var(--transition-slow);
+}
+
+.cp-related-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.cp-related-thumb {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: var(--surface-3);
+    position: relative;
+}
+
+.cp-related-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+}
+
+.cp-related-card:hover .cp-related-thumb img {
+    transform: scale(1.06);
+}
+
+.cp-related-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-light) 0%, #ddd6fe 100%);
+    color: var(--primary);
+}
+
+.cp-related-thumb-placeholder svg {
+    width: 32px;
+    height: 32px;
+    opacity: 0.5;
+}
+
+.cp-related-body {
+    padding: 1rem 1.125rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+}
+
+.cp-related-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+    transition: color var(--transition);
+}
+
+.cp-related-card:hover .cp-related-title {
+    color: var(--primary);
+}
+
+.cp-related-instructor {
+    font-size: 0.78125rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cp-related-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.625rem;
+    border-top: 1px solid var(--border);
+    gap: 0.5rem;
+}
+
+.cp-related-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--accent-orange);
+    line-height: 1;
+}
+
+.cp-related-rating svg {
+    width: 12px;
+    height: 12px;
+    color: var(--accent-orange);
+}
+
+.cp-related-price {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* ================================================================
+   17. ENROLLMENT SIDEBAR CARD
+================================================================ */
+
+/* Mobile thumbnail above the card */
+.cp-card-thumb-mobile {
+    display: none;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 1rem;
+    aspect-ratio: 16/10;
+    border: 1.5px solid var(--border);
+}
+
+.cp-card-thumb-mobile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Main enroll card */
+.cp-enroll-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+    transition: box-shadow var(--transition), border-color var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle top accent line */
+.cp-enroll-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--accent-purple) 50%, var(--accent-pink) 100%);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.cp-enroll-card:hover {
+    box-shadow: 0 24px 60px rgba(0,0,0,0.14);
+    border-color: var(--border-hover);
+}
+
+/* ── Enrolled state: badge ── */
+.cp-enrolled-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--secondary-light);
+    border: 1.5px solid rgba(16,185,129,0.3);
+    border-radius: var(--radius-lg);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #065f46;
+    text-align: center;
+    animation: enrolledPulse 3s ease-in-out infinite;
+}
+
+@keyframes enrolledPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+    50%       { box-shadow: 0 0 0 6px rgba(16,185,129,0.08); }
+}
+
+.cp-enrolled-badge svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--secondary);
+}
+
+/* ── Progress bar ── */
+.cp-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cp-progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.cp-progress-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.cp-progress-pct {
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: var(--primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.cp-progress-track {
+    height: 8px;
+    background: var(--surface-3);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.cp-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--accent-purple) 100%);
+    border-radius: inherit;
+    transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+.cp-completed-note {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.cp-completed-note svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+/* ── Not-enrolled: price block ── */
+.cp-price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.cp-price {
+
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+}
+
+.cp-price--free {
+    font-size: 1.5rem;
+    color: var(--secondary);
+    background: var(--secondary-light);
+    padding: 0.25rem 0.875rem;
+    border-radius: var(--radius-full);
+    border: 1.5px solid rgba(16,185,129,0.3);
+}
+
+/* Form wrappers */
+.cp-action-forms {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* ── Button System ── */
+.cp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.375rem;
+    border-radius: var(--radius-full);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background var(--transition), color var(--transition),
+                border-color var(--transition), box-shadow var(--transition),
+                transform var(--transition-bounce);
+    white-space: nowrap;
+    font-family: inherit;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cp-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: rgba(255,255,255,0.15);
+    transition: opacity var(--transition);
+}
+
+.cp-btn:hover::after { opacity: 1; }
+
+.cp-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* Large */
+.cp-btn--lg {
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    gap: 0.5rem;
+}
+
+.cp-btn--lg svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Full-width */
+.cp-btn--full {
+    width: 100%;
+}
+
+/* Primary */
+.cp-btn--primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    border-color: transparent;
+    box-shadow: 0 4px 16px var(--primary-glow);
+}
+
+.cp-btn--primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #7c3aed 100%);
+    box-shadow: 0 8px 24px rgba(108,99,255,0.45);
+    transform: translateY(-2px);
+    color: var(--text-inverse);
+    text-decoration: none;
+}
+
+.cp-btn--primary:active { transform: translateY(0); }
+
+/* ── Danger / unenroll button ── */
+.cp-btn--danger {
+    background: transparent;
+    color: #ef4444;
+    border-color: rgba(239,68,68,0.45);
+    font-size: 0.875rem;
+}
+.cp-btn--danger:hover {
+    background: rgba(239,68,68,0.1);
+    border-color: #ef4444;
+    color: #ef4444;
+    transform: translateY(-1px);
+}
+
+/* ── Modal fade-in animation ── */
+@keyframes modalIn {
+    from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)     scale(1);    }
+}
+
+/* Outline */
+.cp-btn--outline {
+    background: transparent;
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.cp-btn--outline:hover {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+/* Wishlist active state */
+.cp-btn--wishlisted {
+    background: #fdf2f8;
+    color: var(--accent-pink);
+    border-color: rgba(236,72,153,0.4);
+}
+
+.cp-btn--wishlisted:hover {
+    background: #fce7f3;
+    color: #be185d;
+    border-color: rgba(236,72,153,0.6);
+    transform: translateY(-1px);
+}
+
+.cp-btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* ── Guarantee note ── */
+.cp-guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.cp-guarantee svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: var(--secondary);
+}
+
+/* ── Course Includes list ── */
+.cp-includes {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.cp-includes-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.cp-includes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cp-includes-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    padding: 0.375rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    transition: color var(--transition), padding-left var(--transition);
+}
+
+.cp-includes-list li:last-child {
+    border-bottom: none;
+}
+
+.cp-includes-list li:hover {
+    color: var(--text-primary);
+    padding-left: 4px;
+}
+
+.cp-includes-list li svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--primary);
+}
+
+/* ── Share buttons ── */
+.cp-share {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cp-share-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.cp-share-btns {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cp-share-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition),
+                border-color var(--transition), transform var(--transition-bounce);
+    flex-shrink: 0;
+}
+
+.cp-share-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.cp-share-btn:hover {
+    background: var(--primary);
+    color: var(--text-inverse);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.cp-share-btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.cp-copy-confirm {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--secondary);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    display: block;
+}
+
+.cp-copy-confirm--visible {
+    opacity: 1;
+}
+
+/* ================================================================
+   18. STARS (shared between reviews and hero rating)
+================================================================ */
+.stars-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    line-height: 1;
+}
+
+.star {
+    font-size: 0.875rem;
+    line-height: 1;
+    display: inline-block;
+}
+
+.star--filled  { color: var(--accent-orange); }
+.star--half    { color: var(--accent-orange); opacity: 0.6; }
+.star--empty   { color: #d1d5db; }
+
+/* ================================================================
+   19. DATA-REVEAL ANIMATIONS  (same as home.css)
+================================================================ */
+[data-reveal] {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+[data-reveal="fade-up"]    { transform: translateY(28px); }
+[data-reveal="fade-left"]  { transform: translateX(28px); }
+[data-reveal="fade-right"] { transform: translateX(-28px); }
+
+[data-reveal].revealed {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
+/* ================================================================
+   20. SCROLLBAR  (matches home.css)
+================================================================ */
+@media (hover: hover) {
+    ::-webkit-scrollbar       { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+}
+
+/* ================================================================
+   21. FOCUS VISIBLE
+================================================================ */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* ================================================================
+   22. RESPONSIVE — 1400px
+================================================================ */
+@media (max-width: 1400px) {
+    .cp-hero-inner {
+        grid-template-columns: 1fr 300px;
+        gap: 2.5rem;
+    }
+
+    .cp-layout {
+        grid-template-columns: 1fr 340px;
+        padding: 2.25rem 1.5rem 3.5rem;
+    }
+}
+
+/* ================================================================
+   23. RESPONSIVE — 1200px
+================================================================ */
+@media (max-width: 1200px) {
+    .cp-hero-inner {
+        grid-template-columns: 1fr 280px;
+        gap: 2rem;
+    }
+
+    .cp-layout {
+        grid-template-columns: 1fr 320px;
+        gap: 2rem;
+    }
+
+    .cp-related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ================================================================
+   24. RESPONSIVE — 1024px
+================================================================ */
+@media (max-width: 1024px) {
+    .cp-hero-inner {
+        grid-template-columns: 1fr 240px;
+        gap: 1.75rem;
+    }
+
+    .cp-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 2rem;
+    }
+
+    .cp-body-top {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .cp-sidebar {
+        grid-column: 1;
+        grid-row: 2;
+        position: static;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .cp-body-bottom {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .cp-enroll-card {
+        grid-column: unset;
+    }
+    
+    .cp-card-thumb-mobile {
+        display: none;
+    }
+
+    .cp-related-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ================================================================
+   25. RESPONSIVE — 960px
+================================================================ */
+@media (max-width: 960px) {
+    .cp-layout {
+        padding: 2rem 1.25rem 3rem;
+    }
+
+    .cp-hero {
+        padding: 2.5rem 0 2.5rem;
+    }
+
+    .cp-hero-inner {
+        padding: 0 1.25rem;
+    }
+
+    .cp-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-reviews-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-related-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .cp-learn-grid { grid-template-columns: 1fr; }
+
+    .cp-rating-summary {
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .cp-rating-big {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        border-right: none;
+        border-bottom: 1.5px solid var(--border);
+        padding-right: 0;
+        padding-bottom: 1.25rem;
+        min-width: unset;
+    }
+
+    .cp-rating-big-num {
+        font-size: 2.5rem;
+    }
+}
+
+/* ================================================================
+   26. RESPONSIVE — 768px
+================================================================ */
+@media (max-width: 768px) {
+    .cp-hero {
+        padding: 2rem 0 2rem;
+    }
+
+    .cp-hero-inner {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .cp-hero-thumb {
+        display: none;
+    }
+
+    .cp-hero-title {
+        font-size: clamp(1.5rem, 5vw, 2.125rem);
+    }
+
+    .cp-hero-subtitle {
+        font-size: 0.9375rem;
+    }
+
+    .cp-hero-meta-row {
+        font-size: 0.8125rem;
+    }
+
+    .cp-hero-bottom-row {
+        gap: 0.75rem 1rem;
+    }
+
+    .cp-hero-badges {
+        gap: 0.375rem;
+    }
+
+    .cp-layout {
+        padding: 1.5rem 1rem 2.5rem;
+        gap: 1.5rem;
+    }
+
+    .cp-section {
+        padding: 1.5rem;
+    }
+
+    .cp-section-title {
+        font-size: 1.125rem;
+    }
+
+    .cp-breadcrumb-bar {
+        padding: 0.5rem 1rem;
+    }
+
+    .cp-breadcrumb-bar-inner {
+        padding: 0;
+    }
+
+    .cp-bc-current {
+        display: none;
+    }
+
+    .cp-bc-sep:last-of-type {
+        display: none;
+    }
+
+    .cp-instructor-card {
+        gap: 1rem;
+    }
+
+    .cp-instructor-avatar {
+        width: 56px;
+        height: 56px;
+        font-size: 1.125rem;
+    }
+
+    .cp-instructor-stats {
+        gap: 0.875rem;
+        flex-wrap: wrap;
+    }
+
+    .cp-related-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-enroll-card {
+        padding: 1.375rem 1.25rem;
+    }
+
+    .cp-price {
+        font-size: 1.625rem;
+    }
+
+    .cp-reviews-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-learn-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-alert {
+        margin: 1rem 1rem 0;
+    }
+
+    .cp-card-thumb-mobile {
+        display: none;
+    }
+}
+
+/* ================================================================
+   27. RESPONSIVE — 640px
+================================================================ */
+@media (max-width: 640px) {
+    .cp-hero {
+        padding: 1.5rem 0 2rem;
+    }
+
+    .cp-hero-inner {
+        padding: 0 1rem;
+    }
+
+    .cp-hero-title {
+        font-size: clamp(1.375rem, 6vw, 2rem);
+    }
+
+    .cp-layout {
+        padding: 1.25rem 0.875rem 2rem;
+        gap: 1.25rem;
+    }
+
+    .cp-section {
+        padding: 1.25rem 1rem;
+    }
+
+    .cp-section-title {
+        font-size: 1rem;
+        gap: 0.5rem;
+    }
+
+    .cp-section-title svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .cp-hero-meta-row {
+        gap: 0.35rem;
+    }
+
+    .cp-hero-stat {
+        font-size: 0.8125rem;
+    }
+
+    .cp-learn-item {
+        padding: 0.625rem 0.75rem;
+    }
+
+    .cp-acc-trigger {
+        padding: 0.875rem 1rem;
+    }
+
+    .cp-acc-title {
+        font-size: 0.875rem;
+    }
+
+    .cp-lesson-item {
+        padding: 0.5rem 1rem;
+    }
+
+    .cp-lesson-title {
+        font-size: 0.8125rem;
+    }
+
+    .cp-lesson-dur {
+        display: none;
+    }
+
+    .cp-rating-big-num {
+        font-size: 2rem;
+    }
+
+    .cp-review-card {
+        padding: 1.125rem;
+    }
+
+    .cp-instructor-card {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0.875rem;
+    }
+
+    .cp-instructor-avatar {
+        width: 48px;
+        height: 48px;
+        font-size: 1rem;
+    }
+
+    .cp-enroll-card {
+        padding: 1.25rem 1rem;
+    }
+
+    .cp-btn--lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9375rem;
+    }
+
+    .cp-price { font-size: 1.5rem; }
+
+    .cp-star-inputs label {
+        font-size: 1.625rem;
+    }
+
+    .cp-share-btn {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+/* ================================================================
+   28. RESPONSIVE — 480px
+================================================================ */
+@media (max-width: 480px) {
+    .cp-hero-inner {
+        padding: 0 0.875rem;
+    }
+
+    .cp-hero-title {
+        font-size: clamp(1.25rem, 7vw, 1.75rem);
+    }
+
+    .cp-hero-subtitle {
+        font-size: 0.875rem;
+    }
+
+    .cp-hero-bottom-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.625rem;
+    }
+
+    .cp-layout {
+        padding: 1rem 0.75rem 1.5rem;
+    }
+
+    .cp-section {
+        padding: 1.125rem 0.875rem;
+    }
+
+    .cp-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .cp-curriculum-meta {
+        font-size: 0.75rem;
+    }
+
+    .cp-rating-summary {
+        padding: 1.125rem 1rem;
+    }
+
+    .cp-related-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-related-thumb {
+        max-height: 160px;
+    }
+
+    .cp-instructor-bio {
+        font-size: 0.8125rem;
+    }
+
+    .cp-req-list li {
+        font-size: 0.875rem;
+    }
+
+    .cp-includes-list li {
+        font-size: 0.8125rem;
+    }
+
+    .cp-acc-count {
+        display: none;
+    }
+
+    .cp-hero-badges {
+        gap: 0.3rem;
+    }
+
+    .cp-badge {
+        font-size: 0.6875rem;
+        padding: 0.175rem 0.5rem;
+    }
+
+    .cp-review-avatar {
+        width: 34px;
+        height: 34px;
+        font-size: 0.75rem;
+    }
+
+    .cp-review-name { font-size: 0.875rem; }
+
+    .cp-bc-link { font-size: 0.75rem; }
+
+    .cp-alert {
+        font-size: 0.875rem;
+        padding: 0.75rem 1rem;
+        margin: 0.875rem 0.75rem 0;
+    }
+}
+
+/* ================================================================
+   29. RESPONSIVE — 360px
+================================================================ */
+@media (max-width: 360px) {
+    .cp-hero-inner {
+        padding: 0 0.75rem;
+    }
+
+    .cp-hero-title {
+        font-size: 1.25rem;
+    }
+
+    .cp-layout {
+        padding: 0.875rem 0.625rem 1.25rem;
+    }
+
+    .cp-section {
+        padding: 1rem 0.75rem;
+    }
+
+    .cp-acc-trigger {
+        padding: 0.75rem 0.875rem;
+        gap: 0.5rem;
+    }
+
+    .cp-lesson-item {
+        padding: 0.5rem 0.875rem;
+        gap: 0.625rem;
+    }
+
+    .cp-lesson-icon { width: 24px; height: 24px; }
+
+    .cp-enroll-card { padding: 1rem 0.875rem; }
+
+    .cp-btn--lg {
+        padding: 0.6875rem 1.25rem;
+        font-size: 0.875rem;
+    }
+
+    .cp-price { font-size: 1.375rem; }
+
+    .cp-rbar-stars { min-width: 60px; }
+
+    .cp-instructor-avatar {
+        width: 44px;
+        height: 44px;
+        font-size: 0.9375rem;
+    }
+
+    .cp-write-review-title { font-size: 0.9375rem; }
+
+    .cp-star-inputs label { font-size: 1.375rem; }
+}

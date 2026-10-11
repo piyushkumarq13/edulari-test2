@@ -1,0 +1,1925 @@
+/* ============================================================
+   Edulari – Checkout Page (checkout.css)
+   File: /public/assets/css/checkout.css
+   Extends cart-wishlist.css — load AFTER it.
+   Matches the navy/purple/amber design system from home.css.
+   Covers: every element, every section, every state.
+   Breakpoints: 1200 | 1024 | 768 | 480 | 360
+   ============================================================ */
+
+/* ================================================================
+   1. CSS CUSTOM PROPERTIES (mirrors home.css :root exactly)
+================================================================ */
+:root {
+    --primary:           #6c63ff;
+    --primary-dark:      #5449e6;
+    --primary-light:     #ede9fe;
+    --primary-glow:      rgba(108, 99, 255, 0.35);
+    --secondary:         #10b981;
+    --secondary-light:   #d1fae5;
+    --accent-orange:     #f59e0b;
+    --accent-orange-lt:  #fef3c7;
+    --accent-red:        #ef4444;
+    --accent-red-lt:     #fef2f2;
+    --accent-pink:       #ec4899;
+    --accent-purple:     #8b5cf6;
+
+    --bg:                #f5f6fa;
+    --surface:           #ffffff;
+    --surface-2:         #f9fafb;
+    --surface-3:         #f0f1f8;
+    --hero-bg:           #0d1b2e;
+
+    --text-primary:      #111827;
+    --text-secondary:    #6b7280;
+    --text-muted:        #9ca3af;
+    --text-inverse:      #ffffff;
+
+    --border:            #e5e7eb;
+    --border-hover:      #d1d5db;
+
+    --shadow-xs:         0 1px 2px rgba(0,0,0,0.05);
+    --shadow-sm:         0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+    --shadow-lg:         0 10px 25px -5px rgba(0,0,0,0.1), 0 4px 10px -5px rgba(0,0,0,0.06);
+    --shadow-xl:         0 20px 40px -10px rgba(0,0,0,0.15);
+    --shadow-card:       0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-card-hover: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-primary:    0 8px 24px rgba(108,99,255,0.28);
+
+    --radius-sm:         6px;
+    --radius-md:         10px;
+    --radius-lg:         16px;
+    --radius-xl:         24px;
+    --radius-2xl:        32px;
+    --radius-full:       9999px;
+
+    --container-max:     1280px;
+    --navbar-height:     68px;
+
+    --transition:        0.2s ease;
+    --transition-slow:   0.35s ease;
+    --transition-bounce: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ================================================================
+   2. RESET & BASE
+================================================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+ul, ol { list-style: none; }
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* ================================================================
+   3. PAGE SHELL — NAVBAR OFFSET
+================================================================ */
+.main-wrapper {
+    margin-left: 0;
+    min-height: 100vh;
+    background: var(--bg);
+}
+
+.page-content {
+    padding: 2.5rem 2rem 4rem;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ================================================================
+   4. PAGE HEADER — matches cart-wishlist / homepage style
+================================================================ */
+.page-header {
+    position: relative;
+    background: linear-gradient(155deg, var(--hero-bg) 0%, #1a2744 40%, #0f1f3a 70%, #12112e 100%);
+    border-radius: var(--radius-xl);
+    padding: 2.5rem 2.5rem 3rem;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-xl);
+}
+
+/* Decorative grid overlay — same as hero */
+.page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(108,99,255,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,99,255,0.055) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Glowing blob top-right */
+.page-header::after {
+    content: '';
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(108,99,255,0.22) 0%, transparent 70%);
+    top: -100px;
+    right: -80px;
+    pointer-events: none;
+    filter: blur(60px);
+}
+
+.page-header-left {
+    position: relative;
+    z-index: 2;
+}
+
+.page-title {
+
+    font-size: clamp(1.625rem, 3.5vw, 2.25rem);
+    font-weight: 800;
+    color: var(--text-inverse);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-title svg {
+    width: 28px;
+    height: 28px;
+    color: #a78bfa;
+    flex-shrink: 0;
+}
+
+.page-subtitle {
+    font-size: 0.9375rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+    max-width: 460px;
+    font-weight: 400;
+}
+
+/* ================================================================
+   5. REVEAL ANIMATIONS (matches home.css [data-reveal])
+================================================================ */
+[data-reveal] {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+[data-reveal="fade-up"]    { transform: translateY(28px); }
+[data-reveal="fade-left"]  { transform: translateX(28px); }
+[data-reveal="fade-right"] { transform: translateX(-28px); }
+
+[data-reveal].revealed {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
+/* ================================================================
+   6. STEP INDICATOR — polished to match homepage design tokens
+================================================================ */
+.checkout-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 2rem;
+    padding: 1.25rem 1.75rem;
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle top accent line */
+.checkout-steps::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary), var(--primary), var(--accent-purple));
+    border-radius: var(--radius-full) var(--radius-full) 0 0;
+}
+
+.checkout-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.checkout-step span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    transition: color var(--transition);
+}
+
+.step-circle {
+    width: 46px;
+    height: 46px;
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition), border-color var(--transition),
+                box-shadow var(--transition-slow), transform var(--transition-bounce);
+}
+
+.step-circle svg {
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    transition: color var(--transition);
+}
+
+/* ── Done step ── */
+.checkout-step--done .step-circle {
+    background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+    border-color: var(--secondary);
+    box-shadow: 0 4px 14px rgba(16,185,129,0.3);
+}
+
+.checkout-step--done .step-circle svg {
+    color: #fff;
+}
+
+.checkout-step--done span {
+    color: var(--secondary);
+}
+
+/* ── Active step ── */
+.checkout-step--active .step-circle {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    border-color: transparent;
+    box-shadow: 0 4px 16px var(--primary-glow), 0 0 0 4px var(--primary-light);
+    transform: scale(1.05);
+}
+
+.checkout-step--active .step-circle svg {
+    color: #fff;
+}
+
+.checkout-step--active span {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* ── Connector lines ── */
+.step-line {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    margin: 0 0.5rem;
+    margin-bottom: 1.5rem; /* aligns with circle vertical center */
+    border-radius: var(--radius-full);
+    position: relative;
+    overflow: hidden;
+    transition: background var(--transition-slow);
+}
+
+.step-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary), var(--accent-purple));
+    border-radius: inherit;
+    transition: width 0.8s ease;
+}
+
+.step-line--done {
+    background: transparent;
+}
+
+.step-line--done::after {
+    width: 100%;
+    background: linear-gradient(90deg, var(--secondary), #059669);
+}
+
+/* ================================================================
+   7. CHECKOUT TWO-COLUMN LAYOUT
+================================================================ */
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.75rem;
+    align-items: start;
+}
+
+.checkout-payment-col,
+.checkout-summary-col {
+    min-width: 0;
+}
+
+/* ================================================================
+   8. CHECKOUT CARD — Payment Panel
+================================================================ */
+.checkout-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: box-shadow var(--transition-slow);
+}
+
+.checkout-card:hover {
+    box-shadow: var(--shadow-card-hover);
+}
+
+/* ── Card Header ── */
+.checkout-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 1.375rem 1.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Sheen animation on header */
+.checkout-card-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    transform: skewX(-20deg);
+    animation: headerSheen 4s ease-in-out infinite;
+}
+
+@keyframes headerSheen {
+    0%, 100% { left: -80%; }
+    50%       { left: 130%; }
+}
+
+.checkout-card-header svg {
+    width: 22px;
+    height: 22px;
+    color: rgba(255,255,255,0.9);
+    flex-shrink: 0;
+}
+
+.checkout-card-header h2 {
+
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-inverse);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+/* ── Card inner padding wrapper ── */
+.checkout-card > *:not(.checkout-card-header) {
+    /* each child gets its own spacing — see individual rules below */
+}
+
+/* ================================================================
+   9. ERROR MESSAGE BOX
+================================================================ */
+.checkout-error {
+    display: none; /* toggled to flex by JS */
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin: 1.5rem 1.75rem 0;
+    padding: 1rem 1.125rem;
+    background: var(--accent-red-lt);
+    border: 1.5px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #dc2626;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.55;
+    animation: slideDownFade 0.3s ease;
+}
+
+@keyframes slideDownFade {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.checkout-error svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+/* ================================================================
+   10. AMOUNT BANNER
+================================================================ */
+.upi-amount-banner {
+    margin: 1.75rem 1.75rem 0;
+    padding: 1.5rem 1.75rem;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 1.5px solid #bbf7d0;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative ring inside amount banner */
+.upi-amount-banner::before {
+    content: '';
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(16,185,129,0.06);
+    top: -50px;
+    right: -30px;
+    pointer-events: none;
+}
+
+.upi-amount-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #16a34a;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+    position: relative;
+    z-index: 1;
+}
+
+.upi-amount-value {
+
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #15803d;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    position: relative;
+    z-index: 1;
+}
+
+/* ================================================================
+   11. ACCEPTED PAYMENT METHODS BLOCK (inline styles in PHP —
+       override with real classes via the selector below)
+================================================================ */
+.checkout-card > div[style*="surface-secondary"],
+.checkout-card > div[style*="f8fafc"] {
+    margin: 1.25rem 1.75rem 0;
+    padding: 1.125rem 1.25rem;
+    background: var(--surface-2) !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: var(--radius-lg) !important;
+}
+
+/* Payment method pill chips — enhance the inline spans */
+.checkout-card span[style*="border:1px solid"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 0.3rem 0.75rem !important;
+    background: var(--surface) !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: var(--radius-full) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    color: var(--text-secondary) !important;
+    transition: border-color var(--transition), color var(--transition),
+                background var(--transition), transform var(--transition-bounce) !important;
+}
+
+.checkout-card span[style*="border:1px solid"]:hover {
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+    background: var(--primary-light) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* ================================================================
+   12. BUTTON SYSTEM — matches home.css btn architecture exactly
+================================================================ */
+
+/* Base button */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.375rem;
+    border-radius: var(--radius-full);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background var(--transition), color var(--transition),
+                border-color var(--transition), box-shadow var(--transition),
+                transform var(--transition-bounce);
+    white-space: nowrap;
+    font-family: inherit;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: rgba(255,255,255,0.15);
+    transition: opacity var(--transition);
+}
+
+.btn:hover::after { opacity: 1; }
+.btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* Block */
+.btn-block {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}
+
+/* Large */
+.btn-lg {
+    padding: 0.9375rem 1.75rem;
+    font-size: 1rem;
+    gap: 0.625rem;
+}
+
+/* Primary — gradient purple like home.css .btn--primary */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    border-color: transparent;
+    box-shadow: 0 4px 16px var(--primary-glow);
+    margin: 1.5rem 1.75rem 0;
+    width: calc(100% - 3.5rem);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #7c3aed 100%);
+    box-shadow: 0 8px 28px rgba(108,99,255,0.48);
+    transform: translateY(-2px);
+    color: var(--text-inverse);
+    text-decoration: none;
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 4px 16px var(--primary-glow);
+}
+
+.btn-primary svg { flex-shrink: 0; width: 18px; height: 18px; }
+
+/* Ghost — matches home.css .btn--outline */
+.btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border);
+    margin: 0.875rem 1.75rem 0;
+    width: calc(100% - 3.5rem);
+}
+
+.btn-ghost:hover {
+    background: var(--surface-2);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.btn-ghost svg { flex-shrink: 0; width: 16px; height: 16px; }
+
+/* ================================================================
+   13. SECURE FOOTER TEXT (inside checkout-card)
+================================================================ */
+.checkout-card > p[style*="text-align:center"] {
+    text-align: center !important;
+    margin: 1.25rem 1.75rem 1.75rem !important;
+    font-size: 0.78125rem !important;
+    color: var(--text-muted) !important;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+}
+
+.checkout-card > p[style*="text-align:center"] strong {
+    color: var(--primary) !important;
+    font-weight: 700 !important;
+}
+
+/* ================================================================
+   14. ORDER SUMMARY CARD — RIGHT COLUMN
+================================================================ */
+.cart-summary-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow var(--transition-slow);
+}
+
+.cart-summary-card:hover {
+    box-shadow: var(--shadow-card-hover);
+}
+
+/* Decorative gradient top bar */
+.cart-summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent-purple), var(--accent-pink));
+    border-radius: var(--radius-full) var(--radius-full) 0 0;
+}
+
+/* ================================================================
+   15. SUMMARY TITLE
+================================================================ */
+.summary-title {
+
+    font-size: 1.0625rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin-bottom: 1.25rem;
+    padding-top: 0.25rem;
+}
+
+/* ================================================================
+   16. CHECKOUT COURSE LIST (order summary items)
+================================================================ */
+.checkout-course-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin-bottom: 1.25rem;
+}
+
+.checkout-course-row {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.75rem;
+    border-radius: var(--radius-lg);
+    border: 1.5px solid var(--border);
+    background: var(--surface-2);
+    transition: border-color var(--transition), background var(--transition),
+                transform var(--transition);
+}
+
+.checkout-course-row:hover {
+    border-color: var(--primary-light);
+    background: var(--surface);
+    transform: translateX(2px);
+}
+
+.checkout-course-thumb {
+    width: 60px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+}
+
+.checkout-course-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.checkout-course-row:hover .checkout-course-thumb img {
+    transform: scale(1.05);
+}
+
+.checkout-course-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+}
+
+.checkout-course-placeholder svg {
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+}
+
+.checkout-course-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.checkout-course-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.15rem;
+}
+
+.checkout-course-instructor {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+}
+
+.checkout-course-price {
+
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
+}
+
+/* ================================================================
+   17. SUMMARY DIVIDER
+================================================================ */
+.summary-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 1.125rem 0;
+    border: none;
+}
+
+/* ================================================================
+   18. SUMMARY ROWS
+================================================================ */
+.summary-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+
+.summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.summary-row span:first-child {
+    flex: 1;
+    font-weight: 500;
+}
+
+.summary-row span:last-child {
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* ================================================================
+   19. SUMMARY TOTAL ROW
+================================================================ */
+.summary-total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1.125rem;
+    background: linear-gradient(135deg, var(--primary-light) 0%, #ddd6fe 100%);
+    border: 1.5px solid rgba(108,99,255,0.2);
+    border-radius: var(--radius-lg);
+    margin-top: 0.25rem;
+}
+
+.summary-total-label {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    letter-spacing: -0.01em;
+}
+
+.summary-total-amount {
+
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+/* ================================================================
+   20. TRUST BADGES
+================================================================ */
+.trust-badges {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 1.125rem 1.25rem;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.trust-badges li {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    transition: color var(--transition);
+}
+
+.trust-badges li:hover {
+    color: var(--text-primary);
+}
+
+.trust-badges li svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--secondary);
+}
+
+/* ================================================================
+   21. UPI STEPS (legacy — kept for compatibility)
+================================================================ */
+.upi-steps {
+    list-style: none;
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.upi-steps li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.upi-step-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.1rem;
+}
+
+.upi-steps li > div strong {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+}
+
+.upi-steps li > div p {
+    font-size: 0.8375rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* ── UPI ID box ── */
+.upi-id-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    background: var(--surface-2);
+    border: 1.5px dashed var(--primary);
+    border-radius: var(--radius-md);
+    max-width: 100%;
+    transition: background var(--transition), border-color var(--transition);
+}
+
+.upi-id-box:hover {
+    background: var(--primary-light);
+}
+
+.upi-id-box span {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--primary);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.02em;
+    word-break: break-all;
+}
+
+.upi-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.35rem 0.7rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity var(--transition), transform var(--transition-bounce);
+    flex-shrink: 0;
+}
+
+.upi-copy-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.upi-copy-btn svg {
+    width: 13px;
+    height: 13px;
+}
+
+/* ── QR Code frame ── */
+.upi-qr-wrap {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.875rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.upi-qr-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.upi-qr-frame {
+    width: 200px;
+    height: 200px;
+    border: 3px solid var(--primary);
+    border-radius: var(--radius-lg);
+    padding: 0.5rem;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md), 0 0 0 4px var(--primary-light);
+    overflow: hidden;
+    transition: box-shadow var(--transition-slow);
+}
+
+.upi-qr-frame:hover {
+    box-shadow: var(--shadow-lg), 0 0 0 6px var(--primary-light);
+}
+
+.upi-qr-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.qr-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    color: var(--text-muted);
+    padding: 0.5rem;
+}
+
+.qr-placeholder svg {
+    width: 80px;
+    height: 80px;
+    opacity: 0.3;
+}
+
+.qr-placeholder p {
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.qr-placeholder code {
+    display: inline-block;
+    font-size: 0.65rem;
+    background: var(--surface-2);
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    word-break: break-all;
+    margin-top: 0.25rem;
+}
+
+.upi-merchant-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: -0.01em;
+}
+
+/* ── Confirm form ── */
+.upi-confirm-form {
+    padding: 1.5rem 1.75rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.form-required {
+    color: var(--accent-red);
+    margin-left: 0.15rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: border-color var(--transition), box-shadow var(--transition),
+                background var(--transition);
+    outline: none;
+}
+
+.form-input::placeholder {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    background: var(--surface);
+}
+
+.form-input:hover:not(:focus) {
+    border-color: var(--border-hover);
+    background: var(--surface);
+}
+
+.form-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+    line-height: 1.5;
+}
+
+/* ================================================================
+   22. SUCCESS STATE — full page replace
+================================================================ */
+.checkout-success {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 3rem 0 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+    animation: successFadeIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes successFadeIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Success icon ── */
+.success-icon {
+    position: relative;
+}
+
+.success-icon svg {
+    width: 96px;
+    height: 96px;
+    filter: drop-shadow(0 8px 28px rgba(16,185,129,0.35));
+    animation: successBounce 0.7s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes successBounce {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+/* Radiating pulse ring */
+.success-icon::after {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 2px solid rgba(16,185,129,0.3);
+    animation: successPulse 2s ease-in-out infinite 0.8s;
+}
+
+@keyframes successPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50%       { transform: scale(1.12); opacity: 0.2; }
+}
+
+/* ── Success title ── */
+.success-title {
+
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    animation: successFadeIn 0.6s 0.15s ease both;
+}
+
+/* ── Success subtitle ── */
+.success-subtitle {
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 440px;
+    animation: successFadeIn 0.6s 0.25s ease both;
+}
+
+/* ── Transaction details box ── */
+.success-details {
+    width: 100%;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    animation: successFadeIn 0.6s 0.35s ease both;
+    position: relative;
+}
+
+.success-details::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary), #059669);
+}
+
+.success-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.375rem;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+    transition: background var(--transition);
+}
+
+.success-detail-row:last-child {
+    border-bottom: none;
+}
+
+.success-detail-row:hover {
+    background: var(--surface-2);
+}
+
+.detail-label {
+    font-size: 0.8375rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.detail-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: right;
+    word-break: break-all;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.01em;
+}
+
+/* ── Enrolled courses list ── */
+.success-courses {
+    width: 100%;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    text-align: left;
+    animation: successFadeIn 0.6s 0.45s ease both;
+}
+
+.success-courses h3 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.875rem 1.375rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+}
+
+.success-course-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.375rem;
+    border-bottom: 1px solid var(--border);
+    transition: background var(--transition), transform var(--transition);
+}
+
+.success-course-item:last-child {
+    border-bottom: none;
+}
+
+.success-course-item:hover {
+    background: var(--primary-light);
+    transform: translateX(3px);
+}
+
+.success-course-thumb {
+    width: 60px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+}
+
+.success-course-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.success-course-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+}
+
+.success-course-placeholder svg {
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+}
+
+.success-course-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.success-course-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.success-course-price {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+    font-weight: 500;
+}
+
+.success-course-check {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 6px rgba(16,185,129,0.35));
+}
+
+/* ── Success CTA buttons ── */
+.success-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    animation: successFadeIn 0.6s 0.55s ease both;
+}
+
+.success-actions .btn {
+    flex: 1;
+    min-width: 200px;
+    justify-content: center;
+    padding: 0.9375rem 1.75rem;
+    font-size: 0.9375rem;
+}
+
+/* Success primary action — inherits .btn-primary look */
+.success-actions a.btn-primary,
+.success-actions .btn.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    border-color: transparent;
+    box-shadow: 0 4px 16px var(--primary-glow);
+    width: auto;
+    margin: 0;
+}
+
+.success-actions a.btn-primary:hover,
+.success-actions .btn.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #7c3aed 100%);
+    box-shadow: 0 8px 28px rgba(108,99,255,0.48);
+    transform: translateY(-2px);
+    color: var(--text-inverse);
+    text-decoration: none;
+}
+
+/* ================================================================
+   23. SPIN ANIMATION (for loading state buttons)
+================================================================ */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ================================================================
+   24. TOAST NOTIFICATION — matches home.css
+================================================================ */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1.375rem;
+    background: #1f2937;
+    color: var(--text-inverse);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    z-index: 9999;
+    white-space: nowrap;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.toast.is-visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.toast__icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.toast--success .toast__icon { color: var(--secondary); }
+.toast--error   .toast__icon { color: var(--accent-red); }
+
+/* ================================================================
+   25. BACK TO TOP — matches home.css
+================================================================ */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--text-inverse);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px var(--primary-glow);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: opacity var(--transition-slow), visibility var(--transition-slow),
+                transform var(--transition-slow), background var(--transition);
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px var(--primary-glow);
+}
+
+.back-to-top:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* ================================================================
+   26. SCROLLBAR — matches home.css utility
+================================================================ */
+@media (hover: hover) {
+    ::-webkit-scrollbar       { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+}
+
+/* ================================================================
+   27. FOCUS VISIBLE (accessibility — matches home.css)
+================================================================ */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+.btn:focus-visible,
+.form-input:focus-visible,
+.checkout-step:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* ================================================================
+   28. RESPONSIVE — 1200px
+================================================================ */
+@media (max-width: 1200px) {
+    .page-content {
+        padding: 2.25rem 1.75rem 3.5rem;
+    }
+
+    .checkout-layout {
+        grid-template-columns: 1fr 340px;
+        gap: 1.5rem;
+    }
+}
+
+/* ================================================================
+   29. RESPONSIVE — 1024px (stack layout)
+================================================================ */
+@media (max-width: 1024px) {
+    .page-content {
+        padding: 2rem 1.5rem 3rem;
+    }
+
+    .checkout-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .checkout-summary-col {
+        order: -1; /* summary appears above payment on tablet/mobile */
+    }
+
+    .page-header {
+        padding: 2.25rem 2rem 2.75rem;
+    }
+
+    .page-title {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    .checkout-steps {
+        padding: 1.125rem 1.375rem;
+    }
+}
+
+/* ================================================================
+   30. RESPONSIVE — 768px
+================================================================ */
+@media (max-width: 768px) {
+    .page-content {
+        padding: 1.75rem 1.25rem 2.5rem;
+    }
+
+    .page-header {
+        padding: 2rem 1.5rem 2.5rem;
+        border-radius: var(--radius-lg);
+        margin-bottom: 1.75rem;
+    }
+
+    .page-title {
+        font-size: clamp(1.375rem, 5vw, 1.75rem);
+        gap: 0.5rem;
+    }
+
+    .page-title svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .page-subtitle {
+        font-size: 0.875rem;
+    }
+
+    /* Steps */
+    .checkout-steps {
+        padding: 1rem 1.25rem;
+    }
+
+    .step-circle {
+        width: 38px;
+        height: 38px;
+    }
+
+    .step-circle svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .checkout-step span {
+        font-size: 0.6875rem;
+    }
+
+    /* Amount banner */
+    .upi-amount-banner {
+        margin: 1.375rem 1.375rem 0;
+        padding: 1.25rem 1.375rem;
+    }
+
+    .upi-amount-value {
+        font-size: 1.875rem;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        margin: 1.375rem 1.375rem 0;
+        width: calc(100% - 2.75rem);
+    }
+
+    .btn-ghost {
+        margin: 0.75rem 1.375rem 0;
+        width: calc(100% - 2.75rem);
+    }
+
+    /* Card header */
+    .checkout-card-header {
+        padding: 1.125rem 1.375rem;
+    }
+
+    /* Success */
+    .success-title {
+        font-size: 1.625rem;
+    }
+
+    .success-subtitle {
+        font-size: 0.9375rem;
+    }
+
+    .success-icon svg {
+        width: 80px;
+        height: 80px;
+    }
+
+    .success-actions {
+        flex-direction: column;
+    }
+
+    .success-actions .btn {
+        width: 100%;
+        min-width: unset;
+    }
+
+    /* Summary card */
+    .cart-summary-card {
+        padding: 1.375rem;
+    }
+
+    /* Error box */
+    .checkout-error {
+        margin: 1.25rem 1.375rem 0;
+    }
+
+    /* UPI elements */
+    .upi-steps,
+    .upi-confirm-form {
+        padding: 1.25rem 1.375rem;
+    }
+
+    .upi-qr-frame {
+        width: 170px;
+        height: 170px;
+    }
+}
+
+/* ================================================================
+   31. RESPONSIVE — 480px
+================================================================ */
+@media (max-width: 480px) {
+    .page-content {
+        padding: 1.5rem 1rem 2.25rem;
+    }
+
+    .page-header {
+        padding: 1.75rem 1.25rem 2.25rem;
+        border-radius: var(--radius-lg);
+        margin-bottom: 1.5rem;
+    }
+
+    .page-title {
+        font-size: 1.375rem;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    /* Steps compact */
+    .checkout-steps {
+        padding: 0.875rem 1rem;
+    }
+
+    .step-circle {
+        width: 34px;
+        height: 34px;
+    }
+
+    .step-circle svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .checkout-step span {
+        font-size: 0.625rem;
+    }
+
+    /* Card */
+    .checkout-card-header {
+        padding: 1rem 1.25rem;
+    }
+
+    .checkout-card-header h2 {
+        font-size: 1rem;
+    }
+
+    /* Amount */
+    .upi-amount-banner {
+        margin: 1.25rem 1.25rem 0;
+        padding: 1rem 1.25rem;
+    }
+
+    .upi-amount-value {
+        font-size: 1.625rem;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        margin: 1.25rem 1.25rem 0;
+        width: calc(100% - 2.5rem);
+        font-size: 0.9375rem;
+        padding: 0.875rem 1.25rem;
+    }
+
+    .btn-ghost {
+        margin: 0.75rem 1.25rem 0;
+        width: calc(100% - 2.5rem);
+        font-size: 0.875rem;
+    }
+
+    /* Error */
+    .checkout-error {
+        margin: 1.25rem 1.25rem 0;
+        padding: 0.875rem;
+        font-size: 0.8125rem;
+    }
+
+    /* UPI id */
+    .upi-id-box {
+        flex-wrap: wrap;
+    }
+
+    /* Course rows */
+    .checkout-course-row {
+        gap: 0.625rem;
+        padding: 0.625rem;
+    }
+
+    .checkout-course-thumb {
+        width: 52px;
+        height: 38px;
+    }
+
+    .checkout-course-title {
+        font-size: 0.8rem;
+    }
+
+    .checkout-course-price {
+        font-size: 0.875rem;
+    }
+
+    /* Summary */
+    .summary-total-amount {
+        font-size: 1.375rem;
+    }
+
+    .cart-summary-card {
+        padding: 1.125rem;
+    }
+
+    /* Success */
+    .success-title { font-size: 1.5rem; }
+    .success-subtitle { font-size: 0.875rem; }
+
+    .success-detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        padding: 0.875rem 1.125rem;
+    }
+
+    .detail-value {
+        text-align: left;
+        font-size: 0.8375rem;
+    }
+
+    .success-course-item {
+        padding: 0.875rem 1.125rem;
+    }
+
+    /* Trust badges */
+    .trust-badges {
+        padding: 1rem;
+    }
+
+    .trust-badges li {
+        font-size: 0.78125rem;
+    }
+
+    /* Toast & back to top */
+    .toast        { bottom: 1.25rem; }
+    .back-to-top  { bottom: 1.25rem; right: 1.25rem; }
+}
+
+/* ================================================================
+   32. RESPONSIVE — 360px
+================================================================ */
+@media (max-width: 360px) {
+    .page-content {
+        padding: 1.25rem 0.875rem 2rem;
+    }
+
+    .page-header {
+        padding: 1.5rem 1rem 2rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+        gap: 0.4rem;
+    }
+
+    .page-title svg { width: 18px; height: 18px; }
+
+    .page-subtitle { font-size: 0.8125rem; }
+
+    .checkout-steps {
+        padding: 0.75rem 0.875rem;
+        gap: 0;
+    }
+
+    .step-circle { width: 30px; height: 30px; }
+    .step-circle svg { width: 12px; height: 12px; }
+    .checkout-step span { font-size: 0.5625rem; }
+
+    .upi-amount-value { font-size: 1.5rem; }
+
+    .btn-primary,
+    .btn-ghost {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        width: calc(100% - 2rem);
+    }
+
+    .checkout-card-header {
+        padding: 0.875rem 1rem;
+    }
+
+    .checkout-card-header h2 { font-size: 0.9375rem; }
+
+    .upi-amount-banner {
+        margin: 1rem 1rem 0;
+        padding: 0.875rem 1rem;
+    }
+
+    .checkout-error { margin: 1rem 1rem 0; }
+
+    .cart-summary-card { padding: 1rem; }
+    .summary-title { font-size: 0.9375rem; }
+    .summary-total-amount { font-size: 1.25rem; }
+
+    .success-title { font-size: 1.375rem; }
+    .success-icon svg { width: 70px; height: 70px; }
+}

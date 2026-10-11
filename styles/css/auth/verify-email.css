@@ -1,0 +1,605 @@
+/* ============================================================
+   VERIFY EMAIL PAGE — Edulari
+   Design system: matches homepage (home.css) navy/purple/emerald
+   Font: Plus Jakarta Sans (headings) + Inter (body) via Google Fonts
+   ============================================================ */
+
+/* ── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ================================================================
+   DESIGN TOKENS — identical to home.css + student pages
+================================================================ */
+:root {
+    /* Brand palette */
+    --primary:           #6c63ff;
+    --primary-dark:      #5449e6;
+    --primary-light:     #ede9fe;
+    --primary-glow:      rgba(108, 99, 255, 0.35);
+    --secondary:         #10b981;
+    --secondary-light:   #d1fae5;
+    --accent-orange:     #f59e0b;
+    --accent-orange-lt:  #fef3c7;
+    --accent-red:        #ef4444;
+    --accent-red-lt:     #fef2f2;
+    --accent-pink:       #ec4899;
+    --accent-purple:     #8b5cf6;
+    --accent-purple-lt:  #ede9fe;
+
+    /* Surfaces */
+    --bg:                #f5f6fa;
+    --surface:           #ffffff;
+    --surface-2:         #f9fafb;
+
+    /* Text */
+    --text-primary:      #111827;
+    --text-secondary:    #6b7280;
+    --text-muted:        #9ca3af;
+    --text-inverse:      #ffffff;
+
+    /* Borders */
+    --border:            #e5e7eb;
+    --border-hover:      #d1d5db;
+
+    /* Status colours */
+    --error:             #ef4444;
+    --error-bg:          #fef2f2;
+    --error-border:      #fecaca;
+    --error-text:        #dc2626;
+    --warning-bg:        #fffbeb;
+    --warning-border:    #fde68a;
+    --warning-text:      #c2410c;
+    --success:           #10b981;
+    --success-bg:        #f0fdf4;
+    --success-border:    #a7f3d0;
+    --success-text:      #065f46;
+    --success-ring:      #6ee7b7;
+
+    /* Shadows */
+    --shadow-sm:         0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+    --shadow-card:       0 2px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    --shadow-card-lg:    0 8px 40px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.05);
+    --shadow-primary:    0 8px 24px rgba(108, 99, 255, 0.28);
+    --shadow-success:    0 8px 24px rgba(16, 185, 129, 0.28);
+
+    /* Radius */
+    --radius-sm:         6px;
+    --radius-md:         10px;
+    --radius-lg:         16px;
+    --radius-xl:         24px;
+    --radius-full:       9999px;
+
+    /* Transitions */
+    --transition:        0.2s ease;
+    --transition-slow:   0.35s ease;
+    --transition-bounce: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ================================================================
+   BASE
+================================================================ */
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+body {
+
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition);
+}
+
+/* ================================================================
+   PAGE LAYOUT
+================================================================ */
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 12px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top-right purple glow blob */
+.page-wrapper::before {
+    content: '';
+    position: fixed;
+    top: -180px;
+    right: -180px;
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(108, 99, 255, 0.09) 0%, transparent 65%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(20px);
+}
+
+/* Bottom-left emerald blob */
+.page-wrapper::after {
+    content: '';
+    position: fixed;
+    bottom: -140px;
+    left: -140px;
+    width: 460px;
+    height: 460px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 65%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(20px);
+}
+
+/* ================================================================
+   SITE LOGO
+================================================================ */
+.site-logo {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    transition: opacity var(--transition);
+}
+
+.site-logo:hover {
+    opacity: 0.82;
+}
+
+.site-logo img {
+    height: 44px;
+    width: auto;
+    display: block;
+}
+
+/* ================================================================
+   CARD — centred text layout
+================================================================ */
+.card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 52px 44px 44px;
+    width: 100%;
+    max-width: 468px;
+    box-shadow: var(--shadow-card-lg);
+    border: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    animation: cardIn 0.4s ease both;
+}
+
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.99); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* Top gradient accent line — colour adapts per state via JS or separate classes */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--accent-purple), transparent);
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    opacity: 0.5;
+}
+
+/* When in success state, accent line turns emerald */
+.card.is-success::before {
+    background: linear-gradient(90deg, transparent, var(--secondary), #34d399, transparent);
+    opacity: 0.7;
+}
+
+/* When in error/expired state, accent line turns red/orange */
+.card.is-error::before {
+    background: linear-gradient(90deg, transparent, var(--error), var(--accent-orange), transparent);
+    opacity: 0.5;
+}
+
+.card.is-expired::before {
+    background: linear-gradient(90deg, transparent, var(--accent-orange), #fbbf24, transparent);
+    opacity: 0.55;
+}
+
+/* ── Card headings ────────────────────────────────────────── */
+.card h1 {
+
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+/* Status-specific heading colours */
+.card h1.success-title  { color: var(--success); }
+.card h1.expired-title  { color: var(--warning-text); }
+.card h1.invalid-title  { color: var(--error-text); }
+
+/* ── Card description text ────────────────────────────────── */
+.card-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.75;
+    margin-bottom: 32px;
+    font-weight: 400;
+}
+
+.card-desc a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition);
+}
+
+.card-desc a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* ── Card divider ─────────────────────────────────────────── */
+.card-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 22px 0;
+    border: none;
+}
+
+/* ── Card footer note ─────────────────────────────────────── */
+.card-note {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.card-note a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition);
+}
+
+.card-note a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* ================================================================
+   STATUS ICONS
+================================================================ */
+.status-icon {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    font-size: 38px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* ── Success icon — emerald gradient ring animation ───────── */
+.status-icon.success {
+    background: linear-gradient(135deg, var(--success-bg) 0%, #a7f3d0 100%);
+    border: 2px solid var(--success-border);
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.3);
+}
+
+/* Pulsing outer ring — emerald glow matching homepage secondary */
+.status-icon.success::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid var(--success-ring);
+    animation: ringPulse 2.2s ease infinite;
+    opacity: 0;
+}
+
+/* Second, slower ring for layered depth */
+.status-icon.success::after {
+    content: '';
+    position: absolute;
+    inset: -18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(16, 185, 129, 0.2);
+    animation: ringPulse 2.2s ease 0.5s infinite;
+    opacity: 0;
+}
+
+@keyframes ringPulse {
+    0%   { transform: scale(1);    opacity: 0.75; }
+    60%  { transform: scale(1.12); opacity: 0.2; }
+    100% { transform: scale(1);    opacity: 0.75; }
+}
+
+/* ── Expired icon — amber/orange gradient ─────────────────── */
+.status-icon.expired {
+    background: linear-gradient(135deg, var(--warning-bg) 0%, #fed7aa 100%);
+    border: 2px solid var(--warning-border);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+/* ── Invalid icon — red gradient ─────────────────────────── */
+.status-icon.invalid {
+    background: linear-gradient(135deg, var(--error-bg) 0%, #fecaca 100%);
+    border: 2px solid var(--error-border);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+/* Shared pop-in animation */
+@keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ================================================================
+   BUTTONS
+================================================================ */
+
+/* Primary — gradient, matching homepage btn--primary */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 32px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition:
+        background var(--transition),
+        transform var(--transition-bounce),
+        box-shadow var(--transition);
+    letter-spacing: 0.01em;
+    text-align: center;
+    box-shadow: 0 4px 16px var(--primary-glow);
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.14);
+    transition: opacity var(--transition);
+}
+
+.btn-primary:hover::after {
+    opacity: 1;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #7c3aed 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(108, 99, 255, 0.42);
+    color: var(--text-inverse);
+    text-decoration: none;
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.btn-primary:disabled {
+    background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+/* Success button — emerald gradient for the "Complete Profile" CTA */
+.btn-success {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 32px;
+    background: linear-gradient(135deg, var(--secondary) 0%, #06d6a0 100%);
+    color: var(--text-inverse);
+
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition:
+        background var(--transition),
+        transform var(--transition-bounce),
+        box-shadow var(--transition);
+    letter-spacing: 0.01em;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.30);
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+.btn-success::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.14);
+    transition: opacity var(--transition);
+}
+
+.btn-success:hover::after {
+    opacity: 1;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-success);
+    color: var(--text-inverse);
+    text-decoration: none;
+}
+
+.btn-success:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+/* Outline variant */
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 32px;
+    background: transparent;
+    color: var(--primary);
+
+    font-size: 14px;
+    font-weight: 600;
+    border: 1.5px solid var(--primary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition:
+        background var(--transition),
+        color var(--transition),
+        border-color var(--transition),
+        transform var(--transition-bounce);
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.btn-outline:hover {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.btn-outline:active {
+    transform: translateY(0);
+}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+@media (max-width: 520px) {
+    .card {
+        padding: 40px 28px 36px;
+        border-radius: var(--radius-md);
+    }
+
+    .card h1 {
+        font-size: 22px;
+    }
+
+    .card-desc {
+        font-size: 13px;
+        margin-bottom: 26px;
+    }
+
+    .status-icon {
+        width: 72px;
+        height: 72px;
+        font-size: 32px;
+        margin-bottom: 22px;
+    }
+
+    .site-logo {
+        margin-bottom: 10px;
+    }
+
+    .site-logo img {
+        height: 36px;
+    }
+
+    .btn-primary,
+    .btn-success,
+    .btn-outline {
+        font-size: 14px;
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 400px) {
+    .page-wrapper {
+        padding: 12px 16px;
+    }
+
+    .card {
+        padding: 32px 20px 28px;
+    }
+
+    .card h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .status-icon {
+        width: 64px;
+        height: 64px;
+        font-size: 28px;
+        margin-bottom: 18px;
+    }
+}
+
+@media (max-width: 360px) {
+    .card {
+        padding: 26px 16px 22px;
+    }
+
+    .card h1 {
+        font-size: 18px;
+    }
+
+    .card-note {
+        font-size: 12px;
+    }
+}

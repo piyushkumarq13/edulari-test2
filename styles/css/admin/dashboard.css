@@ -1,0 +1,739 @@
+/* ============================================================
+   Admin Dashboard CSS
+   File: /public/assets/css/admin/dashboard.css
+
+   SCOPING:
+   All dashboard-specific classes use the "addash-" prefix so
+   they never conflict with:
+     - Navbar CSS          (ad-)
+     - Instructor CSS      (in- / indash-)
+     - Student CSS         (sn-)
+
+   DEPENDENCIES:
+   - navbar.css must be loaded before this file.
+     It provides the --ad- CSS variables and .ad-page-wrap.
+============================================================ */
+
+/* ================================================================
+   RESET & BASE
+================================================================ */
+:root {
+    --ad-nav-height: 64px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    background: #f1f5f9;
+    color: #1e1e2e;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+/* ================================================================
+   PAGE INNER CONTAINER
+================================================================ */
+.addash-page-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3.5rem;
+}
+
+/* ================================================================
+   PAGE HEADER
+================================================================ */
+.addash-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.addash-page-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1e1e2e;
+    line-height: 1.2;
+    margin-bottom: 0.3rem;
+}
+
+.addash-page-subtitle {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.addash-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* ================================================================
+   BUTTONS
+================================================================ */
+.addash-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+    font-family: inherit;
+    line-height: 1;
+}
+
+.addash-btn--primary {
+    background: #e84545;
+    color: #ffffff;
+    border-color: #e84545;
+}
+
+.addash-btn--primary:hover {
+    background: #c73232;
+    border-color: #c73232;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.addash-btn--secondary {
+    background: #ffffff;
+    color: #374151;
+    border-color: #d1d5db;
+}
+
+.addash-btn--secondary:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    text-decoration: none;
+    color: #374151;
+}
+
+.addash-btn--danger-outline {
+    background: transparent;
+    color: #dc2626;
+    border-color: #dc2626;
+}
+
+.addash-btn--danger-outline:hover {
+    background: #fef2f2;
+}
+
+/* ================================================================
+   BADGE COUNT (on buttons)
+================================================================ */
+.addash-badge-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.18);
+    color: inherit;
+    line-height: 1;
+}
+
+.addash-badge-count--light {
+    background: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+}
+
+/* ================================================================
+   STATS GRID
+================================================================ */
+.addash-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.addash-stat-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e8edf3;
+    padding: 1.4rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.addash-stat-card:hover {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.09);
+    transform: translateY(-2px);
+}
+
+.addash-stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.addash-stat-icon--blue   { background: #eff6ff; color: #3b82f6; }
+.addash-stat-icon--violet { background: #f5f3ff; color: #7c3aed; }
+.addash-stat-icon--teal   { background: #f0fdfa; color: #0d9488; }
+.addash-stat-icon--green  { background: #f0fdf4; color: #16a34a; }
+
+.addash-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.addash-stat-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    line-height: 1;
+}
+
+.addash-stat-value {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #1e1e2e;
+    line-height: 1.15;
+}
+
+.addash-stat-sub {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    line-height: 1.4;
+}
+
+.addash-stat-warning {
+    color: #d97706;
+    font-weight: 600;
+}
+
+/* ================================================================
+   SECTION SHELL
+================================================================ */
+.addash-section {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e8edf3;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.addash-section--maintenance {
+    border-color: #fecaca;
+    background: #fffbfb;
+}
+
+.addash-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.addash-section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.addash-section-header .addash-section-title {
+    margin-bottom: 0;
+}
+
+.addash-section-title--danger {
+    color: #dc2626;
+}
+
+.addash-link-more {
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: #e84545;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+}
+
+.addash-link-more:hover {
+    color: #c73232;
+    text-decoration: underline;
+}
+
+/* ================================================================
+   QUICK ACTIONS GRID
+================================================================ */
+.addash-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.addash-action-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.2rem;
+    border-radius: 10px;
+    border: 1.5px solid #e8edf3;
+    text-decoration: none;
+    color: inherit;
+    background: #fafbfc;
+    transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.addash-action-card:hover {
+    border-color: #e84545;
+    background: #fff5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(232, 69, 69, 0.1);
+    text-decoration: none;
+    color: inherit;
+}
+
+.addash-action-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.addash-action-icon--blue   { background: #eff6ff; color: #3b82f6; }
+.addash-action-icon--violet { background: #f5f3ff; color: #7c3aed; }
+.addash-action-icon--orange { background: #fff7ed; color: #ea580c; }
+.addash-action-icon--teal   { background: #f0fdfa; color: #0d9488; }
+.addash-action-icon--green  { background: #f0fdf4; color: #16a34a; }
+.addash-action-icon--yellow { background: #fefce8; color: #ca8a04; }
+
+.addash-action-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.addash-action-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    line-height: 1.3;
+}
+
+.addash-action-desc {
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* ================================================================
+   TWO-COLUMN LAYOUT
+================================================================ */
+.addash-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 0;
+}
+
+.addash-two-col .addash-section {
+    margin-bottom: 0;
+}
+
+/* ================================================================
+   TABLES
+================================================================ */
+.addash-table-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.addash-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.addash-table thead tr {
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.addash-table th {
+    text-align: left;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+.addash-table td {
+    padding: 0.8rem 0.85rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+    color: #374151;
+}
+
+.addash-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.addash-table tbody tr:hover td {
+    background: #fafbfc;
+}
+
+/* Specific td variants */
+.addash-td-user {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.addash-user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #3b82f6;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.addash-user-avatar--teal { background: #0d9488; }
+
+.addash-user-name {
+    display: block;
+    font-weight: 600;
+    color: #1e1e2e;
+    font-size: 0.875rem;
+    line-height: 1.3;
+}
+
+.addash-user-email {
+    display: block;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.3;
+}
+
+.addash-td-date {
+    font-size: 0.8rem;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+.addash-td-bold {
+    font-weight: 600;
+    color: #1e1e2e;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.addash-td-course {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #374151;
+}
+
+.addash-td-amount {
+    font-weight: 700;
+    color: #16a34a;
+    white-space: nowrap;
+}
+
+.addash-td-rating {
+    white-space: nowrap;
+}
+
+.addash-td-empty {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    padding: 1.5rem !important;
+}
+
+.addash-td-empty-cell {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+}
+
+/* ================================================================
+   STATUS BADGES
+================================================================ */
+.addash-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.addash-badge--success { background: #dcfce7; color: #15803d; }
+.addash-badge--warning { background: #fef9c3; color: #854d0e; }
+.addash-badge--danger  { background: #fee2e2; color: #991b1b; }
+.addash-badge--info    { background: #dbeafe; color: #1d4ed8; }
+
+/* Enrollment count pill */
+.addash-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #475569;
+}
+
+/* Star rating */
+.addash-stars {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #d97706;
+}
+
+/* ================================================================
+   ALERTS (maintenance messages)
+================================================================ */
+.addash-alert {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.addash-alert--success {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.addash-alert--danger {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* ================================================================
+   MAINTENANCE SECTION
+================================================================ */
+.addash-maintenance-note {
+    font-size: 0.85rem;
+    color: #b91c1c;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.addash-maintenance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.addash-maintenance-card {
+    background: #ffffff;
+    border: 1.5px solid #fecaca;
+    border-radius: 10px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.addash-maintenance-card-header {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+}
+
+.addash-maintenance-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #fee2e2;
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.addash-maintenance-title {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+}
+
+.addash-maintenance-desc {
+    display: block;
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* ================================================================
+   RESPONSIVE BREAKPOINTS
+================================================================ */
+
+/* Large tablet / small desktop */
+@media (max-width: 1200px) {
+    .addash-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .addash-actions-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .addash-maintenance-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .addash-page-inner {
+        padding: 1.5rem 1.25rem 3rem;
+    }
+
+    .addash-page-title {
+        font-size: 1.5rem;
+    }
+
+    .addash-two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .addash-actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .addash-maintenance-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .addash-page-inner {
+        padding: 1.25rem 1rem 2.5rem;
+    }
+
+    .addash-page-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .addash-header-actions {
+        justify-content: flex-start;
+    }
+
+    .addash-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.875rem;
+    }
+
+    .addash-stat-card {
+        padding: 1.1rem 1rem;
+        gap: 0.75rem;
+    }
+
+    .addash-stat-value {
+        font-size: 1.5rem;
+    }
+
+    .addash-stat-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .addash-actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .addash-action-card {
+        padding: 0.95rem 1rem;
+    }
+
+    .addash-table th,
+    .addash-table td {
+        padding: 0.65rem 0.65rem;
+    }
+
+    .addash-maintenance-card {
+        padding: 1rem;
+    }
+}
+
+/* Extra small */
+@media (max-width: 480px) {
+    .addash-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .addash-page-title {
+        font-size: 1.3rem;
+    }
+}

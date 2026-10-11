@@ -1,0 +1,1105 @@
+/* ============================================================
+   Edulari – Instructor Register  (instructor-register.css)
+   File : /public/assets/css/auth/instructor-register.css
+
+   KEY LAYOUT CHANGE (v2):
+   • html, body  → height:100%; overflow:hidden on desktop
+   • .instructor-reg-wrapper → height:100vh; overflow:hidden
+   • .reg-panel  → position:sticky; top:0; height:100vh;
+                   overflow-y:auto; flex-shrink:0
+   • .reg-form-side → height:100vh; overflow-y:auto; flex:1
+   This makes the left panel stay fixed while only the right
+   form area scrolls – on ALL long steps (step-6, step-5 etc.)
+
+   On mobile (≤959px) the panel is hidden and normal page
+   flow is restored (overflow:auto on body, height:auto).
+
+   Fonts      : Plus Jakarta Sans (headings) + Inter (body)
+   Breakpoints: 1200 | 1024 | 960 | 768 | 640 | 520 | 480 | 360
+   ============================================================ */
+
+/* ================================================================
+   1. CSS CUSTOM PROPERTIES
+================================================================ */
+:root {
+    /* Brand */
+    --primary:           #6c63ff;
+    --primary-dark:      #5449e6;
+    --primary-light:     #ede9fe;
+    --primary-glow:      rgba(108,99,255,0.35);
+    --secondary:         #10b981;
+    --secondary-light:   #d1fae5;
+    --accent-orange:     #f59e0b;
+    --accent-orange-lt:  #fef3c7;
+    --accent-red:        #ef4444;
+    --accent-pink:       #ec4899;
+    --accent-purple:     #8b5cf6;
+    --accent-cyan:       #06b6d4;
+
+    /* Surfaces */
+    --bg:                #f5f6fa;
+    --surface:           #ffffff;
+    --surface-2:         #f9fafb;
+    --surface-3:         #f0f1f8;
+
+    /* Panel */
+    --panel-bg:          #0d1b2e;
+    --panel-bg-2:        #111d35;
+    --panel-bg-3:        #1a2744;
+
+    /* Text */
+    --text-primary:      #111827;
+    --text-secondary:    #6b7280;
+    --text-muted:        #9ca3af;
+    --text-inverse:      #ffffff;
+
+    /* Borders */
+    --border:            #e5e7eb;
+    --border-hover:      #d1d5db;
+
+    /* Semantic colours */
+    --error:             #ef4444;
+    --error-bg:          #fef2f2;
+    --error-border:      #fecaca;
+    --info-bg:           #eff6ff;
+    --info-border:       #bfdbfe;
+    --info-text:         #1d4ed8;
+    --success:           #10b981;
+    --success-bg:        #d1fae5;
+    --success-border:    #6ee7b7;
+    --warning-bg:        #fffbeb;
+    --warning-border:    #fde68a;
+
+    /* Shadows */
+    --shadow-xs:         0 1px 2px rgba(0,0,0,0.05);
+    --shadow-sm:         0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.08),0 2px 4px -1px rgba(0,0,0,0.04);
+    --shadow-lg:         0 10px 25px -5px rgba(0,0,0,0.10),0 4px 10px -5px rgba(0,0,0,0.06);
+    --shadow-card:       0 2px 12px rgba(0,0,0,0.06),0 1px 3px rgba(0,0,0,0.04);
+    --shadow-primary:    0 8px 24px rgba(108,99,255,0.28);
+
+    /* Radii */
+    --radius-sm:         6px;
+    --radius-md:         10px;
+    --radius-lg:         16px;
+    --radius-xl:         24px;
+    --radius-2xl:        32px;
+    --radius-full:       9999px;
+
+    /* Transitions */
+    --transition:        0.2s ease;
+    --transition-slow:   0.35s ease;
+    --transition-bounce: 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ================================================================
+   2. RESET & BASE
+================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+a   { text-decoration: none; color: inherit; transition: color var(--transition); }
+img { display: block; max-width: 100%; height: auto; }
+ul, ol { list-style: none; }
+button { font-family: inherit; cursor: pointer; }
+input, select, textarea { font-family: inherit; }
+
+/* ================================================================
+   3. FIXED-PANEL LAYOUT  (desktop ≥ 960 px)
+   The wrapper fills exactly the viewport. The left panel is
+   sticky/fixed-height. The right side scrolls independently.
+================================================================ */
+.instructor-reg-wrapper {
+    display: flex;
+    /* height set in the ≥960 media query below */
+}
+
+/* ================================================================
+   4. LEFT PANEL
+================================================================ */
+.reg-panel {
+    display: none;
+    width: 380px;
+    flex-shrink: 0;
+    background: linear-gradient(160deg,
+        var(--panel-bg)   0%,
+        var(--panel-bg-3) 45%,
+        #12112e           80%,
+        #0a0d1a           100%);
+    position: relative;
+    overflow: hidden;      /* the panel itself never scrolls anymore */
+}
+
+/* Subtle grid overlay */
+.reg-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(108,99,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,99,255,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Ambient blobs */
+.reg-panel__blob-1 {
+    position: absolute; top: -100px; right: -100px;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(108,99,255,0.22) 0%, transparent 68%);
+    border-radius: 50%; filter: blur(60px); pointer-events: none; z-index: 0;
+}
+.reg-panel__blob-2 {
+    position: absolute; bottom: -80px; left: -80px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 68%);
+    border-radius: 50%; filter: blur(50px); pointer-events: none; z-index: 0;
+}
+
+/* Lift all direct children above the decorative pseudo/blobs */
+.reg-panel > * { position: relative; z-index: 1; }
+
+/* ── Fixed header — logo, locked to top-left, never moves ──────── */
+.reg-panel__header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    background: rgba(26, 39, 68, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 18px 40px 10px;
+    display: flex;
+    justify-content: center;
+}
+
+/* ── Scrollable body — the ONLY part that scrolls now ───────────── */
+.reg-panel__body {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 102px 40px 44px;
+}
+
+/* ── Panel Logo ─────────────────────────────────────────────── */
+.panel-logo {
+    display: flex; 
+    align-items: center;
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+
+.panel-logo img {
+    height: 50px;
+    width: auto;
+    display: block;
+}
+
+/* ── Panel Step Content (step-aware) ────────────────────────── */
+/* FIX: removed flex:1 and min-height:0 — these caused the content block to
+   expand and push perks off-screen. Content now sits naturally after the logo. */
+.panel-step-content { 
+    display: none; 
+    flex-direction: column; 
+    gap: 14px; 
+    flex-shrink: 0; 
+}
+.panel-step-content.active { 
+    display: flex; 
+}
+
+.panel-step-heading-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.panel-step-visual {
+    width: 46px; 
+    height: 46px; 
+    border-radius: var(--radius-lg);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 22px; 
+    line-height: 1;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    flex-shrink: 0;
+}
+
+.panel-step-headline {
+    font-size: clamp(16px, 1.6vw, 20px); 
+    font-weight: 800;
+    color: var(--text-inverse); 
+    line-height: 1.22; 
+    letter-spacing: -0.3px;
+}
+.panel-step-headline span {
+    background: linear-gradient(135deg, var(--primary) 0%, #a78bfa 50%, var(--accent-pink) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.panel-step-desc {
+    font-size: 13px; color: rgba(255,255,255,0.58); line-height: 1.7;
+}
+
+.panel-step-tips { display: flex; flex-direction: column; gap: 8px; }
+.panel-step-tip {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 13px; border-radius: var(--radius-md);
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07);
+}
+.panel-step-tip-icon { font-size: 14px; flex-shrink: 0; margin-top: 2px; line-height: 1; }
+.panel-step-tip-text { font-size: 12.5px; color: rgba(255,255,255,0.65); line-height: 1.55; }
+
+/* ── Trust Badges (steps 5-6) ───────────────────────────────── */
+.panel-trust-badges { display: flex; flex-direction: column; gap: 8px; }
+.panel-trust-badge {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 13px; border-radius: var(--radius-md);
+    background: rgba(16,185,129,0.10); border: 1px solid rgba(16,185,129,0.18);
+}
+.panel-trust-badge-icon { font-size: 15px; flex-shrink: 0; line-height: 1; }
+.panel-trust-badge-text { font-size: 12.5px; color: rgba(255,255,255,0.75); font-weight: 500; line-height: 1.4; }
+
+/* ── Panel Perks (pinned to bottom) ─────────────────────────── */
+/* FIX: margin-top:auto pushes perks to the bottom of the panel correctly
+   now that .reg-panel uses justify-content:flex-start */
+.panel-perks {
+    display: flex; flex-direction: column; gap: 8px;
+    flex-shrink: 0;
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+.perk-item {
+    font-size: 12.5px; color: rgba(255,255,255,0.52);
+    display: flex; align-items: center; gap: 8px; line-height: 1.4;
+}
+
+/* ── Panel custom scrollbar (thin, barely visible) ──────────── */
+.reg-panel__body::-webkit-scrollbar       { width: 4px; }
+.reg-panel__body::-webkit-scrollbar-track { background: transparent; }
+.reg-panel__body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+
+/* ================================================================
+   5. RIGHT FORM SIDE
+================================================================ */
+.reg-form-side {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background: var(--surface);
+    padding: 44px 32px;
+    /* height + overflow set in ≥960 media query */
+}
+
+.reg-form-container {
+    width: 100%;
+    max-width: 560px;
+    padding-bottom: 56px;
+    animation: stepSlideIn 0.30s ease both;
+}
+
+/* ── Mobile logo (hidden on desktop) ───────────────────────── */
+.reg-logo-mobile {
+    display: flex; 
+    align-items: center;
+    justify-content: center;  
+    margin-bottom: 20px;
+}
+
+.reg-logo-mobile img {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+/* ================================================================
+   6. STEP PROGRESS BAR
+================================================================ */
+.step-progress {
+    position: relative; display: flex;
+    justify-content: space-between; align-items: flex-start;
+    margin-bottom: 36px; padding-bottom: 4px;
+}
+
+.progress-step {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 6px; flex: 1; position: relative; z-index: 1;
+}
+
+.progress-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--text-muted);
+    transition: all var(--transition);
+
+}
+.progress-step.active .progress-dot {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    box-shadow: 0 0 0 4px var(--primary-light);
+}
+.progress-step.done .progress-dot {
+    border-color: var(--success); background: var(--success);
+    color: var(--text-inverse); font-size: 13px;
+}
+
+.progress-label {
+    font-size: 10px; font-weight: 600; color: var(--text-muted);
+    text-align: center; line-height: 1.3; max-width: 64px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+}
+.progress-step.active .progress-label { color: var(--primary); }
+.progress-step.done   .progress-label { color: var(--success); }
+
+.progress-bar {
+    position: absolute; top: 15px; left: 16px; right: 16px;
+    height: 2px; background: var(--border); z-index: 0;
+    border-radius: var(--radius-full);
+}
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success) 0%, var(--primary) 100%);
+    transition: width 0.45s ease; border-radius: var(--radius-full);
+}
+
+/* ── Auto-save indicator (floating toast, out of page flow) ──── */
+.autosave-indicator {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--success);
+    opacity: 0; transition: opacity 0.4s ease;
+    justify-content: flex-end;
+    position: fixed; top: 70px; right: 32px; z-index: 20;
+    background: var(--surface); padding: 4px 10px;
+    border-radius: var(--radius-full); box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    pointer-events: none;
+}
+.autosave-indicator.show { opacity: 1; }
+.autosave-indicator svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* ================================================================
+   7. ALERTS
+================================================================ */
+.alert {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px 16px; border-radius: var(--radius-md);
+    font-size: 14px; line-height: 1.55;
+    margin-bottom: 20px; border: 1px solid transparent;
+}
+.alert-error   { background: var(--error-bg);   color: #b91c1c; border-color: var(--error-border); }
+.alert-info    { background: var(--info-bg);    color: var(--info-text); border-color: var(--info-border); }
+.alert-success { background: var(--success-bg); color: #065f46; border-color: var(--success-border); }
+.alert-warning { background: var(--warning-bg); color: #92400e; border-color: var(--warning-border); }
+.alert-icon    { font-size: 15px; flex-shrink: 0; margin-top: 1px; line-height: 1; }
+.alert a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.alert a:hover { opacity: 0.8; }
+
+/* ================================================================
+   8. FORM HEADER
+================================================================ */
+.form-header { margin-bottom: 28px; }
+.form-header h1 {
+
+    font-size: 24px; font-weight: 800; color: var(--text-primary);
+    letter-spacing: -0.4px; line-height: 1.25; margin-bottom: 6px;
+}
+.form-header p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
+
+.step-email-notice {
+    display: flex; align-items: flex-start; gap: 8px;
+    background: var(--info-bg); border: 1px solid var(--info-border);
+    border-radius: var(--radius-md); padding: 10px 14px;
+    font-size: 13px; color: var(--info-text); line-height: 1.5; margin-top: 12px;
+}
+
+/* Section title (divider style) */
+.form-section-title {
+
+    font-size: 10.5px; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    border-bottom: 1.5px solid var(--border);
+    padding-bottom: 8px; margin-bottom: 18px; margin-top: 24px;
+}
+.form-section-title:first-of-type { margin-top: 0; }
+
+/* Section card */
+.form-section-card {
+    background: var(--bg); border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 20px 20px 6px;
+    margin-bottom: 20px; transition: border-color var(--transition);
+}
+.form-section-card:focus-within { border-color: rgba(108,99,255,0.35); }
+
+.form-section-card-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+}
+.form-section-card-icon {
+    width: 34px; height: 34px; border-radius: var(--radius-md);
+    background: var(--primary-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+}
+.form-section-card-title {
+
+    font-size: 13px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.01em;
+}
+
+/* ================================================================
+   9. FORM ELEMENTS
+================================================================ */
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+    display: block; font-size: 13px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 7px;
+    letter-spacing: 0.01em; line-height: 1.4;
+}
+.req { color: var(--error); font-weight: 700; margin-left: 2px; }
+
+/* ── Text-like inputs ───────────────────────────────────────── */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="url"],
+.form-group input[type="number"] {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid var(--border); border-radius: var(--radius-md);
+    font-size: 14px; color: var(--text-primary); background: var(--surface);
+    transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    outline: none; -webkit-appearance: none; line-height: 1.5;
+}
+.form-group input[type="text"]::placeholder,
+.form-group input[type="email"]::placeholder,
+.form-group input[type="password"]::placeholder,
+.form-group input[type="url"]::placeholder,
+.form-group input[type="number"]::placeholder { color: var(--text-muted); }
+
+/* ── Select ─────────────────────────────────────────────────── */
+.form-group select {
+    width: 100%; padding: 11px 36px 11px 14px;
+    border: 1.5px solid var(--border); border-radius: var(--radius-md);
+    font-size: 14px; color: var(--text-primary); background-color: var(--surface);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    cursor: pointer; outline: none; line-height: 1.5;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+/* ── Textarea ────────────────────────────────────────────────── */
+.form-group textarea {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid var(--border); border-radius: var(--radius-md);
+    font-size: 14px; color: var(--text-primary); background: var(--surface);
+    resize: vertical; min-height: 82px; line-height: 1.6; outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+.form-group textarea::placeholder { color: var(--text-muted); }
+
+/* ── Focus states ────────────────────────────────────────────── */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    outline: none;
+}
+
+/* ── Disabled states ─────────────────────────────────────────── */
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+    opacity: 0.55; cursor: not-allowed; background: var(--surface-3);
+}
+
+/* ================================================================
+   10. FIELD HINTS, CHAR COUNTERS & PASSWORD STRENGTH
+================================================================ */
+.field-hint { font-size: 12px; color: var(--text-muted); margin-top: 5px; line-height: 1.45; }
+
+.char-counter                { transition: color var(--transition); }
+.char-counter.near-limit     { color: var(--accent-orange); }
+.char-counter.at-limit       { color: var(--error); }
+.char-counter.met            { color: var(--success); }
+
+.password-strength-wrap      { margin-top: 8px; }
+.password-strength-bar {
+    height: 4px; border-radius: var(--radius-full);
+    background: var(--border); overflow: hidden; margin-bottom: 5px;
+}
+.password-strength-fill {
+    height: 100%; border-radius: var(--radius-full); width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+.password-strength-fill.weak   { width: 33%; background: var(--error); }
+.password-strength-fill.fair   { width: 66%; background: var(--accent-orange); }
+.password-strength-fill.strong { width: 100%; background: var(--success); }
+.password-strength-label {
+    font-size: 11.5px; font-weight: 600; color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+.password-strength-label.weak   { color: var(--error); }
+.password-strength-label.fair   { color: var(--accent-orange); }
+.password-strength-label.strong { color: var(--success); }
+
+/* ================================================================
+   11. TWO-COLUMN ROW
+================================================================ */
+.form-row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ================================================================
+   12. PASSWORD TOGGLE WRAPPER
+================================================================ */
+.input-password-wrap { position: relative; display: flex; align-items: center; }
+.input-password-wrap input[type="password"],
+.input-password-wrap input[type="text"] { width: 100%; padding-right: 46px !important; }
+.toggle-password {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 44px;
+    background: none; border: none; cursor: pointer; font-size: 16px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); opacity: 0.65;
+    transition: opacity var(--transition), color var(--transition);
+    z-index: 2; flex-shrink: 0;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+.toggle-password:hover { opacity: 1; color: var(--primary); }
+
+/* ================================================================
+   13. CHECKBOXES
+================================================================ */
+.form-check { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 22px; }
+.form-check input[type="checkbox"] {
+    width: 16px; height: 16px; accent-color: var(--primary);
+    cursor: pointer; flex-shrink: 0; margin-top: 3px;
+}
+.form-check label { font-size: 13px; color: var(--text-secondary); cursor: pointer; line-height: 1.55; }
+.form-check label a { color: var(--primary); font-weight: 600; }
+.form-check label a:hover { color: var(--primary-dark); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Checkbox card (used on step 5 agreements) */
+.form-check-block {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px; background: var(--bg);
+    border: 1.5px solid var(--border); border-radius: var(--radius-md);
+    margin-bottom: 10px; cursor: pointer;
+    transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+.form-check-block:hover {
+    border-color: var(--primary); background: var(--primary-light);
+    box-shadow: 0 0 0 2px rgba(108,99,255,0.08);
+}
+.form-check-block:has(input:checked) {
+    border-color: var(--primary); background: var(--primary-light);
+}
+.form-check-block input[type="checkbox"] {
+    width: 17px; height: 17px; accent-color: var(--primary);
+    cursor: pointer; flex-shrink: 0; margin-top: 2px;
+}
+.form-check-block label { font-size: 13px; color: var(--text-secondary); cursor: pointer; line-height: 1.55; }
+.form-check-block label strong { color: var(--text-primary); font-weight: 600; }
+.form-check-block label a { color: var(--primary); font-weight: 600; }
+.form-check-block label a:hover { color: var(--primary-dark); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ================================================================
+   14. BUTTONS
+================================================================ */
+.btn-primary {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+    font-size: 15px; font-weight: 600;
+    border: none; border-radius: var(--radius-full); cursor: pointer;
+    transition: background var(--transition), transform var(--transition-bounce),
+                box-shadow var(--transition), opacity var(--transition);
+    letter-spacing: 0.01em; text-align: center; text-decoration: none; white-space: nowrap;
+    box-shadow: 0 4px 16px var(--primary-glow);
+    position: relative; overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+.btn-primary::after {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    opacity: 0; background: rgba(255,255,255,0.15); transition: opacity var(--transition);
+}
+.btn-primary:hover::after { opacity: 1; }
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #7c3aed 100%);
+    box-shadow: 0 8px 24px rgba(108,99,255,0.45);
+    transform: translateY(-2px); color: var(--text-inverse); text-decoration: none;
+}
+.btn-primary:active:not(:disabled) {
+    transform: translateY(0); box-shadow: 0 4px 12px var(--primary-glow);
+}
+.btn-primary:disabled {
+    background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
+    cursor: not-allowed; transform: none; box-shadow: none; opacity: 0.7;
+}
+.btn-primary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+/* ── Button Loading State ────────────────────────────────────────────────── */
+.btn-primary.is-loading {
+    pointer-events: none;
+    opacity: 0.85;
+    cursor: not-allowed;
+}
+.btn-primary.is-loading .btn-label { visibility: hidden; }
+.btn-primary.is-loading::before {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    border: 2.5px solid rgba(255,255,255,0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: btn-spin 0.65s linear infinite;
+}
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
+}
+
+.btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+    padding: 11px 24px; background: transparent; color: var(--primary);
+    font-size: 14px; font-weight: 600;
+    border: 1.5px solid var(--border); border-radius: var(--radius-full); cursor: pointer;
+    transition: all var(--transition); text-align: center; white-space: nowrap; text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+}
+.btn-secondary:hover {
+    border-color: var(--primary); background: var(--primary-light);
+    color: var(--primary-dark); transform: translateY(-1px); text-decoration: none;
+}
+.btn-secondary:active  { transform: translateY(0); }
+.btn-secondary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+.form-actions { display: flex; gap: 12px; margin-top: 8px; align-items: center; }
+.form-actions .btn-secondary { flex: 0 0 auto; }
+.form-actions .btn-primary   { flex: 1; }
+
+form > .btn-primary,
+.step-form > .btn-primary { width: 100%; justify-content: center; }
+
+/* ================================================================
+   15. FORM FOOTER LINKS
+================================================================ */
+.form-footer-links {
+    text-align: center; margin-top: 24px; font-size: 14px;
+    color: var(--text-secondary); line-height: 1.8;
+}
+.form-footer-links a { color: var(--primary); font-weight: 600; }
+.form-footer-links a:hover { color: var(--primary-dark); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ================================================================
+   16. EMAIL VERIFICATION GATE
+================================================================ */
+.email-verify-gate {
+    text-align: center; padding: 36px 28px;
+    background: var(--bg); border-radius: var(--radius-xl);
+    border: 1.5px solid var(--border); box-shadow: var(--shadow-card);
+}
+.email-verify-gate .verify-icon {
+    font-size: 56px; margin-bottom: 18px; display: block; line-height: 1;
+    animation: iconBounce 2s ease-in-out infinite;
+}
+@keyframes iconBounce {
+    0%, 100% { transform: translateY(0);   }
+    50%       { transform: translateY(-6px); }
+}
+.email-verify-gate .verify-msg  { font-size: 16px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; line-height: 1.6; }
+.email-verify-gate .verify-msg strong { color: var(--primary); font-weight: 700; }
+.email-verify-gate .verify-sub  { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
+.email-verify-gate .verify-resend { font-size: 13px; color: var(--text-muted); margin-top: 16px; line-height: 1.5; }
+.email-verify-gate .verify-resend a { color: var(--primary); font-weight: 600; }
+.email-verify-gate .verify-resend a:hover { color: var(--primary-dark); text-decoration: underline; text-underline-offset: 2px; }
+.email-verify-gate .btn-primary { width: 100%; margin-top: 0; }
+
+/* ================================================================
+   17. TAG INPUT
+================================================================ */
+.tag-input-wrapper {
+    min-height: 44px; padding: 6px 10px;
+    border: 1.5px solid var(--border); border-radius: var(--radius-md);
+    background: var(--surface); cursor: text;
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.tag-input-wrapper:focus-within {
+    border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light);
+}
+.tag-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; background: var(--primary-light);
+    color: var(--primary-dark); border-radius: var(--radius-full);
+    font-size: 12.5px; font-weight: 600; line-height: 1.4;
+    border: 1px solid rgba(108,99,255,0.25); white-space: nowrap;
+    animation: chipPop 0.18s var(--transition-bounce);
+}
+@keyframes chipPop {
+    0%   { transform: scale(0.75); opacity: 0; }
+    100% { transform: scale(1);    opacity: 1; }
+}
+.tag-chip-remove {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 15px; height: 15px; border-radius: 50%;
+    background: rgba(108,99,255,0.20); border: none; cursor: pointer;
+    color: var(--primary); font-size: 10px; font-weight: 700; padding: 0;
+    transition: background var(--transition), color var(--transition);
+    line-height: 1; flex-shrink: 0;
+}
+.tag-chip-remove:hover { background: var(--error); color: #fff; }
+.tag-text-input {
+    border: none; outline: none; background: transparent;
+    font-size: 14px; color: var(--text-primary);
+    flex: 1; min-width: 120px; padding: 2px 0;
+}
+.tag-text-input::placeholder { color: var(--text-muted); }
+
+/* ================================================================
+   18. COLLAPSIBLE SECTION (Step 2 – Social links)
+================================================================ */
+.collapsible-toggle {
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    padding: 10px 0; border: none; background: none;
+    font-size: 13px; font-weight: 600; color: var(--primary);
+    transition: color var(--transition); width: 100%; text-align: left;
+}
+.collapsible-toggle:hover { color: var(--primary-dark); }
+.collapsible-toggle-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%; background: var(--primary-light);
+    font-size: 11px; transition: transform var(--transition); flex-shrink: 0;
+}
+.collapsible-toggle[aria-expanded="true"] .collapsible-toggle-icon { transform: rotate(180deg); }
+.collapsible-body {
+    overflow: hidden; max-height: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease; opacity: 0;
+}
+.collapsible-body.open { max-height: 600px; opacity: 1; }
+
+/* ================================================================
+   19. FILE UPLOAD BOX (Step 6)
+================================================================ */
+.file-upload-box {
+    position: relative; border: 2px dashed rgba(108,99,255,0.35);
+    border-radius: var(--radius-lg); padding: 32px 20px;
+    text-align: center; cursor: pointer; background: var(--bg);
+    transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+.file-upload-box:hover,
+.file-upload-box.drag-over {
+    border-color: var(--primary); background: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(108,99,255,0.10);
+}
+.file-upload-box.file-selected-state {
+    border-color: var(--success); background: var(--success-bg);
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.10); border-style: solid;
+}
+.file-upload-box input[type="file"] {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0; cursor: pointer; z-index: 2;
+}
+.file-upload-prompt {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 7px; pointer-events: none;
+}
+.file-upload-prompt .file-icon     { font-size: 2.4rem; line-height: 1; margin-bottom: 2px; }
+.file-upload-prompt span           { font-size: 0.9375rem; font-weight: 500; color: var(--text-secondary); line-height: 1.5; }
+.file-upload-prompt .file-formats  { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.4; }
+.file-upload-prompt .file-upload-cta { font-size: 0.875rem; font-weight: 600; color: var(--primary); }
+
+.file-selected {
+    margin-top: 10px; font-size: 0.875rem; font-weight: 500;
+    color: var(--success); pointer-events: none;
+    display: none; align-items: center; justify-content: center; gap: 6px;
+}
+.file-preview-wrap  { margin-top: 14px; pointer-events: none; }
+.file-preview-img {
+    max-width: 120px; max-height: 90px; border-radius: var(--radius-md);
+    border: 2px solid var(--success-border); object-fit: cover;
+    margin: 0 auto; box-shadow: var(--shadow-sm); display: block;
+}
+.file-preview-pdf {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; background: var(--surface);
+    border: 1.5px solid var(--success-border); border-radius: var(--radius-md);
+    font-size: 13px; color: #065f46; font-weight: 500;
+}
+.file-preview-pdf .pdf-icon { font-size: 20px; flex-shrink: 0; }
+
+.file-already-saved {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; background: var(--success-bg);
+    border: 1px solid var(--success-border); border-radius: var(--radius-full);
+    font-size: 12.5px; font-weight: 500; color: #065f46; margin-bottom: 10px; line-height: 1.3;
+}
+
+/* ================================================================
+   20. REVIEW SUMMARY (Step 6)
+================================================================ */
+.review-summary {
+    background: var(--bg); border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px;
+}
+.review-summary-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%);
+    border-bottom: 1.5px solid var(--border);
+}
+.review-summary-header h3 {
+
+    font-size: 14px; font-weight: 700; color: var(--text-primary);
+}
+.review-section        { padding: 14px 18px; border-bottom: 1px solid var(--border); }
+.review-section:last-child { border-bottom: none; }
+.review-section-title  {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+}
+.review-row            { display: flex; gap: 10px; margin-bottom: 5px; align-items: flex-start; }
+.review-row-key        { font-size: 12.5px; color: var(--text-muted); min-width: 110px; flex-shrink: 0; }
+.review-row-val        { font-size: 12.5px; color: var(--text-primary); font-weight: 500; word-break: break-word; }
+.review-edit-link      { font-size: 12px; color: var(--primary); font-weight: 600; text-decoration: none; transition: color var(--transition); }
+.review-edit-link:hover { color: var(--primary-dark); text-decoration: underline; }
+
+/* ================================================================
+   21. TRUST BANNER (Step 5)
+================================================================ */
+.trust-banner {
+    display: flex; align-items: center; gap: 14px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border: 1.5px solid var(--success-border); border-radius: var(--radius-lg);
+    padding: 14px 18px; margin-bottom: 24px;
+}
+.trust-banner-icon { font-size: 28px; flex-shrink: 0; line-height: 1; }
+.trust-banner-text h4 {
+
+    font-size: 13.5px; font-weight: 700; color: #065f46; margin-bottom: 3px;
+}
+.trust-banner-text p      { font-size: 12.5px; color: #047857; line-height: 1.5; }
+.trust-badges-row         { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.trust-badge-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; background: #d1fae5;
+    border: 1px solid #6ee7b7; border-radius: var(--radius-full);
+    font-size: 11.5px; font-weight: 600; color: #065f46;
+}
+
+.optional-payout-notice {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px 14px; background: var(--warning-bg);
+    border: 1px solid var(--warning-border); border-radius: var(--radius-md);
+    font-size: 13px; color: #92400e; margin-bottom: 18px; line-height: 1.5;
+}
+.optional-payout-notice strong { font-weight: 600; }
+
+/* ================================================================
+   22. BLOCKED / ERROR CARD
+================================================================ */
+.block-card {
+    background: var(--error-bg); border: 1.5px solid var(--error-border);
+    border-radius: var(--radius-xl); padding: 32px;
+    text-align: center; margin-top: 16px;
+}
+.block-card p         { font-size: 14px; color: #b91c1c; line-height: 1.6; }
+.block-card p strong  { display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #991b1b; }
+.block-card a         { color: #b91c1c; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ================================================================
+   23. PAGE-ENTER ANIMATION
+================================================================ */
+@keyframes stepSlideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0);    }
+}
+
+/* ================================================================
+   24. GLOBAL FOCUS RING
+================================================================ */
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+/* ================================================================
+   25. RIGHT-SIDE SCROLLBAR (thin, matches the panel)
+================================================================ */
+.reg-form-side::-webkit-scrollbar       { width: 6px; }
+.reg-form-side::-webkit-scrollbar-track { background: var(--bg); }
+.reg-form-side::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+.reg-form-side::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ================================================================
+   26. RESPONSIVE  ≥ 960 px — FIXED PANEL LAYOUT
+   This is the core "sticky panel" change.
+   html + body get height:100% + overflow:hidden so the viewport
+   itself does not scroll. Each column scrolls independently.
+================================================================ */
+@media (min-width: 960px) {
+
+    html, body {
+        height: 100%;
+        overflow: hidden;   /* prevent the page itself from scrolling */
+    }
+
+    .instructor-reg-wrapper {
+        height: 100vh;       /* exact viewport height */
+        overflow: hidden;    /* clip children */
+    }
+
+    /* Left panel — sticky, full viewport height, scrolls if content overflows */
+    .reg-panel {
+        display: block;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* Right side — full viewport height, independently scrollable */
+    .reg-form-side {
+        height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: var(--bg);
+        align-items: flex-start;
+    }
+
+    /* Hide mobile logo when panel is visible */
+    .reg-logo-mobile { display: none; }
+}
+
+/* ================================================================
+   27. RESPONSIVE  1200 px  (wide desktops — slightly narrower panel)
+================================================================ */
+@media (min-width: 960px) and (max-width: 1200px) {
+    .reg-panel { width: 340px; }
+	.reg-panel__header { padding: 16px 32px 8px; }
+	.reg-panel__body { padding: 98px 32px 36px; }
+}
+
+/* ================================================================
+   28. RESPONSIVE  ≤ 959 px  (tablet + mobile — panel hidden)
+   Restore normal scrolling; single-column layout.
+================================================================ */
+@media (max-width: 959px) {
+
+    html, body {
+        height: auto;
+        overflow: auto;     /* restore normal page scroll */
+    }
+
+    .instructor-reg-wrapper {
+        height: auto;
+        overflow: visible;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    .reg-panel { display: none !important; }  /* panel hidden on mobile */
+
+    .reg-form-side {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+        padding: 12px 20px 48px;
+        background: var(--surface);
+        align-items: flex-start;
+    }
+
+    .reg-form-container { max-width: 540px; }
+    .reg-logo-mobile    { display: flex; }
+    .autosave-indicator { top: 12px; right: 20px; }
+}
+
+/* ================================================================
+   29. RESPONSIVE  768 px
+================================================================ */
+@media (max-width: 768px) {
+    .reg-form-side  { padding: 12px 18px 44px; }
+    .reg-form-container { max-width: 100%; }
+    .form-header h1 { font-size: 21px; }
+    .step-progress  { margin-bottom: 28px; }
+    .trust-banner   { flex-direction: column; gap: 10px; }
+}
+
+/* ================================================================
+   30. RESPONSIVE  640 px
+================================================================ */
+@media (max-width: 640px) {
+    .reg-form-side          { padding: 12px 16px 40px; }
+    .form-header h1         { font-size: 20px; }
+    .form-check-block       { padding: 10px 12px; }
+    .review-row             { flex-direction: column; gap: 2px; }
+    .review-row-key         { min-width: unset; }
+    .trust-banner           { padding: 12px 14px; }
+}
+
+/* ================================================================
+   31. RESPONSIVE  520 px
+================================================================ */
+@media (max-width: 520px) {
+    .form-row-2col          { grid-template-columns: 1fr; gap: 0; }
+    .progress-label         { font-size: 9px; max-width: 52px; }
+    .progress-dot           { width: 28px; height: 28px; font-size: 11px; }
+    .progress-bar           { top: 13px; }
+    .form-header h1         { font-size: 19px; }
+    .step-progress          { margin-bottom: 24px; }
+    .btn-primary,
+    .btn-secondary          { font-size: 14px; padding: 11px 18px; }
+    .email-verify-gate      { padding: 28px 16px; }
+}
+
+/* ================================================================
+   32. RESPONSIVE  480 px
+================================================================ */
+@media (max-width: 480px) {
+    .reg-form-side          { padding: 12px 14px 36px; }
+    .reg-logo-mobile        { margin-bottom: 22px; }
+    .reg-logo-mobile img    { height: 38px; }
+    .email-verify-gate .verify-icon { font-size: 48px; }
+    .file-upload-box        { padding: 24px 16px; }
+    .review-summary-header  { padding: 12px 14px; }
+    .review-section         { padding: 12px 14px; }
+}
+
+/* ================================================================
+   33. RESPONSIVE  360 px
+================================================================ */
+@media (max-width: 360px) {
+    .reg-form-side          { padding: 12px 12px 32px; }
+    .form-header h1         { font-size: 17px; }
+    .form-actions           { flex-direction: column-reverse; gap: 8px; }
+    .form-actions .btn-primary,
+    .form-actions .btn-secondary {
+        width: 100%; text-align: center; justify-content: center;
+    }
+    .progress-label         { font-size: 8px; max-width: 44px; }
+    .progress-dot           { width: 26px; height: 26px; font-size: 10px; }
+    .form-check-block       { padding: 9px 10px; }
+    .block-card             { padding: 24px 16px; }
+}

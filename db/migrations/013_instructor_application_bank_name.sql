@@ -1,0 +1,11 @@
+-- Phase 7: persist the payout bank name.
+--
+-- The PHP site validated bank_name on step 5 and rendered "✓ <bank name> — ••••1234" on the
+-- step-6 review, but saveInstructorRegistrationData() never wrote it anywhere: the MySQL
+-- instructor_applications table has no bank_name column, so the value was validated, then
+-- dropped, and the review always fell through to the "—" branch.
+--
+-- The intended behaviour is to show the masked payout line, so the column is added here and
+-- written by saveInstructorDraft() / saveInstructorApplication(). bank_name is deliberately NOT
+-- encrypted (like the PHP) because the review screen and the admin review screen show it in clear.
+ALTER TABLE instructor_applications ADD COLUMN IF NOT EXISTS bank_name text;

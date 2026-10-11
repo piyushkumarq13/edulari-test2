@@ -1,0 +1,824 @@
+/* ============================================================
+   UPDATES / NOTIFICATIONS PAGE — updates.css
+   All classes prefixed "upd-"
+
+   DEPENDENCIES:
+   - navbar.css must be loaded before this file.
+     It provides --unav-* CSS variables.
+
+   SCOPING:
+   All page-specific classes use the "upd-" prefix so they
+   never conflict with navbar.css or any other page CSS.
+============================================================ */
+
+/* ================================================================
+   CSS VARIABLES — inherit from navbar design system
+================================================================ */
+:root {
+    /* Accent / interactive */
+    --upd-accent:          #2563eb;
+    --upd-accent-hov:      #1d4ed8;
+    --upd-accent-soft:     #eff6ff;
+    --upd-accent-border:   #dbeafe;
+
+    /* Surface */
+    --upd-bg-page:         #f0f4f9;
+    --upd-bg-card:         #ffffff;
+    --upd-bg-hover:        #f8faff;
+    --upd-bg-open:         #f0f6ff;
+    --upd-bg-unread:       #f8faff;
+
+    /* Borders */
+    --upd-border:          #e2e8f0;
+    --upd-border-light:    #f1f5f9;
+
+    /* Text */
+    --upd-text-primary:    #0f172a;
+    --upd-text-body:       #334155;
+    --upd-text-secondary:  #475569;
+    --upd-text-muted:      #64748b;
+    --upd-text-faint:      #94a3b8;
+
+    /* Status colours — kept minimal */
+    --upd-red:             #dc2626;
+    --upd-red-soft:        #fef2f2;
+    --upd-red-border:      #fca5a5;
+    --upd-green-soft:      #f0fdf4;
+    --upd-green:           #16a34a;
+    --upd-amber-soft:      #fffbeb;
+    --upd-amber:           #d97706;
+    --upd-purple-soft:     #faf5ff;
+    --upd-purple:          #7c3aed;
+    --upd-orange-soft:     #fff7ed;
+    --upd-orange:          #ea580c;
+
+    /* Unread accent bar */
+    --upd-unread-bar:      #3b82f6;
+
+    /* Shadows */
+    --upd-shadow-card:     0 1px 4px rgba(0, 0, 0, 0.05);
+    --upd-shadow-toast:    0 4px 20px rgba(0, 0, 0, 0.2);
+
+    /* Radii */
+    --upd-radius-lg:       12px;
+    --upd-radius-md:       8px;
+    --upd-radius-sm:       6px;
+    --upd-radius-tag:      4px;
+    --upd-radius-pill:     999px;
+
+    /* Transitions */
+    --upd-transition:      0.14s ease;
+    --upd-transition-slow: 0.2s ease;
+}
+
+/* ================================================================
+   RESET
+================================================================ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ================================================================
+   BODY — page background
+================================================================ */
+body {
+    margin: 0;
+
+    background: var(--upd-bg-page);
+    color: var(--upd-text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ================================================================
+   PAGE WRAPPER — max-width centred column
+================================================================ */
+.upd-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 36px 16px 80px;
+}
+
+/* ================================================================
+   PAGE HEADER — title row + actions
+================================================================ */
+.upd-header {
+    display:         flex;
+    align-items:     flex-start;
+    justify-content: space-between;
+    gap:             12px;
+    margin-bottom:   8px;
+    flex-wrap:       wrap;
+}
+
+/* Left block: title + subtitle */
+.upd-header-left {
+    min-width: 0;
+}
+
+/* Title + badge in one row */
+.upd-title-row {
+    display:     flex;
+    align-items: center;
+    gap:         10px;
+    flex-wrap:   wrap;
+}
+
+/* Page heading */
+.upd-title {
+    font-size:      1.55rem;
+    font-weight:    750;
+    letter-spacing: -0.02em;
+    color:          var(--upd-text-primary);
+    margin:         0;
+    line-height:    1.2;
+}
+
+/* Unread count badge next to title */
+.upd-badge {
+    display:        inline-flex;
+    align-items:    center;
+    background:     #ef4444;
+    color:          #fff;
+    font-size:      0.72rem;
+    font-weight:    700;
+    letter-spacing: 0.03em;
+    padding:        3px 10px;
+    border-radius:  var(--upd-radius-pill);
+    line-height:    1;
+    white-space:    nowrap;
+    flex-shrink:    0;
+}
+
+/* Subtitle line below title */
+.upd-subtitle {
+    font-size:   0.85rem;
+    color:       var(--upd-text-muted);
+    margin:      4px 0 0;
+    line-height: 1.4;
+}
+
+/* Right block: header action buttons */
+.upd-header-actions {
+    display:     flex;
+    align-items: center;
+    gap:         8px;
+    flex-shrink: 0;
+    padding-top: 4px;
+}
+
+/* ================================================================
+   HEADER ACTION BUTTON — "Mark all read"
+================================================================ */
+.upd-btn {
+    display:      inline-flex;
+    align-items:  center;
+    gap:          6px;
+    padding:      7px 14px;
+    border-radius: var(--upd-radius-sm);
+    font-size:    0.82rem;
+    font-weight:  600;
+    font-family:  inherit;
+    cursor:       pointer;
+    border:       1px solid var(--upd-border);
+    background:   var(--upd-bg-card);
+    color:        var(--upd-text-secondary);
+    white-space:  nowrap;
+    line-height:  1;
+    transition:   background var(--upd-transition),
+                  border-color var(--upd-transition),
+                  color var(--upd-transition);
+}
+
+.upd-btn:hover {
+    background:   #f1f5f9;
+    border-color: #94a3b8;
+    color:        var(--upd-text-primary);
+}
+
+.upd-btn:focus-visible {
+    outline:        2px solid var(--upd-accent);
+    outline-offset: 2px;
+}
+
+.upd-btn:disabled {
+    opacity: 0.45;
+    cursor:  default;
+    pointer-events: none;
+}
+
+/* SVG icon inside buttons */
+.upd-btn svg {
+    flex-shrink: 0;
+    color:       currentColor;
+}
+
+/* ================================================================
+   FILTER TABS — horizontal scrollable pill row
+================================================================ */
+.upd-filters {
+    display:        flex;
+    align-items:    center;
+    gap:            4px;
+    margin:         20px 0 16px;
+    overflow-x:     auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    -ms-overflow-style: none;
+}
+
+.upd-filters::-webkit-scrollbar {
+    display: none;
+}
+
+/* Individual filter pill */
+.upd-filter-btn {
+    display:       inline-flex;
+    align-items:   center;
+    gap:           6px;
+    padding:       6px 14px;
+    border-radius: var(--upd-radius-pill);
+    font-size:     0.82rem;
+    font-weight:   600;
+    font-family:   inherit;
+    cursor:        pointer;
+    border:        1.5px solid var(--upd-border);
+    background:    var(--upd-bg-card);
+    color:         var(--upd-text-muted);
+    white-space:   nowrap;
+    flex-shrink:   0;
+    line-height:   1;
+    transition:    background var(--upd-transition),
+                   border-color var(--upd-transition),
+                   color var(--upd-transition);
+}
+
+.upd-filter-btn:hover {
+    background: #f1f5f9;
+    color:      var(--upd-text-body);
+}
+
+.upd-filter-btn:focus-visible {
+    outline:        2px solid var(--upd-accent);
+    outline-offset: 2px;
+}
+
+/* Active state */
+.upd-filter-btn.is-active {
+    background:   var(--upd-accent);
+    border-color: var(--upd-accent);
+    color:        #fff;
+}
+
+.upd-filter-btn.is-active:hover {
+    background:   var(--upd-accent-hov);
+    border-color: var(--upd-accent-hov);
+}
+
+/* Count pill inside filter button */
+.upd-filter-count {
+    background:    rgba(255, 255, 255, 0.25);
+    color:         inherit;
+    font-size:     0.7rem;
+    font-weight:   700;
+    padding:       1px 6px;
+    border-radius: var(--upd-radius-pill);
+    min-width:     18px;
+    text-align:    center;
+    line-height:   1.5;
+}
+
+/* Count pill when tab is NOT active */
+.upd-filter-btn:not(.is-active) .upd-filter-count {
+    background: #e2e8f0;
+    color:      var(--upd-text-secondary);
+}
+
+/* ================================================================
+   EMPTY STATE — no notifications at all
+================================================================ */
+.upd-empty {
+    text-align: center;
+    padding:    72px 24px;
+    color:      var(--upd-text-faint);
+}
+
+/* Icon circle */
+.upd-empty-icon {
+    width:           56px;
+    height:          56px;
+    margin:          0 auto 16px;
+    background:      #e2e8f0;
+    border-radius:   50%;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    color:           var(--upd-text-faint);
+}
+
+.upd-empty-icon svg {
+    flex-shrink: 0;
+}
+
+/* Empty state heading */
+.upd-empty h3 {
+    font-size:   1rem;
+    font-weight: 600;
+    color:       var(--upd-text-secondary);
+    margin:      0 0 6px;
+}
+
+/* Empty state body copy */
+.upd-empty p {
+    font-size: 0.875rem;
+    margin:    0;
+    color:     var(--upd-text-faint);
+}
+
+/* ================================================================
+   NOTIFICATION LIST — card container
+================================================================ */
+.upd-list {
+    display:       flex;
+    flex-direction: column;
+    gap:           0;
+    border:        1px solid var(--upd-border);
+    border-radius: var(--upd-radius-lg);
+    overflow:      hidden;
+    background:    var(--upd-bg-card);
+    box-shadow:    var(--upd-shadow-card);
+}
+
+/* ================================================================
+   NOTIFICATION CARD — each individual notification
+================================================================ */
+.upd-card {
+    border-bottom: 1px solid var(--upd-border-light);
+    position:      relative;
+    transition:    background var(--upd-transition);
+}
+
+/* Remove border from last card */
+.upd-card:last-child {
+    border-bottom: none;
+}
+
+/* Unread background tint */
+.upd-card.is-unread {
+    background: var(--upd-bg-unread);
+}
+
+/* Hidden by filter */
+.upd-card.is-hidden {
+    display: none;
+}
+
+/* ================================================================
+   COLLAPSED ROW — always-visible summary line
+================================================================ */
+.upd-row {
+    display:     flex;
+    align-items: center;
+    gap:         14px;
+    padding:     14px 18px;
+    cursor:      pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    position:    relative;
+    transition:  background var(--upd-transition);
+}
+
+.upd-row:hover {
+    background: var(--upd-bg-hover);
+}
+
+.upd-row:focus-visible {
+    outline:        2px solid var(--upd-accent);
+    outline-offset: -2px;
+}
+
+/* Open state: highlight the row header */
+.upd-card.is-open .upd-row {
+    background:    var(--upd-bg-open);
+    border-bottom: 1px solid var(--upd-accent-border);
+}
+
+/* Unread accent bar — left edge */
+.upd-card.is-unread .upd-row::before {
+    content:      '';
+    position:     absolute;
+    left:         0;
+    top:          0;
+    bottom:       0;
+    width:        3px;
+    background:   var(--upd-unread-bar);
+    border-radius: 0 2px 2px 0;
+}
+
+/* ================================================================
+   NOTIFICATION ICON — coloured circle per category
+================================================================ */
+.upd-icon {
+    width:           38px;
+    height:          38px;
+    border-radius:   50%;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    flex-shrink:     0;
+}
+
+.upd-icon svg {
+    flex-shrink: 0;
+}
+
+/* Category colour variants */
+.upd-icon--security {
+    background: var(--upd-red-soft);
+    color:      var(--upd-red);
+}
+
+.upd-icon--account {
+    background: var(--upd-accent-soft);
+    color:      var(--upd-accent);
+}
+
+.upd-icon--promo {
+    background: var(--upd-amber-soft);
+    color:      var(--upd-amber);
+}
+
+.upd-icon--course {
+    background: var(--upd-green-soft);
+    color:      var(--upd-green);
+}
+
+.upd-icon--general {
+    background: var(--upd-purple-soft);
+    color:      var(--upd-purple);
+}
+
+.upd-icon--instructor {
+    background: var(--upd-orange-soft);
+    color:      var(--upd-orange);
+}
+
+/* ================================================================
+   ROW TEXT — title + meta
+================================================================ */
+.upd-row-text {
+    flex:      1;
+    min-width: 0;
+}
+
+/* Notification title */
+.upd-row-title {
+    font-size:     0.92rem;
+    font-weight:   600;
+    color:         var(--upd-text-primary);
+    white-space:   nowrap;
+    overflow:      hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+    line-height:   1.3;
+}
+
+/* Read state: slightly lighter title */
+.upd-card:not(.is-unread) .upd-row-title {
+    font-weight: 500;
+    color:       var(--upd-text-body);
+}
+
+/* Meta row: tag + relative time + date */
+.upd-row-meta {
+    display:     flex;
+    align-items: center;
+    gap:         8px;
+    font-size:   0.75rem;
+    color:       var(--upd-text-faint);
+    flex-wrap:   wrap;
+    line-height: 1;
+}
+
+/* Type tag pill */
+.upd-tag {
+    font-size:      0.68rem;
+    font-weight:    700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding:        2px 7px;
+    border-radius:  var(--upd-radius-tag);
+    background:     #f1f5f9;
+    color:          var(--upd-text-muted);
+    line-height:    1.5;
+}
+
+/* Relative time text */
+.upd-row-meta span {
+    color: var(--upd-text-faint);
+}
+
+/* ================================================================
+   UNREAD DOT — blue circle indicator
+================================================================ */
+.upd-dot {
+    width:        8px;
+    height:       8px;
+    border-radius: 50%;
+    background:   var(--upd-unread-bar);
+    flex-shrink:  0;
+}
+
+/* ================================================================
+   CHEVRON — expand / collapse arrow
+================================================================ */
+.upd-chevron {
+    flex-shrink: 0;
+    color:       #cbd5e1;
+    transition:  transform var(--upd-transition-slow),
+                 color var(--upd-transition);
+}
+
+.upd-card.is-open .upd-chevron {
+    transform: rotate(180deg);
+    color:     var(--upd-accent);
+}
+
+/* ================================================================
+   EXPANDED BODY — notification full content
+================================================================ */
+.upd-body {
+    display:   none;
+    padding:   0 18px 18px;
+    animation: updSlideIn 0.18s ease;
+}
+
+/* Shown when card is open */
+.upd-card.is-open .upd-body {
+    display: block;
+}
+
+/* Slide-in animation */
+@keyframes updSlideIn {
+    from {
+        opacity:   0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity:   1;
+        transform: translateY(0);
+    }
+}
+
+/* Body content box */
+.upd-body-inner {
+    background:  var(--upd-accent-soft);
+    border:      1px solid var(--upd-accent-border);
+    border-radius: var(--upd-radius-md);
+    padding:     16px 18px;
+    font-size:   0.9rem;
+    color:       var(--upd-text-body);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break:  break-word;
+}
+
+/* Footer row inside expanded body */
+.upd-body-footer {
+    display:         flex;
+    align-items:     center;
+    justify-content: flex-end;
+    gap:             8px;
+    margin-top:      12px;
+}
+
+/* ================================================================
+   ACTION BUTTONS — inside expanded body (delete)
+================================================================ */
+.upd-action-btn {
+    display:      inline-flex;
+    align-items:  center;
+    gap:          5px;
+    padding:      5px 12px;
+    border-radius: var(--upd-radius-sm);
+    font-size:    0.78rem;
+    font-weight:  600;
+    font-family:  inherit;
+    cursor:       pointer;
+    border:       1px solid transparent;
+    line-height:  1;
+    transition:   background var(--upd-transition),
+                  color var(--upd-transition),
+                  border-color var(--upd-transition);
+}
+
+/* SVG icon inside action button */
+.upd-action-btn svg {
+    flex-shrink: 0;
+    color:       currentColor;
+}
+
+/* Delete variant */
+.upd-action-btn--delete {
+    background:   var(--upd-bg-card);
+    border-color: var(--upd-red-border);
+    color:        var(--upd-red);
+}
+
+.upd-action-btn--delete:hover {
+    background:   var(--upd-red-soft);
+    border-color: #ef4444;
+}
+
+.upd-action-btn--delete:focus-visible {
+    outline:        2px solid var(--upd-red);
+    outline-offset: 2px;
+}
+
+/* ================================================================
+   NO-RESULTS — shown when filter returns zero cards
+================================================================ */
+.upd-no-results {
+    display:       none;
+    text-align:    center;
+    padding:       40px 24px;
+    color:         var(--upd-text-faint);
+    font-size:     0.875rem;
+    border:        1px solid var(--upd-border);
+    border-radius: var(--upd-radius-lg);
+    background:    var(--upd-bg-card);
+    line-height:   1.5;
+}
+
+.upd-no-results.is-visible {
+    display: block;
+}
+
+/* ================================================================
+   HIGHLIGHT PULSE — card arriving via ?id=X
+================================================================ */
+@keyframes updHighlight {
+    0%   { background: var(--upd-accent-border); }
+    100% { background: transparent; }
+}
+
+.upd-card.is-highlight-pulse {
+    animation: updHighlight 1.8s ease forwards;
+}
+
+/* ================================================================
+   TOAST — floating feedback message
+================================================================ */
+.upd-toast {
+    position:       fixed;
+    bottom:         28px;
+    left:           50%;
+    transform:      translateX(-50%) translateY(12px);
+    background:     var(--upd-text-primary);
+    color:          #fff;
+    font-size:      0.83rem;
+    font-weight:    500;
+    padding:        10px 20px;
+    border-radius:  var(--upd-radius-md);
+    box-shadow:     var(--upd-shadow-toast);
+    opacity:        0;
+    pointer-events: none;
+    white-space:    nowrap;
+    z-index:        9999;
+    transition:     opacity 0.2s ease,
+                    transform 0.2s ease;
+}
+
+.upd-toast.is-visible {
+    opacity:   1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ================================================================
+   RESPONSIVE — tablet
+================================================================ */
+@media (max-width: 900px) {
+    .upd-wrap {
+        max-width: 100%;
+        padding: 28px 20px 72px;
+    }
+}
+
+/* ================================================================
+   RESPONSIVE — mobile
+================================================================ */
+@media (max-width: 600px) {
+    /* Page wrapper */
+    .upd-wrap {
+        padding: 20px 10px 64px;
+    }
+
+    /* Page title */
+    .upd-title {
+        font-size: 1.25rem;
+    }
+
+    /* Subtitle */
+    .upd-subtitle {
+        font-size: 0.8rem;
+    }
+
+    /* Header actions: hide button text labels */
+    .upd-header-actions .upd-btn span {
+        display: none;
+    }
+
+    /* Header actions: tighter layout */
+    .upd-header-actions {
+        padding-top: 2px;
+    }
+
+    /* Filter pills: tighter padding */
+    .upd-filter-btn {
+        padding:   5px 12px;
+        font-size: 0.78rem;
+    }
+
+    /* Row: tighter padding and smaller gap */
+    .upd-row {
+        padding: 12px 14px;
+        gap:     10px;
+    }
+
+    /* Icon: slightly smaller */
+    .upd-icon {
+        width:  34px;
+        height: 34px;
+    }
+
+    /* Body: tighter padding */
+    .upd-body {
+        padding: 0 14px 14px;
+    }
+
+    /* Body inner text */
+    .upd-body-inner {
+        padding:   12px 14px;
+        font-size: 0.875rem;
+    }
+
+    /* Row title: allow wrapping on small screens */
+    .upd-row-title {
+        white-space: normal;
+        font-size:   0.88rem;
+    }
+
+    /* Meta: tighter gap */
+    .upd-row-meta {
+        gap: 6px;
+    }
+
+    /* Toast: full-width with margin */
+    .upd-toast {
+        left:      16px;
+        right:     16px;
+        bottom:    20px;
+        transform: translateY(12px);
+        text-align: center;
+        white-space: normal;
+        width:     auto;
+    }
+
+    .upd-toast.is-visible {
+        transform: translateY(0);
+    }
+
+    /* Empty state: less padding */
+    .upd-empty {
+        padding: 48px 16px;
+    }
+}
+
+/* ================================================================
+   RESPONSIVE — very small mobile
+================================================================ */
+@media (max-width: 380px) {
+    .upd-wrap {
+        padding: 16px 8px 56px;
+    }
+
+    .upd-row {
+        padding: 10px 12px;
+        gap:     8px;
+    }
+
+    .upd-icon {
+        width:  30px;
+        height: 30px;
+    }
+
+    .upd-title {
+        font-size: 1.15rem;
+    }
+
+    .upd-filter-btn {
+        padding:   4px 10px;
+        font-size: 0.75rem;
+    }
+}

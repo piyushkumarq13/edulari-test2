@@ -1,0 +1,80 @@
+/* ── Edulari reusable video player ─────────────────────────────── */
+.evp-player {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: inherit;
+}
+.evp-player iframe,
+.evp-player video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+.evp-shield {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+.evp-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+.evp-center:hover { background: rgba(0, 0, 0, 0.75); transform: translate(-50%, -50%) scale(1.08); }
+.evp-center img { width: 52px; height: 52px; object-fit: contain; }
+.evp-center svg { width: 34px; height: 34px; fill: #fff; margin-left: 4px; display: none; }
+.evp-player:not(.evp-paused) .evp-center { opacity: 0; pointer-events: none; }
+.evp-center { opacity: 1; transition: opacity .2s, transform .2s ease, background .2s ease; }
+
+.evp-topshade { position: absolute; top: 0; left: 0; right: 0; height: 56px; z-index: 2; background: linear-gradient(to bottom, rgba(0,0,0,.55), transparent); pointer-events: none; }
+
+.evp-controls {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: linear-gradient(to top, rgba(0,0,0,.75), transparent);
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+.evp-player:hover .evp-controls,
+.evp-player.evp-paused .evp-controls,
+.evp-player:focus-within .evp-controls { opacity: 1; }
+.evp-controls button {
+    background: none; border: 0; color: #fff; cursor: pointer;
+    width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+}
+.evp-controls button svg { width: 20px; height: 20px; fill: #fff; }
+.evp-controls .evp-time { color: #eee; font-size: 12px; white-space: nowrap; min-width: 86px; text-align: center; }
+.evp-seek { flex: 1; accent-color: #4f46e5; height: 4px; cursor: pointer; }
+.evp-vol { width: 80px; accent-color: #4f46e5; cursor: pointer; }
+.evp-speed { position: relative; }
+.evp-speed select {
+    background: rgba(0,0,0,.5); color: #fff; border: 1px solid rgba(255,255,255,.25);
+    border-radius: 6px; font-size: 12px; padding: 4px 6px; cursor: pointer;
+}
+.evp-error {
+    position: absolute; inset: 0; z-index: 5; background: #111; color: #ccc;
+    display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; font-size: 14px;
+}

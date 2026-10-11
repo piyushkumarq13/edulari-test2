@@ -1,0 +1,566 @@
+/* ============================================================
+   Earnings Page – /public/assets/css/instructor/earnings.css
+   Namespace: earn-*
+   Depends on navbar.css being loaded first (provides in-page-wrap,
+   CSS custom properties via [data-instructor-nav], and nav height).
+============================================================ */
+
+/* ── Local tokens ─────────────────────────────────────────── */
+:root {
+    --earn-primary:       #5c6ef8;
+    --earn-primary-light: #eef0ff;
+    --earn-green:         #22c55e;
+    --earn-green-light:   #dcfce7;
+    --earn-blue:          #3b82f6;
+    --earn-blue-light:    #dbeafe;
+    --earn-purple:        #8b5cf6;
+    --earn-purple-light:  #ede9fe;
+    --earn-orange:        #f59e0b;
+    --earn-orange-light:  #fef3c7;
+    --earn-text:          #1e1e2e;
+    --earn-text-2:        #64748b;
+    --earn-border:        #e2e8f0;
+    --earn-bg:            #f8fafc;
+    --earn-white:         #ffffff;
+    --earn-radius:        12px;
+    --earn-radius-sm:     8px;
+    --earn-shadow:        0 2px 12px rgba(0, 0, 0, .06);
+    --earn-shadow-md:     0 6px 24px rgba(0, 0, 0, .09);
+}
+
+/* ── Base font ────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+    background: #f8fafc;
+    color: #1e1e2e;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Page wrapper ─────────────────────────────────────────── */
+.earn-wrap {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+/* ── Page header ──────────────────────────────────────────── */
+.earn-page-header {
+    margin-bottom: 1.75rem;
+}
+
+.earn-page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--earn-text);
+    margin: 0 0 0.25rem;
+    line-height: 1.2;
+}
+
+.earn-page-sub {
+    font-size: 0.95rem;
+    color: var(--earn-text-2);
+    margin: 0;
+}
+
+/* ── KPI grid ─────────────────────────────────────────────── */
+.earn-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.earn-kpi-card {
+    background: var(--earn-white);
+    border: 1px solid var(--earn-border);
+    border-radius: var(--earn-radius);
+    padding: 1.25rem 1.25rem 1.25rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    box-shadow: var(--earn-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.earn-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--earn-shadow-md);
+}
+
+.earn-kpi-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.earn-kpi-card--green .earn-kpi-icon  { background: var(--earn-green-light);  color: var(--earn-green);  }
+.earn-kpi-card--blue .earn-kpi-icon   { background: var(--earn-blue-light);   color: var(--earn-blue);   }
+.earn-kpi-card--purple .earn-kpi-icon { background: var(--earn-purple-light); color: var(--earn-purple); }
+.earn-kpi-card--orange .earn-kpi-icon { background: var(--earn-orange-light); color: var(--earn-orange); }
+
+.earn-kpi-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.earn-kpi-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--earn-text-2);
+}
+
+.earn-kpi-value {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--earn-text);
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.earn-kpi-sub {
+    font-size: 0.75rem;
+    color: var(--earn-text-2);
+}
+
+/* ── Two-column chart + top courses ───────────────────────── */
+.earn-two-col {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    align-items: start;
+}
+
+/* ── Generic card ─────────────────────────────────────────── */
+.earn-card {
+    background: var(--earn-white);
+    border: 1px solid var(--earn-border);
+    border-radius: var(--earn-radius);
+    box-shadow: var(--earn-shadow);
+    overflow: hidden;
+}
+
+.earn-card--chart {
+    min-height: 340px;
+}
+
+.earn-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid var(--earn-border);
+}
+
+.earn-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--earn-text);
+    margin: 0;
+}
+
+/* ── Chart ────────────────────────────────────────────────── */
+.earn-chart-wrap {
+    padding: 1.25rem;
+    height: 280px;
+    position: relative;
+}
+
+/* ── Year selector ────────────────────────────────────────── */
+.earn-year-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ── Select ───────────────────────────────────────────────── */
+.earn-select {
+    padding: 0.4rem 2rem 0.4rem 0.75rem;
+    border: 1.5px solid var(--earn-border);
+    border-radius: var(--earn-radius-sm);
+    font-size: 0.875rem;
+    color: var(--earn-text);
+    background: var(--earn-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") no-repeat right 0.5rem center / 1.2rem;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.earn-select:focus {
+    outline: none;
+    border-color: var(--earn-primary);
+    box-shadow: 0 0 0 3px rgba(92, 110, 248, .12);
+}
+
+/* ── Top courses list ─────────────────────────────────────── */
+.earn-top-list {
+    list-style: none;
+    margin: 0;
+    padding: 0.75rem 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.earn-top-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+}
+
+.earn-top-rank {
+    width: 24px;
+    height: 24px;
+    background: var(--earn-primary-light);
+    color: var(--earn-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.earn-top-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.earn-top-name {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--earn-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.35rem;
+}
+
+.earn-top-bar-wrap {
+    height: 5px;
+    background: var(--earn-border);
+    border-radius: 99px;
+    margin-bottom: 0.35rem;
+    overflow: hidden;
+}
+
+.earn-top-bar {
+    height: 100%;
+    width: var(--bar-pct, 0%);
+    background: linear-gradient(90deg, var(--earn-primary) 0%, #7c3aed 100%);
+    border-radius: 99px;
+    transition: width 0.6s ease;
+}
+
+.earn-top-meta {
+    font-size: 0.75rem;
+    color: var(--earn-text-2);
+}
+
+/* ── Filter form ──────────────────────────────────────────── */
+.earn-filter-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.earn-filter-btn {
+    padding: 0.4rem 1rem;
+    background: var(--earn-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--earn-radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: inherit;
+}
+
+.earn-filter-btn:hover {
+    background: #4355e8;
+}
+
+.earn-reset-btn {
+    padding: 0.4rem 0.9rem;
+    border: 1.5px solid var(--earn-border);
+    border-radius: var(--earn-radius-sm);
+    font-size: 0.875rem;
+    color: var(--earn-text-2);
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+    background: var(--earn-white);
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.earn-reset-btn:hover {
+    border-color: var(--earn-primary);
+    color: var(--earn-primary);
+    text-decoration: none;
+}
+
+/* ── Transactions table ───────────────────────────────────── */
+.earn-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.earn-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.earn-table thead {
+    background: var(--earn-bg);
+    border-bottom: 2px solid var(--earn-border);
+}
+
+.earn-table th {
+    padding: 0.75rem 1.25rem;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--earn-text-2);
+    white-space: nowrap;
+}
+
+.earn-th-right {
+    text-align: right;
+}
+
+.earn-table td {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--earn-border);
+    color: var(--earn-text);
+    vertical-align: middle;
+}
+
+.earn-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.earn-table tbody tr:hover {
+    background: var(--earn-bg);
+}
+
+.earn-td-date {
+    min-width: 130px;
+}
+
+.earn-date-main {
+    display: block;
+    font-weight: 500;
+}
+
+.earn-date-time {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--earn-text-2);
+}
+
+.earn-student-name {
+    font-weight: 500;
+}
+
+.earn-td-course {
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.earn-td-amount {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.earn-amount {
+    font-weight: 700;
+    color: var(--earn-green);
+    font-size: 0.95rem;
+}
+
+.earn-amount--free {
+    color: var(--earn-text-2);
+    font-weight: 500;
+}
+
+/* ── Empty states ─────────────────────────────────────────── */
+.earn-empty {
+    padding: 2rem 1.25rem;
+    text-align: center;
+    color: var(--earn-text-2);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.earn-empty-state {
+    padding: 3rem 1.25rem;
+    text-align: center;
+    color: var(--earn-text-2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.earn-empty-state svg {
+    color: var(--earn-border);
+}
+
+.earn-empty-state p {
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* ── Screen-reader only ───────────────────────────────────── */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Payout balance summary in card header */
+.earn-balance-summary {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.earn-balance-label {
+    font-size: 13px;
+    color: var(--earn-text-2);
+}
+
+.earn-balance-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--earn-green);
+}
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+
+/* Large tablet */
+@media (max-width: 1100px) {
+    .earn-two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .earn-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .earn-chart-wrap {
+        height: 240px;
+    }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+    .earn-wrap {
+        padding: 1.25rem 1rem 3rem;
+    }
+
+    .earn-page-title {
+        font-size: 1.35rem;
+    }
+
+    .earn-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .earn-filter-form {
+        width: 100%;
+    }
+
+    .earn-filter-form .earn-select {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+/* Mobile */
+@media (max-width: 540px) {
+    .earn-kpi-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .earn-kpi-card {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .earn-kpi-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .earn-kpi-value {
+        font-size: 1.3rem;
+    }
+
+    .earn-table th,
+    .earn-table td {
+        padding: 0.75rem 0.875rem;
+    }
+
+    .earn-filter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .earn-filter-form .earn-select {
+        width: 100%;
+    }
+
+    .earn-filter-btn,
+    .earn-reset-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Very small */
+@media (max-width: 380px) {
+    .earn-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}

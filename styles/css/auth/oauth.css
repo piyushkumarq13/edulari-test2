@@ -1,0 +1,111 @@
+/* =============================================================
+   STEP 10 — OAuth Button Styles
+   Location: /htdocs/public/assets/css/auth/oauth.css
+
+   This is a NEW CSS file. Create it at the path above.
+
+   Then add this ONE LINE to both login.php and register.php
+   inside their <head> section, right after the existing CSS link:
+
+   <link rel="stylesheet" href="/assets/css/auth/oauth.css">
+   ============================================================= */
+
+/* ── OAuth button container ─────────────────────────────────────────────────── */
+.oauth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+/* ── Shared button base ──────────────────────────────────────────────────────── */
+.oauth-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 11px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    box-sizing: border-box;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+}
+
+.oauth-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.oauth-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ── Google ───────────────────────────────────────────────────────────────────── */
+.oauth-btn--google {
+    background: #ffffff;
+    color: #3c4043;
+    border-color: #dadce0;
+}
+
+.oauth-btn--google:hover {
+    background: #f8f9fa;
+    border-color: #c0c4c9;
+    color: #3c4043;
+}
+
+/* ── GitHub ───────────────────────────────────────────────────────────────────── */
+.oauth-btn--github {
+    background: #24292f;
+    color: #ffffff;
+    border-color: #24292f;
+}
+
+.oauth-btn--github:hover {
+    background: #32383e;
+    border-color: #32383e;
+    color: #ffffff;
+}
+
+/* ── "or sign in with email" divider ─────────────────────────────────────────── */
+.oauth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 16px;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.oauth-divider::before,
+.oauth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+}
+
+/* ── Dark-mode aware (if your site uses prefers-color-scheme) ─────────────────── */
+@media (prefers-color-scheme: dark) {
+    .oauth-btn--google {
+        background: #2d2d2d;
+        color: #e8eaed;
+        border-color: #5f6368;
+    }
+    .oauth-btn--google:hover {
+        background: #3a3a3a;
+    }
+    .oauth-divider {
+        color: #6b7280;
+    }
+    .oauth-divider::before,
+    .oauth-divider::after {
+        background: #374151;
+    }
+}

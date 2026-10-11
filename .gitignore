@@ -32,6 +32,11 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!scripts/ui-compare/.env.compare.example
+# ui-compare local credentials (never commit)
+scripts/ui-compare/.env.compare
+docs/ui-parity/
+!.env.example
 
 # vercel
 .vercel

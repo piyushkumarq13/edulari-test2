@@ -1,0 +1,506 @@
+[
+  {
+    "label": "home",
+    "php": "index.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": ""
+  },
+  {
+    "label": "about",
+    "php": "page/about.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/about"
+  },
+  {
+    "label": "browse courses",
+    "php": "browse-courses.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/browse-courses"
+  },
+  {
+    "label": "categories",
+    "php": "categories.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/categories"
+  },
+  {
+    "label": "course detail",
+    "php": "course.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/course/[slug]"
+  },
+  {
+    "label": "instructor profile",
+    "php": "instructor-profile.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/instructor-profile/[slug]"
+  },
+  {
+    "label": "contact",
+    "php": "contact.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/contact"
+  },
+  {
+    "label": "track contact",
+    "php": "track-contact.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/track-contact"
+  },
+  {
+    "label": "help center",
+    "php": "help-center.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/help-center"
+  },
+  {
+    "label": "report bug",
+    "php": "report-bug.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/report-bug"
+  },
+  {
+    "label": "track report",
+    "php": "track-report.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/track-report"
+  },
+  {
+    "label": "security",
+    "php": "security.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/security"
+  },
+  {
+    "label": "updates",
+    "php": "updates.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/updates"
+  },
+  {
+    "label": "demo (route handler)",
+    "php": "demo.php",
+    "navbar": false,
+    "footer": false,
+    "head": false,
+    "newDir": null
+  },
+  {
+    "label": "verify certificate",
+    "php": "verify-certificate.php",
+    "navbar": false,
+    "footer": true,
+    "head": true,
+    "newDir": "app/verify-certificate"
+  },
+  {
+    "label": "login",
+    "php": "login.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/login"
+  },
+  {
+    "label": "register",
+    "php": "register.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/register"
+  },
+  {
+    "label": "register success",
+    "php": "register-success.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/register-success"
+  },
+  {
+    "label": "account activation",
+    "php": "account-activation.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/account-activation"
+  },
+  {
+    "label": "verify email",
+    "php": "verify-email.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/verify-email"
+  },
+  {
+    "label": "forgot password",
+    "php": "forgot-password.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/forgot-password"
+  },
+  {
+    "label": "reset password",
+    "php": "reset-password.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/reset-password"
+  },
+  {
+    "label": "password reset after verify",
+    "php": "password-reset-after-verify.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/password-reset-after-verify"
+  },
+  {
+    "label": "logout (redirect)",
+    "php": "logout.php",
+    "navbar": false,
+    "footer": false,
+    "head": false,
+    "newDir": null
+  },
+  {
+    "label": "cart",
+    "php": "cart.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/cart"
+  },
+  {
+    "label": "wishlist",
+    "php": "wishlist.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/wishlist"
+  },
+  {
+    "label": "checkout",
+    "php": "checkout.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/checkout"
+  },
+  {
+    "label": "purchase history",
+    "php": "student/purchase-history.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/student/purchase-history"
+  },
+  {
+    "label": "receipt",
+    "php": "student/receipt.php",
+    "navbar": false,
+    "footer": false,
+    "head": false,
+    "newDir": "app/student/receipt"
+  },
+  {
+    "label": "check payment status (JSON endpoint)",
+    "php": "student/check-payment-status.php",
+    "navbar": false,
+    "footer": false,
+    "head": false,
+    "newDir": null
+  },
+  {
+    "label": "student dashboard",
+    "php": "student/dashboard.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/student/dashboard"
+  },
+  {
+    "label": "my courses",
+    "php": "student/my-courses.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/student/my-courses"
+  },
+  {
+    "label": "student profile",
+    "php": "student/profile.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/student/profile"
+  },
+  {
+    "label": "student grades",
+    "php": "student/grades.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/student/grades"
+  },
+  {
+    "label": "student certificates",
+    "php": "student/certificates.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/student/certificates"
+  },
+  {
+    "label": "student schedule",
+    "php": "student/schedule.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/student/schedule"
+  },
+  {
+    "label": "learn",
+    "php": "student/learn.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/student/learn"
+  },
+  {
+    "label": "generate certificate",
+    "php": "student/generate-certificate.php",
+    "navbar": false,
+    "footer": false,
+    "head": false,
+    "newDir": "app/student/generate-certificate"
+  },
+  {
+    "label": "onboarding",
+    "php": "student/onboarding.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/student/onboarding"
+  },
+  {
+    "label": "instructor register step 1",
+    "php": "instructor-register/step-1.php",
+    "navbar": false,
+    "footer": false,
+    "head": false,
+    "newDir": "app/instructor-register/step-1"
+  },
+  {
+    "label": "instructor register review",
+    "php": "instructor-register/step-6.php",
+    "navbar": false,
+    "footer": false,
+    "head": false,
+    "newDir": "app/instructor-register/step-6"
+  },
+  {
+    "label": "instructor register test preview",
+    "php": "instructor-register/step-8.php",
+    "navbar": false,
+    "footer": false,
+    "head": false,
+    "newDir": "app/instructor-register/step-8"
+  },
+  {
+    "label": "instructor register success",
+    "php": "instructor-register-success.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/instructor-register-success"
+  },
+  {
+    "label": "competency test",
+    "php": "test/index.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/test"
+  },
+  {
+    "label": "course ai shared",
+    "php": "course-ai-shared.php",
+    "navbar": false,
+    "footer": false,
+    "head": true,
+    "newDir": "app/course-ai-shared"
+  },
+  {
+    "label": "admin dashboard",
+    "php": "admin/dashboard.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/dashboard"
+  },
+  {
+    "label": "admin users",
+    "php": "admin/users.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/users"
+  },
+  {
+    "label": "admin user detail",
+    "php": "admin/user-detail.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/user-detail"
+  },
+  {
+    "label": "admin instructor applications",
+    "php": "admin/instructor-applications.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/instructor-applications"
+  },
+  {
+    "label": "admin instructor application detail",
+    "php": "admin/instructor-application-detail.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/instructor-application-detail"
+  },
+  {
+    "label": "admin courses",
+    "php": "admin/courses.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/courses"
+  },
+  {
+    "label": "admin create course",
+    "php": "admin/create-course.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/create-course"
+  },
+  {
+    "label": "admin edit course",
+    "php": "admin/edit-course.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/edit-course"
+  },
+  {
+    "label": "admin categories",
+    "php": "admin/categories.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/categories"
+  },
+  {
+    "label": "admin enrollments",
+    "php": "admin/enrollments.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/enrollments"
+  },
+  {
+    "label": "admin reviews",
+    "php": "admin/reviews.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/reviews"
+  },
+  {
+    "label": "admin banners",
+    "php": "admin/banners.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/banners"
+  },
+  {
+    "label": "admin send notifications",
+    "php": "admin/send-notifications.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/send-notifications"
+  },
+  {
+    "label": "admin settings",
+    "php": "admin/settings.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/settings"
+  },
+  {
+    "label": "admin bug reports",
+    "php": "admin/bug-reports.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/bug-reports"
+  },
+  {
+    "label": "admin bug report detail",
+    "php": "admin/bug-report-detail.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/bug-report-detail"
+  },
+  {
+    "label": "admin contact submissions",
+    "php": "admin/contact-submissions.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/contact-submissions"
+  },
+  {
+    "label": "admin contact submission detail",
+    "php": "admin/contact-submission-detail.php",
+    "navbar": true,
+    "footer": true,
+    "head": true,
+    "newDir": "app/admin/contact-submission-detail"
+  }
+]

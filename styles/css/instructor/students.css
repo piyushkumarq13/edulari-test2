@@ -1,0 +1,799 @@
+/* ============================================================
+   Students CSS
+   File: /public/assets/css/instructor/students.css
+
+   DEPENDENCIES:
+   - navbar.css must load first (provides --in-* variables, .in-page-wrap)
+
+   PREFIX: st- (Students namespace)
+============================================================ */
+
+/* ================================================================
+   RESET & BASE
+================================================================ */
+
+:root {
+    --in-nav-height: 64px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    background: #f1f5f9;
+    color: #1e1e2e;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+/* ================================================================
+   PAGE WRAPPER
+================================================================ */
+
+.st-page-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+/* ================================================================
+   PAGE HEADER
+================================================================ */
+
+.st-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+}
+
+.st-page-title {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    line-height: 1.25;
+    margin-bottom: 0.3rem;
+}
+
+.st-page-subtitle {
+    font-size: 0.925rem;
+    color: #64748b;
+}
+
+.st-page-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+/* ================================================================
+   BUTTONS
+================================================================ */
+
+.st-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.st-btn:active {
+    transform: scale(0.97);
+}
+
+.st-btn--primary {
+    background: #5c6ef8;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(92, 110, 248, 0.3);
+}
+
+.st-btn--primary:hover {
+    background: #4355e8;
+    box-shadow: 0 4px 12px rgba(92, 110, 248, 0.38);
+}
+
+.st-btn--secondary {
+    background: #fff;
+    color: #334155;
+    border: 1.5px solid #e2e8f0;
+}
+
+.st-btn--secondary:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.st-btn--ghost {
+    background: transparent;
+    color: #5c6ef8;
+    border: 1.5px solid #e0e4ff;
+}
+
+.st-btn--ghost:hover {
+    background: #eef0ff;
+}
+
+/* ================================================================
+   STATS GRID
+================================================================ */
+
+.st-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+}
+
+.st-stat-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.2rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.st-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.st-stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.st-stat-icon--blue   { background: #eff6ff; color: #3b82f6; }
+.st-stat-icon--green  { background: #f0fdf4; color: #22c55e; }
+.st-stat-icon--indigo { background: #eef2ff; color: #6366f1; }
+.st-stat-icon--amber  { background: #fffbeb; color: #f59e0b; }
+
+.st-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.st-stat-label {
+    font-size: 0.78rem;
+    color: #64748b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.st-stat-value {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    line-height: 1.15;
+}
+
+.st-stat-value small {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.st-stat-sub {
+    font-size: 0.78rem;
+    color: #94a3b8;
+}
+
+/* ================================================================
+   FILTERS
+================================================================ */
+
+.st-filters-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.st-filters-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.st-search-wrap {
+    position: relative;
+}
+
+.st-search-icon {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.st-search-input {
+    width: 100%;
+    padding: 0.65rem 0.9rem 0.65rem 2.5rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #1e1e2e;
+    background: #f8fafc;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: inherit;
+}
+
+.st-search-input:focus {
+    outline: none;
+    border-color: #5c6ef8;
+    box-shadow: 0 0 0 3px rgba(92, 110, 248, 0.1);
+    background: #fff;
+}
+
+.st-filters-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.st-select {
+    padding: 0.55rem 0.85rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #374151;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    font-family: inherit;
+    min-width: 140px;
+}
+
+.st-select:focus {
+    outline: none;
+    border-color: #5c6ef8;
+}
+
+.st-filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+.st-result-count {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.st-result-count strong {
+    color: #1e1e2e;
+}
+
+.st-clear-link {
+    color: #5c6ef8;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 0.75rem;
+    font-size: 0.82rem;
+}
+
+.st-clear-link:hover {
+    text-decoration: underline;
+}
+
+/* ================================================================
+   TABLE CARD
+================================================================ */
+
+.st-table-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.st-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.st-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 780px;
+}
+
+.st-table thead {
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.st-table th {
+    padding: 0.85rem 1.1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.st-th-center { text-align: center; }
+
+.st-table td {
+    padding: 0.95rem 1.1rem;
+    font-size: 0.875rem;
+    color: #374151;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.st-row:last-child td {
+    border-bottom: none;
+}
+
+.st-row--main:hover td {
+    background: #f8fafc;
+}
+
+/* ── Student cell ── */
+.st-student-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.st-avatar-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.st-avatar-initials {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5c6ef8 0%, #7c3aed 100%);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.st-student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.st-student-name {
+    font-weight: 600;
+    color: #1e1e2e;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.st-student-email {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Count chip ── */
+.st-count-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #eef0ff;
+    color: #5c6ef8;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* ── Progress ── */
+.st-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.st-progress-wrap--sm .st-progress-bar {
+    height: 4px;
+}
+
+.st-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+    min-width: 80px;
+}
+
+.st-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.4s ease;
+}
+
+.st-prog--zero   { background: #e2e8f0; }
+.st-prog--active { background: linear-gradient(90deg, #5c6ef8, #7c3aed); }
+.st-prog--done   { background: linear-gradient(90deg, #22c55e, #16a34a); }
+
+.st-progress-label {
+    font-size: 0.78rem;
+    color: #64748b;
+    min-width: 36px;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* ── Badges ── */
+.st-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.65rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.st-badge--success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.st-badge--info    { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
+.st-badge--neutral { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
+
+/* ── Misc ── */
+.st-muted { color: #cbd5e1; font-weight: 500; }
+
+.st-td-center { text-align: center; }
+
+.st-td-date {
+    font-size: 0.82rem;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+/* ── Rating ── */
+.st-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #f59e0b;
+}
+
+/* ── Link button ── */
+.st-link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #5c6ef8;
+    background: #eef0ff;
+    text-decoration: none;
+    transition: background 0.15s ease;
+    white-space: nowrap;
+}
+
+.st-link-btn:hover {
+    background: #e0e4ff;
+}
+
+/* ── Expand button ── */
+.st-expand-btn {
+    background: none;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #64748b;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.st-expand-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #334155;
+}
+
+.st-expand-btn--open {
+    background: #eef0ff;
+    border-color: #c7ceff;
+    color: #5c6ef8;
+}
+
+.st-chevron {
+    transition: transform 0.2s ease;
+}
+
+.st-expand-btn--open .st-chevron {
+    transform: rotate(180deg);
+}
+
+/* ================================================================
+   EXPANDABLE DETAIL ROW
+================================================================ */
+
+.st-row--detail td {
+    padding: 0;
+    background: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.st-td-detail {
+    padding: 0 !important;
+}
+
+.st-detail-inner {
+    padding: 1.25rem 1.4rem;
+}
+
+.st-detail-heading-row {
+    margin-bottom: 0.9rem;
+}
+
+.st-detail-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.st-detail-student-name {
+    color: #5c6ef8;
+    font-weight: 700;
+}
+
+.st-detail-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+}
+
+.st-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+}
+
+.st-detail-table thead {
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.st-detail-table th {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.st-detail-table td {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.83rem;
+    color: #374151;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.st-detail-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.st-detail-table tbody tr:hover td {
+    background: #f8fafc;
+}
+
+.st-detail-course-title {
+    font-weight: 500;
+    color: #1e1e2e;
+}
+
+.st-detail-date {
+    white-space: nowrap;
+    color: #64748b;
+}
+
+/* ================================================================
+   EMPTY STATE
+================================================================ */
+
+.st-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+}
+
+.st-empty-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    color: #94a3b8;
+}
+
+.st-empty-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.4rem;
+}
+
+.st-empty-sub {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 1.25rem;
+}
+
+/* ================================================================
+   RESPONSIVE — Tablet (≤ 1024px)
+================================================================ */
+
+@media (max-width: 1024px) {
+    .st-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ================================================================
+   RESPONSIVE — Mobile (≤ 768px)
+================================================================ */
+
+@media (max-width: 768px) {
+    .st-page-inner {
+        padding: 1.25rem 1rem 3rem;
+    }
+
+    .st-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .st-page-header-actions {
+        width: 100%;
+    }
+
+    .st-page-header-actions .st-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .st-filters-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .st-select {
+        width: 100%;
+    }
+
+    .st-filter-actions {
+        margin-left: 0;
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* ================================================================
+   RESPONSIVE — Small mobile (≤ 480px)
+================================================================ */
+
+@media (max-width: 480px) {
+    .st-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .st-stat-card {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 0.6rem;
+        align-items: flex-start;
+    }
+
+    .st-stat-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .st-stat-value {
+        font-size: 1.35rem;
+    }
+
+    .st-page-title {
+        font-size: 1.35rem;
+    }
+
+    .st-empty-state {
+        padding: 2.5rem 1.25rem;
+    }
+}
+
+/* ================================================================
+   RESPONSIVE — Extra small (≤ 380px)
+================================================================ */
+
+@media (max-width: 380px) {
+    .st-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .st-page-title {
+        font-size: 1.2rem;
+    }
+}

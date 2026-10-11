@@ -1,0 +1,44 @@
+# Edulari - Online Learning Platform
+
+> Edulari is an online learning platform offering expert-led courses in programming, design, business, data science, and more. Learners can enroll in free and paid courses, earn certificates, and track their progress.
+
+## Key Pages
+
+- [Home](https://edulari.zya.me/): Landing page with course search and platform overview
+- [Browse Courses](https://edulari.zya.me/browse-courses): Full catalog of published courses
+- [Course Categories](https://edulari.zya.me/categories): Courses grouped by subject area
+- [About Us](https://edulari.zya.me/page/about): Platform mission, founder, and story
+- [Help Center](https://edulari.zya.me/help-center): FAQs and support articles
+- [Contact](https://edulari.zya.me/contact): Contact form for support inquiries
+- [Verify Certificate](https://edulari.zya.me/verify-certificate): Public certificate ID verification
+- [Track Report](https://edulari.zya.me/track-report): Look up the status of a submitted bug report
+- [Track Ticket](https://edulari.zya.me/track-contact): Look up the status of a submitted contact request
+- [Login](https://edulari.zya.me/login): Student and instructor sign-in
+- [Register](https://edulari.zya.me/register): Create a new student account
+- [Become an Instructor](https://edulari.zya.me/instructor-register): Instructor application flow
+
+Individual course pages follow the pattern `https://edulari.zya.me/course/{slug}`. Individual instructor profiles follow the pattern `https://edulari.zya.me/instructor-profile?id={id}`. The full, current list of both is published at [the sitemap](https://edulari.zya.me/sitemap.xml).
+
+## Features
+
+- Expert-led video courses with structured lesson plans
+- Quizzes and assignments to reinforce learning
+- Course completion certificates with unique verification IDs
+- Progress tracking across all enrolled courses
+- Instructor profiles with ratings and reviews
+- Category-based course browsing
+- Free and paid course options
+- Student dashboard with grade tracking
+- Razorpay payment integration for paid courses
+- Email and GitHub/Google OAuth authentication
+
+## Platform Details
+
+- Name: Edulari
+- URL: https://edulari.zya.me/
+- Founding Year: 2025
+- Founder: Piyush Chaurasiya
+- Headquarters: India
+- Primary Language: English
+- Payment Currency: INR
+- Certificate Verification: Public, ID-based verification at /verify-certificate

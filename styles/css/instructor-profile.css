@@ -1,0 +1,1348 @@
+/* ============================================================
+   Edulari – Instructor Profile (instructor-profile.css)
+   Matches the navy / purple / amber design system from
+   browse-courses.css / home.css — same tokens, card styles,
+   hero aesthetic, and responsive breakpoints.
+   ============================================================ */
+
+/* ================================================================
+   1. DESIGN TOKENS  (mirrors site-wide :root exactly)
+================================================================ */
+:root {
+    /* Brand palette */
+    --primary:           #6c63ff;
+    --primary-dark:      #5449e6;
+    --primary-light:     #ede9fe;
+    --primary-glow:      rgba(108, 99, 255, 0.35);
+    --secondary:         #10b981;
+    --secondary-light:   #d1fae5;
+    --accent-orange:     #f59e0b;
+    --accent-orange-lt:  #fef3c7;
+    --accent-red:        #ef4444;
+    --accent-red-lt:     #fef2f2;
+    --accent-pink:       #ec4899;
+    --accent-purple:     #8b5cf6;
+
+    /* Surfaces */
+    --bg:                #f5f6fa;
+    --surface:           #ffffff;
+    --surface-2:         #f9fafb;
+    --surface-3:         #f0f1f8;
+    --hero-bg:           #0d1b2e;
+    --hero-bg-2:         #0f2040;
+
+    /* Text */
+    --text-primary:      #111827;
+    --text-secondary:    #6b7280;
+    --text-muted:        #9ca3af;
+    --text-inverse:      #ffffff;
+
+    /* Borders */
+    --border:            #e5e7eb;
+    --border-hover:      #d1d5db;
+
+    /* Shadows */
+    --shadow-xs:         0 1px 2px rgba(0,0,0,0.05);
+    --shadow-sm:         0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+    --shadow-lg:         0 10px 25px -5px rgba(0,0,0,0.1), 0 4px 10px -5px rgba(0,0,0,0.06);
+    --shadow-xl:         0 20px 40px -10px rgba(0,0,0,0.15);
+    --shadow-card:       0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-card-hover: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-primary:    0 8px 24px rgba(108,99,255,0.28);
+
+    /* Radius */
+    --radius-sm:         6px;
+    --radius-md:         10px;
+    --radius-lg:         16px;
+    --radius-xl:         24px;
+    --radius-full:       9999px;
+
+    /* Layout */
+    --navbar-height:     64px;
+
+    /* Transitions */
+    --transition:        0.2s ease;
+    --transition-slow:   0.35s ease;
+    --transition-bounce: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ================================================================
+   2. BASE RESET
+================================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+
+    background-color: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; transition: color var(--transition); }
+img { display: block; max-width: 100%; height: auto; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ================================================================
+   3. HERO BANNER
+================================================================ */
+.ip-hero {
+    position: relative;
+    background: linear-gradient(155deg, var(--hero-bg) 0%, #1a2744 40%, #0f1f3a 70%, #12112e 100%);
+    padding: 3rem 0 0;
+    overflow: hidden;
+}
+
+/* Dot-grid overlay */
+.ip-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(108,99,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,99,255,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Glow blob */
+.ip-hero::after {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(108,99,255,0.22) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(80px);
+    top: -120px;
+    right: -60px;
+    pointer-events: none;
+    z-index: 0;
+    animation: ipBlobFloat 12s ease-in-out infinite alternate;
+}
+
+@keyframes ipBlobFloat {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(30px, 25px) scale(1.08); }
+}
+
+.ip-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Avatar */
+.ip-avatar,
+.ip-avatar-initials {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 4px solid rgba(255,255,255,0.25);
+    box-shadow: 0 0 0 4px rgba(108,99,255,0.35), var(--shadow-xl);
+    flex-shrink: 0;
+    object-fit: cover;
+    background: var(--surface);
+    margin-bottom: 0;
+    align-self: center;
+}
+
+.ip-avatar-initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--primary);
+    background: var(--surface);
+}
+
+/* Hero text block */
+.ip-hero-info {
+    flex: 1;
+    min-width: 220px;
+    padding-bottom: 1.5rem;
+    color: var(--text-inverse);
+}
+
+.ip-hero-info h1 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.ip-hero-headline {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    margin: 0 0 1rem;
+    font-weight: 400;
+}
+
+.ip-hero-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+}
+
+.ip-hero-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.ip-hero-stat .val {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ip-hero-stat .lbl {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+.ip-star-gold { color: var(--accent-orange); }
+
+/* ================================================================
+   4. TAB NAV
+================================================================ */
+.ip-tabs {
+    position: sticky;
+    top: var(--navbar-height);
+    z-index: 100;
+    background: rgba(13, 27, 46, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.ip-tabs-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.ip-tabs-inner::-webkit-scrollbar { display: none; }
+
+.ip-tab {
+    padding: 0.875rem 1.25rem;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    transition: color var(--transition), border-color var(--transition);
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+}
+
+.ip-tab:hover { color: rgba(255,255,255,0.9); }
+
+.ip-tab.active {
+    color: #fff;
+    border-bottom-color: var(--primary);
+}
+
+.ip-tab-count {
+    background: rgba(108,99,255,0.25);
+    color: rgba(255,255,255,0.8);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    line-height: 1.4;
+}
+
+.ip-tab.active .ip-tab-count {
+    background: var(--primary);
+    color: #fff;
+}
+
+/* ================================================================
+   5. PAGE WRAPPER / LAYOUT
+================================================================ */
+.ip-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+}
+
+.ip-body {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 1.75rem;
+    align-items: start;
+}
+
+/* ================================================================
+   6. TAB PANELS
+================================================================ */
+.ip-panel { display: none; }
+.ip-panel.active { display: block; }
+
+/* ================================================================
+   7. CARDS
+================================================================ */
+.ip-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    transition: box-shadow var(--transition);
+}
+
+.ip-card:hover { box-shadow: var(--shadow-md); }
+
+.ip-card-title {
+    margin: 0 0 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ip-card-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    background: var(--primary);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* ================================================================
+   8. ABOUT PANEL
+================================================================ */
+.ip-bio {
+    line-height: 1.8;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    white-space: pre-line;
+    margin: 0;
+}
+
+.ip-bio-empty {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.ip-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.ip-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 0.875rem;
+    background: var(--surface-2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    transition: background var(--transition);
+}
+
+.ip-meta-item a {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.ip-meta-item a:hover { color: var(--primary-dark); text-decoration: underline; }
+
+.ip-meta-icon { font-size: 1rem; flex-shrink: 0; }
+
+/* ================================================================
+   9. COURSES PANEL
+================================================================ */
+
+/* Filter + Sort toolbar */
+.ip-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.ip-toolbar-left  { display: flex; gap: 0.625rem; flex-wrap: wrap; flex: 1; min-width: 0; }
+.ip-toolbar-right { display: flex; gap: 0.625rem; align-items: center; flex-shrink: 0; }
+
+/* Filter dropdown trigger */
+.ip-filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-full);
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+}
+
+.ip-filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.ip-filter-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+.ip-filter-btn svg { width: 14px; height: 14px; }
+
+/* Sort select */
+.ip-sort-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.ip-sort-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.ip-sort-select {
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-full);
+    font-size: 0.825rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: var(--surface);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.625rem center;
+    font-family: inherit;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.ip-sort-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+}
+
+/* Filter panel (collapsible) */
+.ip-filter-panel {
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    display: none;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.ip-filter-panel.open { display: flex; }
+
+.ip-filter-group { flex: 1; min-width: 160px; }
+
+.ip-filter-group label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.ip-filter-opts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+}
+
+.ip-filter-chip {
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+}
+
+.ip-filter-chip:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.ip-filter-chip.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+/* Active filter tags row */
+.ip-active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.ip-active-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.625rem 0.25rem 0.75rem;
+    background: var(--primary-light);
+    border: 1.5px solid rgba(108,99,255,0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.ip-active-tag-x {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(108,99,255,0.2);
+    cursor: pointer;
+    font-size: 0.6rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--primary-dark);
+    transition: background var(--transition);
+}
+
+.ip-active-tag-x:hover { background: var(--primary); color: #fff; }
+
+/* Results count */
+.ip-results-count {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.ip-results-count strong { color: var(--text-primary); }
+
+/* Courses grid */
+.ip-courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+/* Course card */
+.ip-course-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow var(--transition-slow), transform var(--transition-slow), border-color var(--transition);
+    position: relative;
+}
+
+.ip-course-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-4px);
+    border-color: rgba(108,99,255,0.2);
+}
+
+.ip-course-card.hidden { display: none; }
+
+.ip-course-thumb-wrap {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.ip-course-thumb {
+    width: 100%;
+    height: 155px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.ip-course-card:hover .ip-course-thumb { transform: scale(1.04); }
+
+.ip-course-thumb-placeholder {
+    width: 100%;
+    height: 155px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    font-size: 2.5rem;
+    color: rgba(255,255,255,0.9);
+}
+
+.ip-course-badges {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.ip-cbadge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(8px);
+}
+
+.ip-cbadge-free       { background: rgba(16,185,129,0.88); color: #fff; }
+.ip-cbadge-level      { background: rgba(0,0,0,0.55); color: #fff; }
+.ip-cbadge-beginner   { background: rgba(16,185,129,0.88); color: #fff; }
+.ip-cbadge-intermediate { background: rgba(245,158,11,0.88); color: #fff; }
+.ip-cbadge-advanced   { background: rgba(239,68,68,0.88); color: #fff; }
+
+.ip-course-body {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.ip-course-cat {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--primary);
+}
+
+.ip-course-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--text-primary);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.ip-course-meta {
+    font-size: 0.775rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.ip-course-meta-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--border-hover);
+    flex-shrink: 0;
+}
+
+.ip-course-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.625rem;
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+}
+
+.ip-course-price {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.ip-course-price.free { color: var(--secondary); }
+
+.ip-course-rating {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.775rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.ip-course-rating .star { color: var(--accent-orange); font-size: 0.8rem; }
+
+/* Load more */
+.ip-load-more-wrap {
+    text-align: center;
+    margin-top: 1.75rem;
+}
+
+.ip-btn-load-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2.25rem;
+    background: transparent;
+    border: 2px solid var(--primary);
+    border-radius: var(--radius-full);
+    color: var(--primary);
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-bounce);
+    font-family: inherit;
+}
+
+/* Load more spinner */
+@keyframes ipSpin {
+    to { transform: rotate(360deg); }
+}
+
+.ip-load-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: ipSpin 0.6s linear infinite;
+    vertical-align: middle;
+}
+
+.ip-btn-load-more:hover {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: var(--shadow-primary);
+    transform: translateY(-2px);
+}
+
+.ip-btn-load-more.hidden { display: none; }
+
+/* Empty state */
+.ip-empty {
+    text-align: center;
+    padding: 3.5rem 1rem;
+    color: var(--text-muted);
+}
+
+.ip-empty-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+.ip-empty p   { font-size: 0.9rem; margin: 0; }
+
+/* No results */
+.ip-no-results {
+    display: none;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+}
+
+.ip-no-results.visible { display: block; }
+.ip-no-results .icon   { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.ip-no-results p       { font-size: 0.9rem; }
+
+/* ================================================================
+   10. REVIEWS PANEL
+================================================================ */
+.ip-rating-overview {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.ip-rating-big {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.ip-rating-big .num {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ip-rating-big .stars {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin: 0.25rem 0;
+}
+
+.ip-rating-big .cnt {
+    font-size: 0.775rem;
+    color: var(--text-muted);
+}
+
+/* Star render helpers */
+.star-sm {
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.star-md {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.star-full,
+.star-half { color: var(--accent-orange); }
+.star-empty { color: var(--border-hover); }
+
+.ip-rating-bars { flex: 1; min-width: 180px; }
+
+.ip-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.ip-bar-star { color: var(--accent-orange); flex-shrink: 0; }
+
+.ip-bar-num {
+    width: 10px;
+    text-align: right;
+    color: var(--text-secondary);
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.ip-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--surface-3);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.ip-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-orange) 0%, var(--accent-pink) 100%);
+    border-radius: var(--radius-full);
+    transition: width 0.6s ease;
+}
+
+.ip-bar-count {
+    width: 30px;
+    text-align: right;
+    color: var(--text-muted);
+    font-size: 0.775rem;
+    flex-shrink: 0;
+}
+
+/* Review list */
+.ip-review-list { display: flex; flex-direction: column; }
+
+.ip-review-item {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.ip-review-item:first-child { padding-top: 0; }
+.ip-review-item:last-child  { border-bottom: none; padding-bottom: 0; }
+
+.ip-review-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    margin-bottom: 0.625rem;
+}
+
+.ip-review-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    border: 2px solid rgba(108,99,255,0.15);
+}
+
+.ip-review-info { flex: 1; min-width: 0; }
+
+.ip-review-name {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+.ip-review-course {
+    font-size: 0.775rem;
+    color: var(--text-muted);
+    margin-top: 1px;
+}
+
+.ip-review-course a {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.ip-review-course a:hover { text-decoration: underline; }
+
+.ip-review-stars {
+    display: flex;
+    gap: 1px;
+    flex-shrink: 0;
+}
+
+.ip-review-text {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.65;
+    margin-bottom: 0.375rem;
+}
+
+.ip-review-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ================================================================
+   11. RATE INSTRUCTOR PANEL
+================================================================ */
+.ip-rate-intro {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: -0.5rem 0 1.25rem;
+    line-height: 1.6;
+}
+
+.ip-rate-intro strong { color: var(--text-primary); }
+
+/* Star picker */
+.ip-star-picker {
+    display: flex;
+    gap: 0.375rem;
+    margin-bottom: 0.75rem;
+}
+
+.ip-sp-star {
+    font-size: 2.25rem;
+    color: var(--border-hover);
+    cursor: pointer;
+    transition: color var(--transition), transform var(--transition-bounce);
+    user-select: none;
+    line-height: 1;
+}
+
+.ip-sp-star:hover,
+.ip-sp-star.active {
+    color: var(--accent-orange);
+    transform: scale(1.2);
+}
+
+.ip-rating-label {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    font-weight: 500;
+    min-height: 1.2em;
+}
+
+.ip-rate-note {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-family: inherit;
+    color: var(--text-primary);
+    resize: vertical;
+    min-height: 80px;
+    background: var(--surface-2);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    line-height: 1.6;
+}
+
+.ip-rate-note:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+    background: var(--surface);
+}
+
+.ip-rate-note::placeholder { color: var(--text-muted); }
+
+.ip-rate-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.ip-btn-submit {
+    padding: 0.6875rem 1.75rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-bounce);
+    font-family: inherit;
+    box-shadow: var(--shadow-primary);
+}
+
+.ip-btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(108,99,255,0.4);
+}
+
+.ip-btn-remove {
+    padding: 0.6875rem 1.5rem;
+    background: transparent;
+    color: var(--accent-red);
+    border: 1.5px solid var(--accent-red);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: inherit;
+}
+
+.ip-btn-remove:hover {
+    background: var(--accent-red-lt);
+}
+
+.ip-my-rating-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.875rem;
+    padding: 0.625rem 0.875rem;
+    background: var(--surface-2);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--secondary);
+}
+
+.ip-my-rating-note strong { color: var(--text-primary); }
+
+.ip-login-prompt {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    padding: 1.5rem;
+    background: var(--surface-2);
+    border-radius: var(--radius-md);
+    border: 1.5px dashed var(--border);
+    text-align: center;
+}
+
+.ip-login-prompt a {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.ip-login-prompt a:hover { text-decoration: underline; }
+
+.ip-no-rate {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.ip-direct-summary {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.825rem;
+    color: var(--text-muted);
+}
+
+.ip-direct-summary strong { color: var(--text-primary); }
+
+/* ================================================================
+   12. SIDEBAR
+================================================================ */
+.ip-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+
+.ip-sidebar-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+    padding: 1.25rem;
+    transition: box-shadow var(--transition);
+}
+
+.ip-sidebar-card:hover { box-shadow: var(--shadow-md); }
+
+.ip-sidebar-title {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+/* Stats grid */
+.ip-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.625rem;
+}
+
+.ip-stat-item {
+    text-align: center;
+    padding: 0.875rem 0.5rem;
+    background: var(--surface-2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    transition: border-color var(--transition), background var(--transition);
+}
+
+.ip-stat-item:hover {
+    border-color: rgba(108,99,255,0.25);
+    background: var(--primary-light);
+}
+
+.ip-stat-val {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.ip-stat-lbl {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 3px;
+    font-weight: 600;
+}
+
+.ip-stat-full { grid-column: span 2; }
+
+/* Social links */
+.ip-social-links { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.ip-social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all var(--transition);
+}
+
+.ip-social-link:hover {
+    background: var(--primary-light);
+    border-color: rgba(108,99,255,0.3);
+    color: var(--primary);
+    transform: translateX(3px);
+}
+
+/* Member since */
+.ip-member-since {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* ================================================================
+   13. FLASH MESSAGES
+================================================================ */
+.ip-flash {
+    padding: 0.875rem 1.25rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: ipFlashIn 0.3s ease;
+}
+
+@keyframes ipFlashIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.ip-flash-success {
+    background: var(--secondary-light);
+    color: #065f46;
+    border-left: 4px solid var(--secondary);
+}
+
+.ip-flash-error {
+    background: var(--accent-red-lt);
+    color: #b91c1c;
+    border-left: 4px solid var(--accent-red);
+}
+
+/* ================================================================
+   14. 404 / ERROR STATE
+================================================================ */
+.ip-not-found {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-muted);
+}
+
+.ip-not-found h2 { color: var(--text-primary); margin-bottom: 0.5rem; }
+
+.ip-not-found a {
+    color: var(--primary);
+    font-weight: 600;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+/* ================================================================
+   15. RESPONSIVE
+================================================================ */
+
+/* Tablet: 860px → collapse sidebar */
+@media (max-width: 860px) {
+    .ip-body {
+        grid-template-columns: 1fr;
+    }
+
+    .ip-sidebar {
+        order: -1;
+    }
+
+    .ip-stat-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .ip-stat-full { grid-column: span 4; }
+}
+
+/* Mobile: 640px */
+@media (max-width: 640px) {
+    .ip-wrap { padding: 1.25rem 1rem 3rem; }
+
+    .ip-hero-inner { padding: 0 1rem; gap: 1.25rem; }
+
+    .ip-avatar,
+    .ip-avatar-initials { width: 80px; height: 80px; font-size: 28px; }
+
+    .ip-hero-info h1 { font-size: 1.4rem; }
+
+    .ip-hero-stats { gap: 1rem; }
+    .ip-hero-stat .val { font-size: 1.1rem; }
+
+    .ip-tabs-inner { padding: 0 1rem; }
+
+    .ip-card { padding: 1.25rem; }
+
+    .ip-toolbar { gap: 0.5rem; }
+    .ip-sort-wrap { flex-wrap: wrap; }
+    .ip-sort-label { display: none; }
+
+    .ip-courses-grid { grid-template-columns: 1fr; }
+
+    .ip-rating-overview { gap: 1rem; flex-direction: column; align-items: center; }
+
+    .ip-stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .ip-stat-full { grid-column: span 2; }
+
+    .ip-rate-actions { flex-direction: column; align-items: stretch; }
+    .ip-btn-submit,
+    .ip-btn-remove { width: 100%; text-align: center; }
+}
+
+/* XS: 400px */
+@media (max-width: 400px) {
+    .ip-hero-stats { gap: 0.75rem; }
+    .ip-tab { padding: 0.75rem 0.875rem; font-size: 0.8rem; }
+    .ip-meta-grid { grid-template-columns: 1fr; }
+}

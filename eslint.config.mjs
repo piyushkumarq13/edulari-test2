@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Verbatim reference copies of the old PHP site's JS (ported to
+    // client components in later phases, deleted in Phase 10).
+    "public/legacy-js/**",
   ]),
 ]);
 

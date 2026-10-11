@@ -1,0 +1,635 @@
+account_recovery_attempts	CREATE TABLE `account_recovery_attempts` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `ip_address` varchar(45) NOT NULL,
+ `attempt_count` int(11) DEFAULT 0,
+ `first_attempt` datetime DEFAULT current_timestamp(),
+ `is_blocked` tinyint(4) DEFAULT 0,
+ `block_expires` datetime DEFAULT NULL,
+ `created_at` timestamp NULL DEFAULT current_timestamp(),
+ `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `ip_address` (`ip_address`),
+ KEY `idx_ip_address` (`ip_address`),
+ KEY `idx_is_blocked` (`is_blocked`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+app_settings	CREATE TABLE `app_settings` (
+ `setting_key` varchar(100) NOT NULL,
+ `setting_value` varchar(255) NOT NULL,
+ `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`setting_key`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+assignments	CREATE TABLE `assignments` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `lesson_id` int(11) NOT NULL,
+ `instructions` text NOT NULL,
+ `max_marks` int(11) DEFAULT 100,
+ `passing_marks` int(11) DEFAULT 40,
+ `due_days` int(11) DEFAULT 7,
+ `allow_late_submission` tinyint(4) DEFAULT 0,
+ `created_at` datetime DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `lesson_id` (`lesson_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+assignment_submissions	CREATE TABLE `assignment_submissions` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `enrollment_id` int(11) NOT NULL,
+ `lesson_id` int(11) NOT NULL,
+ `submission_text` text DEFAULT NULL,
+ `attachment_file` varchar(255) DEFAULT NULL,
+ `submitted_at` datetime DEFAULT current_timestamp(),
+ `marks_obtained` int(11) DEFAULT NULL,
+ `feedback` text DEFAULT NULL,
+ `status` enum('pending','graded','returned') DEFAULT 'pending',
+ `graded_at` datetime DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ KEY `enrollment_id` (`enrollment_id`),
+ KEY `lesson_id` (`lesson_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+bug_reports	CREATE TABLE `bug_reports` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `reference` varchar(20) NOT NULL,
+ `reporter_name` varchar(120) NOT NULL,
+ `reporter_email` varchar(255) NOT NULL,
+ `reporter_role` varchar(30) NOT NULL DEFAULT 'Guest',
+ `reporter_ip` varchar(45) NOT NULL DEFAULT '',
+ `issue_type` varchar(30) NOT NULL DEFAULT 'bug',
+ `page_url` varchar(500) NOT NULL DEFAULT '',
+ `subject` varchar(255) NOT NULL,
+ `description` text NOT NULL,
+ `steps` text DEFAULT NULL,
+ `expected` text DEFAULT NULL,
+ `severity` tinyint(3) unsigned NOT NULL DEFAULT 3,
+ `severity_label` varchar(20) NOT NULL DEFAULT 'Moderate',
+ `browser` varchar(200) NOT NULL DEFAULT '',
+ `attachment` varchar(260) DEFAULT NULL,
+ `status` enum('open','in_progress','resolved','wont_fix','duplicate') NOT NULL DEFAULT 'open',
+ `admin_notes` text DEFAULT NULL,
+ `resolved_at` datetime DEFAULT NULL,
+ `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+ `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `reference` (`reference`),
+ KEY `idx_status` (`status`),
+ KEY `idx_severity` (`severity`),
+ KEY `idx_reporter_email` (`reporter_email`),
+ KEY `idx_reporter_ip` (`reporter_ip`),
+ KEY `idx_created_at` (`created_at`),
+ KEY `idx_issue_type` (`issue_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+cart	CREATE TABLE `cart` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `student_id` int(11) NOT NULL,
+ `course_id` int(11) NOT NULL,
+ `added_at` datetime DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `unique_cart` (`student_id`,`course_id`),
+ KEY `course_id` (`course_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+categories	CREATE TABLE `categories` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar(100) NOT NULL,
+ `slug` varchar(100) NOT NULL,
+ `description` text DEFAULT NULL,
+ `created_at` datetime DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `slug` (`slug`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+certificates	CREATE TABLE `certificates` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `certificate_id` varchar(32) NOT NULL COMMENT 'Unique public ID like CERT-XXXX-XXXX-XXXX',
+ `enrollment_id` int(11) NOT NULL,
+ `student_id` int(11) NOT NULL,
+ `course_id` int(11) NOT NULL,
+ `course_name` varchar(255) NOT NULL COMMENT 'Snapshot of course title at time of issue',
+ `student_name` varchar(255) NOT NULL COMMENT 'Snapshot of student name at time of issue',
+ `issued_at` datetime NOT NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `uq_certificate_id` (`certificate_id`),
+ UNIQUE KEY `uq_enrollment` (`enrollment_id`),
+ KEY `student_id` (`student_id`),
+ KEY `course_id` (`course_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+contact_replies	CREATE TABLE `contact_replies` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `submission_id` int(10) unsigned NOT NULL,
+ `admin_id` int(10) unsigned NOT NULL COMMENT 'FK → users.id (the admin who replied)',
+ `reply_message` text NOT NULL,
+ `reply_type` enum('public','internal') NOT NULL DEFAULT 'public' COMMENT 'public = visible to user; internal = admin note only',
+ `resolution_status` varchar(50) DEFAULT NULL COMMENT 'Status the ticket was moved to with this reply',
+ `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `idx_submission_id` (`submission_id`),
+ KEY `idx_admin_id` (`admin_id`),
+ CONSTRAINT `fk_cr_submission` FOREIGN KEY (`submission_id`) REFERENCES `contact_submissions` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+contact_submissions	CREATE TABLE `contact_submissions` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `ticket_ref` varchar(20) NOT NULL COMMENT 'e.g. CT-A1B2C3D4',
+ `user_id` int(10) unsigned DEFAULT NULL COMMENT 'NULL for guests',
+ `sender_name` varchar(100) NOT NULL,
+ `sender_email` varchar(200) NOT NULL,
+ `sender_role` varchar(50) NOT NULL DEFAULT 'Guest',
+ `category` varchar(50) NOT NULL,
+ `priority` enum('low','normal','high','urgent') NOT NULL DEFAULT 'normal',
+ `subject` varchar(200) NOT NULL,
+ `message` text NOT NULL,
+ `order_ref` varchar(100) DEFAULT NULL,
+ `course_ref` varchar(200) DEFAULT NULL,
+ `sender_ip` varchar(45) NOT NULL COMMENT 'IPv4 or IPv6',
+ `status` enum('open','in_progress','waiting','resolved','closed') NOT NULL DEFAULT 'open',
+ `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+ `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `ticket_ref` (`ticket_ref`),
+ KEY `idx_status` (`status`),
+ KEY `idx_priority` (`priority`),
+ KEY `idx_category` (`category`),
+ KEY `idx_sender_email` (`sender_email`(100)),
+ KEY `idx_sender_ip` (`sender_ip`),
+ KEY `idx_user_id` (`user_id`),
+ KEY `idx_created_at` (`created_at`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+courses	CREATE TABLE `courses` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `instructor_id` int(11) NOT NULL,
+ `category_id` int(11) DEFAULT NULL,
+ `title` varchar(255) NOT NULL,
+ `slug` varchar(255) NOT NULL,
+ `description` longtext DEFAULT NULL,
+ `short_description` text DEFAULT NULL,
+ `thumbnail` varchar(255) DEFAULT NULL,
+ `level` enum('beginner','intermediate','advanced') DEFAULT 'beginner',
+ `language` varchar(50) DEFAULT 'English',
+ `duration_hours` int(11) DEFAULT 0,
+ `price` decimal(10,2) DEFAULT 0.00,
+ `is_published` tinyint(4) DEFAULT 0,
+ `is_featured` tinyint(4) DEFAULT 0,
+ `certificate_enabled` tinyint(4) DEFAULT 1,
+ `passing_percentage` int(11) DEFAULT 70,
+ `created_at` datetime DEFAULT current_timestamp(),
+ `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ `published_at` datetime DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `slug` (`slug`),
+ KEY `instructor_id` (`instructor_id`),
+ KEY `category_id` (`category_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+course_ai_chats	CREATE TABLE `course_ai_chats` (
+ `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ `course_id` int(10) unsigned NOT NULL,
+ `user_id` int(10) unsigned NOT NULL,
+ `created_at` timestamp NULL DEFAULT current_timestamp(),
+ `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `uniq_course_user` (`course_id`,`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+course_ai_messages	CREATE TABLE `course_ai_messages` (
+ `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ `chat_id` bigint(20) unsigned NOT NULL,
+ `course_id` int(10) unsigned NOT NULL,
+ `user_id` int(10) unsigned NOT NULL,
+ `role` enum('user','assistant') NOT NULL,
+ `content` mediumtext NOT NULL,
+ `versions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`versions`)),
+ `active_version` int(11) NOT NULL DEFAULT 0,
+ `feedback` enum('like','dislike') DEFAULT NULL,
+ `created_at` timestamp NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `chat_id` (`chat_id`,`created_at`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+course_ai_share_links	CREATE TABLE `course_ai_share_links` (
+ `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ `slug` varchar(16) NOT NULL,
+ `chat_id` bigint(20) unsigned NOT NULL,
+ `user_id` int(10) unsigned NOT NULL,
+ `created_at` timestamp NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `slug` (`slug`),
+ KEY `chat_id` (`chat_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+course_reviews	CREATE TABLE `course_reviews` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `course_id` int(11) NOT NULL,
+ `student_id` int(11) NOT NULL,
+ `rating` int(11) NOT NULL CHECK (`rating` >= 1 and `rating` <= 5),
+ `review_text` text DEFAULT NULL,
+ `created_at` datetime DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `course_id` (`course_id`),
+ KEY `student_id` (`student_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+course_sections	CREATE TABLE `course_sections` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `course_id` int(11) NOT NULL,
+ `title` varchar(255) NOT NULL,
+ `description` text DEFAULT NULL,
+ `sort_order` int(11) DEFAULT 0,
+ `created_at` datetime DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `course_id` (`course_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+email_verification_tokens	CREATE TABLE `email_verification_tokens` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `source_table` enum('unverified_users','users') NOT NULL DEFAULT 'unverified_users',
+ `token` varchar(64) NOT NULL,
+ `expires_at` datetime NOT NULL,
+ `created_at` datetime DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `token` (`token`),
+ UNIQUE KEY `user_id` (`user_id`),
+ KEY `expires_at` (`expires_at`)
+) ENGINE=MyISAM AUTO_INCREMENT=139 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+enrollments	CREATE TABLE `enrollments` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `course_id` int(11) NOT NULL,
+ `student_id` int(11) NOT NULL,
+ `enrolled_at` datetime DEFAULT current_timestamp(),
+ `completed_at` datetime DEFAULT NULL,
+ `progress_percentage` int(11) DEFAULT 0,
+ `final_grade` decimal(5,2) DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `unique_enrollment` (`course_id`,`student_id`),
+ KEY `student_id` (`student_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+instructor_applications	CREATE TABLE `instructor_applications` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `highest_education` varchar(80) NOT NULL DEFAULT '',
+ `institution` varchar(150) NOT NULL DEFAULT '',
+ `field_of_study` varchar(150) NOT NULL DEFAULT '',
+ `graduation_year` year(4) DEFAULT NULL,
+ `certifications` text DEFAULT NULL,
+ `professional_exp` text NOT NULL,
+ `notable_works` text DEFAULT NULL,
+ `primary_subject` varchar(100) NOT NULL DEFAULT '',
+ `secondary_subjects` varchar(255) DEFAULT NULL,
+ `skill_level` varchar(30) NOT NULL DEFAULT '',
+ `target_audience` varchar(255) NOT NULL DEFAULT '',
+ `course_ideas` text NOT NULL,
+ `sample_content_url` varchar(255) DEFAULT NULL,
+ `full_legal_name` varchar(150) NOT NULL DEFAULT '',
+ `pan_number` varchar(10) DEFAULT NULL,
+ `bank_account` varchar(20) DEFAULT NULL,
+ `ifsc_code` varchar(11) DEFAULT NULL,
+ `account_holder` varchar(150) DEFAULT NULL,
+ `upi_id` varchar(100) DEFAULT NULL,
+ `revenue_share_ack` tinyint(4) NOT NULL DEFAULT 0,
+ `terms_agreed` tinyint(4) NOT NULL DEFAULT 0,
+ `content_policy` tinyint(4) NOT NULL DEFAULT 0,
+ `govt_id_file` varchar(255) DEFAULT NULL,
+ `marksheet_file` varchar(255) DEFAULT NULL,
+ `docs_scheduled_delete` datetime DEFAULT NULL,
+ `docs_delete_after` datetime DEFAULT NULL,
+ `status` enum('draft','pending','approved','rejected') NOT NULL DEFAULT 'draft',
+ `rejection_reason` text DEFAULT NULL,
+ `submitted_at` datetime DEFAULT current_timestamp(),
+ `reviewed_at` datetime DEFAULT NULL,
+ `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ `test_score` tinyint(3) unsigned NOT NULL DEFAULT 0,
+ `test_time_taken_seconds` int(11) DEFAULT NULL,
+ `test_attempt_started_at` datetime DEFAULT NULL,
+ `last_completed_step` tinyint(3) unsigned NOT NULL DEFAULT 1,
+ `reg_step` tinyint(3) unsigned NOT NULL DEFAULT 1,
+ `profile_headline` varchar(120) DEFAULT NULL,
+ `profile_bio` text DEFAULT NULL,
+ `profile_website` varchar(255) DEFAULT NULL,
+ `profile_linkedin` varchar(255) DEFAULT NULL,
+ `profile_twitter` varchar(255) DEFAULT NULL,
+ `profile_years_exp` tinyint(3) unsigned DEFAULT 0,
+ `profile_teach_style` varchar(50) DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `user_id` (`user_id`),
+ KEY `status` (`status`)
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+instructor_payouts	CREATE TABLE `instructor_payouts` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `instructor_id` int(10) unsigned NOT NULL,
+ `amount` decimal(10,2) NOT NULL,
+ `currency` varchar(10) NOT NULL DEFAULT 'INR',
+ `status` enum('pending','paid','cancelled') NOT NULL DEFAULT 'pending',
+ `payment_method` varchar(100) DEFAULT NULL,
+ `reference_no` varchar(255) DEFAULT NULL,
+ `note` text DEFAULT NULL,
+ `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+ `paid_at` datetime DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ KEY `idx_instructor` (`instructor_id`),
+ KEY `idx_status` (`status`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+instructor_profiles	CREATE TABLE `instructor_profiles` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `headline` varchar(120) NOT NULL DEFAULT '',
+ `bio` text NOT NULL,
+ `website` varchar(255) DEFAULT NULL,
+ `linkedin_url` varchar(255) DEFAULT NULL,
+ `twitter_url` varchar(255) DEFAULT NULL,
+ `years_exp` tinyint(3) NOT NULL DEFAULT 0,
+ `teaching_style` varchar(50) DEFAULT NULL,
+ `avatar_url` varchar(255) DEFAULT NULL,
+ `created_at` datetime DEFAULT current_timestamp(),
+ `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+instructor_ratings	CREATE TABLE `instructor_ratings` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `instructor_id` int(11) NOT NULL,
+ `student_id` int(11) NOT NULL,
+ `rating` tinyint(1) NOT NULL CHECK (`rating` between 1 and 5),
+ `note` varchar(200) DEFAULT NULL,
+ `created_at` datetime DEFAULT current_timestamp(),
+ `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `uq_student_instructor` (`student_id`,`instructor_id`),
+ KEY `idx_instructor` (`instructor_id`),
+ KEY `idx_student` (`student_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+lessons	CREATE TABLE `lessons` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `section_id` int(11) NOT NULL,
+ `course_id` int(11) NOT NULL,
+ `title` varchar(255) NOT NULL,
+ `content_type` enum('video','text','pdf','quiz','assignment') NOT NULL,
+ `content_text` longtext DEFAULT NULL,
+ `video_url` varchar(500) DEFAULT NULL,
+ `video_duration` int(11) DEFAULT 0,
+ `pdf_file` varchar(255) DEFAULT NULL,
+ `is_free_preview` tinyint(4) DEFAULT 0,
+ `sort_order` int(11) DEFAULT 0,
+ `created_at` datetime DEFAULT current_timestamp(),
+ `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `section_id` (`section_id`),
+ KEY `course_id` (`course_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=74 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+lesson_progress	CREATE TABLE `lesson_progress` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `enrollment_id` int(11) NOT NULL,
+ `lesson_id` int(11) NOT NULL,
+ `completed_at` datetime DEFAULT NULL,
+ `time_spent_seconds` int(11) DEFAULT 0,
+ `created_at` datetime DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `unique_progress` (`enrollment_id`,`lesson_id`),
+ KEY `lesson_id` (`lesson_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+login_attempts	CREATE TABLE `login_attempts` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `identifier` varchar(255) NOT NULL,
+ `type` enum('email','ip') NOT NULL,
+ `attempt_count` int(11) DEFAULT 0,
+ `last_attempt` datetime DEFAULT NULL,
+ `is_blocked` tinyint(4) DEFAULT 0,
+ `block_expires` datetime DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+notification_messages	CREATE TABLE `notification_messages` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `type` varchar(50) NOT NULL,
+ `title` varchar(255) NOT NULL,
+ `body` text NOT NULL,
+ `audience` varchar(20) NOT NULL DEFAULT 'all',
+ `target_user_id` int(11) DEFAULT NULL,
+ `sent_by` int(11) DEFAULT NULL,
+ `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `idx_audience` (`audience`),
+ KEY `idx_target` (`target_user_id`),
+ KEY `idx_created` (`created_at`)
+) ENGINE=MyISAM AUTO_INCREMENT=122 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+notification_reads	CREATE TABLE `notification_reads` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `message_id` int(11) NOT NULL,
+ `user_id` int(11) NOT NULL,
+ `is_read` tinyint(1) NOT NULL DEFAULT 0,
+ `deleted_at` datetime DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `uq_msg_user` (`message_id`,`user_id`),
+ KEY `idx_user_read` (`user_id`,`is_read`)
+) ENGINE=MyISAM AUTO_INCREMENT=76 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+password_resets	CREATE TABLE `password_resets` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `token` varchar(64) NOT NULL,
+ `expires_at` datetime NOT NULL,
+ PRIMARY KEY (`id`),
+ KEY `user_id` (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+password_reset_attempts	CREATE TABLE `password_reset_attempts` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `identifier` varchar(255) NOT NULL,
+ `type` enum('email','ip') NOT NULL,
+ `attempt_at` datetime NOT NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `idx_identifier_type` (`identifier`,`type`),
+ KEY `idx_attempt_at` (`attempt_at`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+purchase_history	CREATE TABLE `purchase_history` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `student_id` int(11) NOT NULL,
+ `razorpay_order_id` varchar(100) NOT NULL,
+ `razorpay_payment_id` varchar(100) NOT NULL,
+ `amount_paise` int(11) unsigned NOT NULL,
+ `currency` varchar(10) NOT NULL DEFAULT 'INR',
+ `status` enum('paid','enrollment_failed','enrolled','refunded') NOT NULL DEFAULT 'paid',
+ `enrolled_count` tinyint(3) unsigned NOT NULL DEFAULT 0,
+ `courses_json` longtext NOT NULL,
+ `ip_address` varchar(45) DEFAULT NULL,
+ `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+ `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `uq_payment` (`razorpay_payment_id`),
+ KEY `idx_student` (`student_id`),
+ KEY `idx_order` (`razorpay_order_id`),
+ KEY `idx_status` (`status`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+quiz_answers	CREATE TABLE `quiz_answers` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `attempt_id` int(11) NOT NULL,
+ `question_id` int(11) NOT NULL,
+ `selected_option_id` int(11) DEFAULT NULL,
+ `is_correct` tinyint(4) DEFAULT 0,
+ `points_earned` int(11) DEFAULT 0,
+ PRIMARY KEY (`id`),
+ KEY `attempt_id` (`attempt_id`),
+ KEY `question_id` (`question_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+quiz_attempts	CREATE TABLE `quiz_attempts` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `enrollment_id` int(11) NOT NULL,
+ `lesson_id` int(11) NOT NULL,
+ `score` int(11) DEFAULT 0,
+ `total_points` int(11) DEFAULT 0,
+ `percentage` decimal(5,2) DEFAULT 0.00,
+ `passed` tinyint(4) DEFAULT 0,
+ `started_at` datetime DEFAULT current_timestamp(),
+ `completed_at` datetime DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ KEY `enrollment_id` (`enrollment_id`),
+ KEY `lesson_id` (`lesson_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+quiz_options	CREATE TABLE `quiz_options` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `question_id` int(11) NOT NULL,
+ `option_text` text NOT NULL,
+ `is_correct` tinyint(4) DEFAULT 0,
+ `sort_order` int(11) DEFAULT 0,
+ PRIMARY KEY (`id`),
+ KEY `question_id` (`question_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+quiz_questions	CREATE TABLE `quiz_questions` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `lesson_id` int(11) NOT NULL,
+ `question` text NOT NULL,
+ `question_type` enum('multiple_choice','true_false','short_answer') DEFAULT 'multiple_choice',
+ `points` int(11) DEFAULT 1,
+ `sort_order` int(11) DEFAULT 0,
+ `created_at` datetime DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `lesson_id` (`lesson_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+razorpay_orders	CREATE TABLE `razorpay_orders` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `student_id` int(11) NOT NULL,
+ `razorpay_order_id` varchar(64) NOT NULL,
+ `amount_paise` int(11) NOT NULL,
+ `currency` varchar(10) NOT NULL DEFAULT 'INR',
+ `courses_json` text NOT NULL,
+ `status` enum('created','enrolled','enrollment_failed','abandoned','failed','cancelled') NOT NULL DEFAULT 'created',
+ `failure_reason` varchar(255) DEFAULT NULL,
+ `created_at` timestamp NULL DEFAULT current_timestamp(),
+ `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `razorpay_order_id` (`razorpay_order_id`),
+ KEY `idx_status_created` (`status`,`created_at`)
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+registration_blocks	CREATE TABLE `registration_blocks` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `ip_address` varchar(45) NOT NULL,
+ `attempt_count` tinyint(3) unsigned NOT NULL DEFAULT 1,
+ `first_attempt` datetime NOT NULL DEFAULT current_timestamp(),
+ `block_expires` datetime DEFAULT NULL,
+ `is_blocked` tinyint(1) NOT NULL DEFAULT 0,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `uq_reg_ip` (`ip_address`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+student_profiles	CREATE TABLE `student_profiles` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `user_id` int(10) unsigned NOT NULL,
+ `highest_education` enum('high_school','diploma','bachelors','masters','phd','other') DEFAULT NULL,
+ `college_name` varchar(255) DEFAULT NULL,
+ `field_of_study` varchar(255) DEFAULT NULL,
+ `courses_interested` varchar(1000) DEFAULT NULL COMMENT 'Comma-separated category names / free text',
+ `skills` varchar(1000) DEFAULT NULL COMMENT 'Comma-separated skill tags',
+ `learning_goal` enum('career_change','skill_upgrade','personal_interest','academic','other') DEFAULT NULL,
+ `experience_level` enum('beginner','intermediate','advanced') DEFAULT NULL,
+ `bio` text DEFAULT NULL,
+ `phone` varchar(20) DEFAULT NULL,
+ `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+ `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `uq_user_profile` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+study_plan	CREATE TABLE `study_plan` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `student_id` int(10) unsigned NOT NULL,
+ `course_id` int(10) unsigned NOT NULL,
+ `lesson_id` int(10) unsigned DEFAULT NULL,
+ `planned_date` date NOT NULL,
+ `planned_time` time DEFAULT NULL,
+ `duration_min` smallint(6) DEFAULT 30 COMMENT 'Planned study minutes',
+ `note` varchar(255) DEFAULT NULL,
+ `is_done` tinyint(1) NOT NULL DEFAULT 0,
+ `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+ `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (`id`),
+ KEY `idx_student_date` (`student_id`,`planned_date`),
+ KEY `idx_course` (`course_id`),
+ KEY `idx_lesson` (`lesson_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+test_failures	CREATE TABLE `test_failures` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `user_id` int(10) unsigned NOT NULL,
+ `ip_address` varchar(45) NOT NULL,
+ `context` varchar(64) NOT NULL DEFAULT 'instructor_registration',
+ `failed_at` datetime NOT NULL,
+ `retry_after` datetime NOT NULL,
+ PRIMARY KEY (`id`),
+ KEY `idx_user` (`user_id`),
+ KEY `idx_ip` (`ip_address`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+test_tokens	CREATE TABLE `test_tokens` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `user_id` int(10) unsigned NOT NULL,
+ `token` varchar(64) NOT NULL,
+ `expires_at` datetime NOT NULL,
+ `used` tinyint(1) NOT NULL DEFAULT 0,
+ `started_at` datetime DEFAULT NULL,
+ `questions_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`questions_data`)),
+ `answers_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`answers_data`)),
+ `started_ip` varchar(45) DEFAULT NULL,
+ `last_autosave_at` datetime DEFAULT NULL,
+ `test_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`test_data`)),
+ `answers_updated_at` datetime DEFAULT NULL,
+ `on_pass_action` varchar(64) NOT NULL DEFAULT 'instructor_registration',
+ `redirect_pass` varchar(255) NOT NULL DEFAULT '/instructor-register-success',
+ `redirect_fail` varchar(255) NOT NULL DEFAULT '/instructor-register',
+ `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `token` (`token`),
+ KEY `idx_token` (`token`),
+ KEY `idx_user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+users	CREATE TABLE `users` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar(255) NOT NULL,
+ `email` varchar(255) NOT NULL,
+ `password` varchar(255) DEFAULT NULL,
+ `oauth_provider` varchar(20) DEFAULT NULL COMMENT 'google | github | null for password users',
+ `oauth_id` varchar(255) DEFAULT NULL COMMENT 'Unique user ID returned by the OAuth provider',
+ `avatar_url` varchar(512) DEFAULT NULL COMMENT 'Profile picture URL from OAuth provider',
+ `registration_date` datetime DEFAULT NULL,
+ `last_login` datetime DEFAULT NULL,
+ `email_verified` tinyint(4) DEFAULT 1,
+ `is_recovery_mode` tinyint(1) DEFAULT 0,
+ `ip_address` varchar(45) DEFAULT NULL,
+ `profile_completed` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = onboarding not done, 1 = done',
+ `role` varchar(20) NOT NULL DEFAULT 'student',
+ `bio` text DEFAULT NULL,
+ `profile_image` varchar(255) DEFAULT NULL,
+ `is_active` tinyint(4) DEFAULT 1,
+ `block_reason` varchar(50) DEFAULT NULL,
+ `block_note` varchar(255) DEFAULT NULL,
+ `password_changed_at` datetime DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `email` (`email`),
+ UNIQUE KEY `idx_oauth_provider_id` (`oauth_provider`,`oauth_id`),
+ KEY `idx_is_recovery_mode` (`is_recovery_mode`)
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+user_sessions	CREATE TABLE `user_sessions` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `session_token` varchar(64) NOT NULL,
+ `ip_address` varchar(45) NOT NULL DEFAULT '',
+ `device_info` varchar(255) NOT NULL DEFAULT '',
+ `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+ `last_active` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ `is_active` tinyint(1) NOT NULL DEFAULT 1,
+ `expires_at` datetime DEFAULT NULL,
+ `kicked_reason` varchar(50) DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `unique_token` (`session_token`),
+ KEY `idx_user_id` (`user_id`),
+ KEY `idx_token` (`session_token`)
+) ENGINE=MyISAM AUTO_INCREMENT=151 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci
+wishlists	CREATE TABLE `wishlists` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `student_id` int(11) NOT NULL,
+ `course_id` int(11) NOT NULL,
+ `created_at` datetime DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `unique_wishlist` (`student_id`,`course_id`),
+ KEY `course_id` (`course_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci

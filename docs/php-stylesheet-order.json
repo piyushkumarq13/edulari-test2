@@ -1,0 +1,1416 @@
+{
+  "layoutCss": [
+    "base.css"
+  ],
+  "rows": [
+    {
+      "page": "home",
+      "php": "index.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "home.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)",
+      "group": "site",
+      "newCss": [
+        "home.css"
+      ]
+    },
+    {
+      "page": "about",
+      "php": "page/about.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "about.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/about",
+      "group": "site",
+      "newCss": [
+        "about.css"
+      ]
+    },
+    {
+      "page": "browse courses",
+      "php": "browse-courses.php",
+      "sheets": [
+        "base.css",
+        "student/dashboard.css",
+        "student/navbar.css",
+        "browse-courses.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/browse-courses",
+      "group": "site",
+      "newCss": [
+        "student/dashboard.css",
+        "browse-courses.css"
+      ]
+    },
+    {
+      "page": "categories",
+      "php": "categories.php",
+      "sheets": [
+        "base.css",
+        "student/dashboard.css",
+        "categories.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/categories",
+      "group": "site",
+      "newCss": [
+        "student/dashboard.css",
+        "categories.css"
+      ]
+    },
+    {
+      "page": "category detail",
+      "php": "page/category.php",
+      "missing": true
+    },
+    {
+      "page": "course detail",
+      "php": "course.php",
+      "sheets": [
+        "base.css",
+        "browse-courses.css",
+        "course.css",
+        "markdown-styles.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [
+        {
+          "chars": 2620,
+          "first": "/* ── Override: make course page use navbar layout (like browse-courses) ── */"
+        }
+      ],
+      "newDir": "app/(site)/course/[slug]",
+      "group": "site",
+      "newCss": [
+        "browse-courses.css",
+        "course.css",
+        "markdown-styles.css"
+      ]
+    },
+    {
+      "page": "instructor profile public",
+      "php": "instructor-profile.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "instructor-profile.css",
+        "instructor-profile.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [
+        {
+          "chars": 59,
+          "first": ".ip-body.sidebar-hidden {"
+        }
+      ],
+      "newDir": "app/(site)/instructor-profile/[slug]",
+      "group": "site",
+      "newCss": [
+        "instructor-profile.css"
+      ]
+    },
+    {
+      "page": "contact",
+      "php": "contact.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "contact.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/contact",
+      "group": "site",
+      "newCss": [
+        "contact.css"
+      ]
+    },
+    {
+      "page": "track contact",
+      "php": "track-contact.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "track-contact.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/track-contact",
+      "group": "site",
+      "newCss": [
+        "track-contact.css"
+      ]
+    },
+    {
+      "page": "help center",
+      "php": "help-center.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "help-center.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/help-center",
+      "group": "site",
+      "newCss": [
+        "help-center.css"
+      ]
+    },
+    {
+      "page": "report bug",
+      "php": "report-bug.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "report-bug.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/report-bug",
+      "group": "site",
+      "newCss": [
+        "report-bug.css"
+      ]
+    },
+    {
+      "page": "track report",
+      "php": "track-report.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "track-report.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/track-report",
+      "group": "site",
+      "newCss": [
+        "track-report.css"
+      ]
+    },
+    {
+      "page": "security",
+      "php": "security.php",
+      "sheets": [
+        "base.css",
+        "security.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/security",
+      "group": "site",
+      "newCss": [
+        "security.css"
+      ]
+    },
+    {
+      "page": "updates",
+      "php": "updates.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "updates.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/updates",
+      "group": "site",
+      "newCss": [
+        "updates.css"
+      ]
+    },
+    {
+      "page": "demo",
+      "php": "demo.php",
+      "sheets": [
+        "base.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [],
+      "newDir": "app/demo",
+      "group": "bare",
+      "newCss": []
+    },
+    {
+      "page": "verify certificate",
+      "php": "verify-certificate.php",
+      "sheets": [
+        "base.css",
+        "verify-certificate.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(foot)/verify-certificate",
+      "group": "bare",
+      "newCss": [
+        "verify-certificate.css"
+      ]
+    },
+    {
+      "page": "login",
+      "php": "login.php",
+      "sheets": [
+        "base.css",
+        "auth/login.css",
+        "auth/oauth.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/login",
+      "group": "bare",
+      "newCss": [
+        "auth/login.css",
+        "auth/oauth.css"
+      ]
+    },
+    {
+      "page": "register",
+      "php": "register.php",
+      "sheets": [
+        "base.css",
+        "auth/register.css",
+        "auth/oauth.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/register",
+      "group": "bare",
+      "newCss": [
+        "auth/register.css",
+        "auth/oauth.css"
+      ]
+    },
+    {
+      "page": "register success",
+      "php": "register-success.php",
+      "sheets": [
+        "base.css",
+        "auth/register-success.css",
+        "auth/register-success.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [
+        {
+          "chars": 715,
+          "first": ".btn-login {"
+        },
+        {
+          "chars": 1132,
+          "first": ".btn-check-status {"
+        }
+      ],
+      "newDir": "app/register-success",
+      "group": "bare",
+      "newCss": [
+        "auth/register-success.css"
+      ]
+    },
+    {
+      "page": "account activation",
+      "php": "account-activation.php",
+      "sheets": [
+        "base.css",
+        "auth/account-activation.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/account-activation",
+      "group": "bare",
+      "newCss": [
+        "auth/account-activation.css"
+      ]
+    },
+    {
+      "page": "verify email",
+      "php": "verify-email.php",
+      "sheets": [
+        "base.css",
+        "auth/verify-email.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/verify-email",
+      "group": "bare",
+      "newCss": [
+        "auth/verify-email.css"
+      ]
+    },
+    {
+      "page": "forgot password",
+      "php": "forgot-password.php",
+      "sheets": [
+        "base.css",
+        "auth/forgot-password.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/forgot-password",
+      "group": "bare",
+      "newCss": [
+        "auth/forgot-password.css"
+      ]
+    },
+    {
+      "page": "reset password",
+      "php": "reset-password.php",
+      "sheets": [
+        "base.css",
+        "auth/reset-password.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/reset-password",
+      "group": "bare",
+      "newCss": [
+        "auth/reset-password.css"
+      ]
+    },
+    {
+      "page": "password reset after verify",
+      "php": "password-reset-after-verify.php",
+      "sheets": [
+        "base.css",
+        "auth/password-reset-after-verify.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/password-reset-after-verify",
+      "group": "bare",
+      "newCss": [
+        "auth/password-reset-after-verify.css"
+      ]
+    },
+    {
+      "page": "cart",
+      "php": "cart.php",
+      "sheets": [
+        "base.css",
+        "cart-wishlist.css",
+        "student/navbar.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/cart",
+      "group": "site",
+      "newCss": [
+        "cart-wishlist.css"
+      ]
+    },
+    {
+      "page": "wishlist",
+      "php": "wishlist.php",
+      "sheets": [
+        "base.css",
+        "cart-wishlist.css",
+        "student/navbar.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/wishlist",
+      "group": "site",
+      "newCss": [
+        "cart-wishlist.css"
+      ]
+    },
+    {
+      "page": "checkout",
+      "php": "checkout.php",
+      "sheets": [
+        "base.css",
+        "cart-wishlist.css",
+        "checkout.css",
+        "student/navbar.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [
+        {
+          "chars": 87,
+          "first": "@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }"
+        }
+      ],
+      "newDir": "app/(site)/checkout",
+      "group": "site",
+      "newCss": [
+        "cart-wishlist.css",
+        "checkout.css"
+      ]
+    },
+    {
+      "page": "purchase history",
+      "php": "student/purchase-history.php",
+      "sheets": [
+        "base.css",
+        "student/purchase-history.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/student/purchase-history",
+      "group": "site",
+      "newCss": [
+        "student/purchase-history.css"
+      ]
+    },
+    {
+      "page": "receipt",
+      "php": "student/receipt.php",
+      "sheets": [
+        "base.css",
+        "student/receipt.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/student/receipt",
+      "group": "bare",
+      "newCss": [
+        "student/receipt.css"
+      ]
+    },
+    {
+      "page": "check payment status",
+      "php": "student/check-payment-status.php",
+      "sheets": [
+        "base.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [],
+      "newDir": null,
+      "group": "bare",
+      "newCss": null
+    },
+    {
+      "page": "onboarding",
+      "php": "student/onboarding.php",
+      "sheets": [
+        "base.css",
+        "auth/onboarding.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(student)/student/onboarding",
+      "group": "bare",
+      "newCss": [
+        "auth/onboarding.css"
+      ]
+    },
+    {
+      "page": "student dashboard",
+      "php": "student/dashboard.php",
+      "sheets": [
+        "base.css",
+        "student/dashboard.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [
+        {
+          "chars": 2845,
+          "first": "/* ── Onboarding Banner ── */"
+        }
+      ],
+      "newDir": "app/(site)/student/dashboard",
+      "group": "site",
+      "newCss": [
+        "student/dashboard.css"
+      ]
+    },
+    {
+      "page": "my courses",
+      "php": "student/my-courses.php",
+      "sheets": [
+        "base.css",
+        "student/my-courses.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/student/my-courses",
+      "group": "site",
+      "newCss": [
+        "student/my-courses.css"
+      ]
+    },
+    {
+      "page": "learn",
+      "php": "student/learn.php",
+      "sheets": [
+        "base.css",
+        "student/learn.css",
+        "markdown-styles.css",
+        "course-ai.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(student)/student/learn",
+      "group": "bare",
+      "newCss": [
+        "student/learn.css",
+        "markdown-styles.css",
+        "course-ai.css"
+      ]
+    },
+    {
+      "page": "student profile",
+      "php": "student/profile.php",
+      "sheets": [
+        "base.css",
+        "student/profile.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/student/profile",
+      "group": "site",
+      "newCss": [
+        "student/profile.css"
+      ]
+    },
+    {
+      "page": "grades",
+      "php": "student/grades.php",
+      "sheets": [
+        "base.css",
+        "student/grades.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/student/grades",
+      "group": "site",
+      "newCss": [
+        "student/grades.css"
+      ]
+    },
+    {
+      "page": "certificates",
+      "php": "student/certificates.php",
+      "sheets": [
+        "base.css",
+        "student/certificates.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/student/certificates",
+      "group": "site",
+      "newCss": [
+        "student/certificates.css"
+      ]
+    },
+    {
+      "page": "generate certificate",
+      "php": "student/generate-certificate.php",
+      "sheets": [
+        "base.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css",
+        "student/generate-certificate.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [
+        {
+          "chars": 17893,
+          "first": "/* ============================================================"
+        }
+      ],
+      "newDir": "app/(student)/student/generate-certificate",
+      "group": "bare",
+      "newCss": [
+        "student/generate-certificate.css"
+      ]
+    },
+    {
+      "page": "schedule",
+      "php": "student/schedule.php",
+      "sheets": [
+        "base.css",
+        "student/schedule.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/student/schedule",
+      "group": "site",
+      "newCss": [
+        "student/schedule.css"
+      ]
+    },
+    {
+      "page": "shared ai chat",
+      "php": "course-ai-shared.php",
+      "sheets": [
+        "base.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "style=\"background:#f8fafc;min-height:100vh\"",
+      "inlineStyles": [],
+      "newDir": "app/(student)/course-ai-shared",
+      "group": "bare",
+      "newCss": []
+    },
+    {
+      "page": "instructor register step 1",
+      "php": "instructor-register/step-1.php",
+      "sheets": [
+        "base.css",
+        "auth/instructor-register.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [],
+      "newDir": "app/instructor-register/step-1",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-register.css"
+      ]
+    },
+    {
+      "page": "instructor register step 2",
+      "php": "instructor-register/step-2.php",
+      "sheets": [
+        "base.css",
+        "auth/instructor-register.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [],
+      "newDir": "app/instructor-register/step-2",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-register.css"
+      ]
+    },
+    {
+      "page": "instructor register step 3",
+      "php": "instructor-register/step-3.php",
+      "sheets": [
+        "base.css",
+        "auth/instructor-register.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [],
+      "newDir": "app/instructor-register/step-3",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-register.css"
+      ]
+    },
+    {
+      "page": "instructor register step 4",
+      "php": "instructor-register/step-4.php",
+      "sheets": [
+        "base.css",
+        "auth/instructor-register.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [],
+      "newDir": "app/instructor-register/step-4",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-register.css"
+      ]
+    },
+    {
+      "page": "instructor register step 5",
+      "php": "instructor-register/step-5.php",
+      "sheets": [
+        "base.css",
+        "auth/instructor-register.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [],
+      "newDir": "app/instructor-register/step-5",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-register.css"
+      ]
+    },
+    {
+      "page": "instructor register step 6",
+      "php": "instructor-register/step-6.php",
+      "sheets": [
+        "base.css",
+        "auth/instructor-register.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [
+        {
+          "chars": 551,
+          "first": "/* Locked edit label for step 1 */"
+        }
+      ],
+      "newDir": "app/instructor-register/step-6",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-register.css"
+      ]
+    },
+    {
+      "page": "instructor register step 7",
+      "php": "instructor-register/step-7.php",
+      "sheets": [
+        "base.css",
+        "auth/instructor-register.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [],
+      "newDir": "app/instructor-register/step-7",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-register.css"
+      ]
+    },
+    {
+      "page": "instructor register step 8",
+      "php": "instructor-register/step-8.php",
+      "sheets": [
+        "base.css",
+        "auth/instructor-register.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no <body>)",
+      "inlineStyles": [
+        {
+          "chars": 3019,
+          "first": "/* ── Step 8: Test Preview ─────────────────────────────────────────────────── */"
+        }
+      ],
+      "newDir": "app/instructor-register/step-8",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-register.css"
+      ]
+    },
+    {
+      "page": "instructor register success",
+      "php": "instructor-register-success.php",
+      "sheets": [
+        "base.css",
+        "auth/instructor-register-success.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/instructor-register-success",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-register-success.css"
+      ]
+    },
+    {
+      "page": "competency test",
+      "php": "test/index.php",
+      "sheets": [
+        "base.css",
+        "base.css",
+        "auth/instructor-test.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [
+        {
+          "chars": 3780,
+          "first": "/* ── Spinner Overlay ─────────────────────────────────────── */"
+        }
+      ],
+      "newDir": "app/test",
+      "group": "bare",
+      "newCss": [
+        "auth/instructor-test.css"
+      ]
+    },
+    {
+      "page": "instructor dashboard",
+      "php": "instructor/dashboard.php",
+      "sheets": [
+        "base.css",
+        "instructor/dashboard.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/dashboard",
+      "group": "site",
+      "newCss": [
+        "instructor/dashboard.css"
+      ]
+    },
+    {
+      "page": "instructor courses",
+      "php": "instructor/courses.php",
+      "sheets": [
+        "base.css",
+        "instructor/courses.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/courses",
+      "group": "site",
+      "newCss": [
+        "instructor/courses.css"
+      ]
+    },
+    {
+      "page": "instructor create course",
+      "php": "instructor/create-course.php",
+      "sheets": [
+        "base.css",
+        "instructor/create-course.css",
+        "md-editor.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/create-course",
+      "group": "site",
+      "newCss": [
+        "instructor/create-course.css",
+        "md-editor.css"
+      ]
+    },
+    {
+      "page": "instructor edit course",
+      "php": "instructor/edit-course.php",
+      "sheets": [
+        "base.css",
+        "instructor/edit-course.css",
+        "md-editor.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/edit-course",
+      "group": "site",
+      "newCss": [
+        "instructor/edit-course.css",
+        "md-editor.css"
+      ]
+    },
+    {
+      "page": "instructor course content",
+      "php": "instructor/course-content.php",
+      "sheets": [
+        "base.css",
+        "instructor/course-content.css",
+        "md-editor.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/course-content",
+      "group": "site",
+      "newCss": [
+        "instructor/course-content.css",
+        "md-editor.css"
+      ]
+    },
+    {
+      "page": "instructor course analytics",
+      "php": "instructor/course-analytics.php",
+      "sheets": [
+        "base.css",
+        "instructor/course-analytics.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/course-analytics",
+      "group": "site",
+      "newCss": [
+        "instructor/course-analytics.css"
+      ]
+    },
+    {
+      "page": "instructor analytics",
+      "php": "instructor/analytics.php",
+      "sheets": [
+        "base.css",
+        "instructor/analytics.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/analytics",
+      "group": "site",
+      "newCss": [
+        "instructor/analytics.css"
+      ]
+    },
+    {
+      "page": "instructor students",
+      "php": "instructor/students.php",
+      "sheets": [
+        "base.css",
+        "instructor/students.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/students",
+      "group": "site",
+      "newCss": [
+        "instructor/students.css"
+      ]
+    },
+    {
+      "page": "instructor reviews",
+      "php": "instructor/reviews.php",
+      "sheets": [
+        "base.css",
+        "instructor/reviews.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/reviews",
+      "group": "site",
+      "newCss": [
+        "instructor/reviews.css"
+      ]
+    },
+    {
+      "page": "instructor earnings",
+      "php": "instructor/earnings.php",
+      "sheets": [
+        "base.css",
+        "instructor/earnings.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/earnings",
+      "group": "site",
+      "newCss": [
+        "instructor/earnings.css"
+      ]
+    },
+    {
+      "page": "instructor profile panel",
+      "php": "instructor/profile.php",
+      "sheets": [
+        "base.css",
+        "instructor/profile.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/instructor/profile",
+      "group": "site",
+      "newCss": [
+        "instructor/profile.css"
+      ]
+    },
+    {
+      "page": "admin dashboard",
+      "php": "admin/dashboard.php",
+      "sheets": [
+        "base.css",
+        "admin/dashboard.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/dashboard",
+      "group": "site",
+      "newCss": [
+        "admin/dashboard.css"
+      ]
+    },
+    {
+      "page": "admin users",
+      "php": "admin/users.php",
+      "sheets": [
+        "base.css",
+        "admin/users.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/users",
+      "group": "site",
+      "newCss": [
+        "admin/users.css"
+      ]
+    },
+    {
+      "page": "admin user detail",
+      "php": "admin/user-detail.php",
+      "sheets": [
+        "base.css",
+        "admin/user-detail.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/user-detail",
+      "group": "site",
+      "newCss": [
+        "admin/user-detail.css"
+      ]
+    },
+    {
+      "page": "admin instructor applications",
+      "php": "admin/instructor-applications.php",
+      "sheets": [
+        "base.css",
+        "admin/instructor-applications.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/instructor-applications",
+      "group": "site",
+      "newCss": [
+        "admin/instructor-applications.css"
+      ]
+    },
+    {
+      "page": "admin instructor application detail",
+      "php": "admin/instructor-application-detail.php",
+      "sheets": [
+        "base.css",
+        "admin/instructor-application-detail.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/instructor-application-detail",
+      "group": "site",
+      "newCss": [
+        "admin/instructor-application-detail.css"
+      ]
+    },
+    {
+      "page": "admin courses",
+      "php": "admin/courses.php",
+      "sheets": [
+        "base.css",
+        "admin/courses.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/courses",
+      "group": "site",
+      "newCss": [
+        "admin/courses.css"
+      ]
+    },
+    {
+      "page": "admin create course",
+      "php": "admin/create-course.php",
+      "sheets": [
+        "base.css",
+        "admin/create-course.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/create-course",
+      "group": "site",
+      "newCss": [
+        "admin/create-course.css"
+      ]
+    },
+    {
+      "page": "admin edit course",
+      "php": "admin/edit-course.php",
+      "sheets": [
+        "base.css",
+        "admin/edit-course.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/edit-course",
+      "group": "site",
+      "newCss": [
+        "admin/edit-course.css"
+      ]
+    },
+    {
+      "page": "admin categories",
+      "php": "admin/categories.php",
+      "sheets": [
+        "base.css",
+        "admin/categories.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/categories",
+      "group": "site",
+      "newCss": [
+        "admin/categories.css"
+      ]
+    },
+    {
+      "page": "admin enrollments",
+      "php": "admin/enrollments.php",
+      "sheets": [
+        "base.css",
+        "admin/reviews-enrollments.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/enrollments",
+      "group": "site",
+      "newCss": [
+        "admin/reviews-enrollments.css"
+      ]
+    },
+    {
+      "page": "admin reviews",
+      "php": "admin/reviews.php",
+      "sheets": [
+        "base.css",
+        "admin/reviews-enrollments.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/reviews",
+      "group": "site",
+      "newCss": [
+        "admin/reviews-enrollments.css"
+      ]
+    },
+    {
+      "page": "admin banners",
+      "php": "admin/banners.php",
+      "sheets": [
+        "base.css",
+        "admin/banners.css",
+        "navbar.css"
+      ],
+      "html": "(no <html>)",
+      "body": "(no attrs)",
+      "inlineStyles": [
+        {
+          "chars": 2487,
+          "first": ".sbn-shell{display:flex;align-items:center;gap:12px;width:100%;padding:10px 20px;font-family:\"Inter\""
+        }
+      ],
+      "newDir": "app/(site)/admin/banners",
+      "group": "site",
+      "newCss": [
+        "admin/banners.css"
+      ]
+    },
+    {
+      "page": "admin send notifications",
+      "php": "admin/send-notifications.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [
+        {
+          "chars": 3910,
+          "first": "/* ── Minimal inline styles until CSS file is created ── */"
+        }
+      ],
+      "newDir": "app/(site)/admin/send-notifications",
+      "group": "site",
+      "newCss": []
+    },
+    {
+      "page": "admin settings",
+      "php": "admin/settings.php",
+      "sheets": [
+        "base.css",
+        "admin/settings.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/settings",
+      "group": "site",
+      "newCss": [
+        "admin/settings.css"
+      ]
+    },
+    {
+      "page": "admin bug reports",
+      "php": "admin/bug-reports.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "admin/dashboard.css",
+        "admin/bug-reports.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/bug-reports",
+      "group": "site",
+      "newCss": [
+        "admin/dashboard.css",
+        "admin/bug-reports.css"
+      ]
+    },
+    {
+      "page": "admin bug report detail",
+      "php": "admin/bug-report-detail.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "admin/dashboard.css",
+        "admin/bug-report-detail.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/bug-report-detail",
+      "group": "site",
+      "newCss": [
+        "admin/dashboard.css",
+        "admin/bug-report-detail.css"
+      ]
+    },
+    {
+      "page": "admin contact submissions",
+      "php": "admin/contact-submissions.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "admin/dashboard.css",
+        "admin/contact-submissions.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/contact-submissions",
+      "group": "site",
+      "newCss": [
+        "admin/dashboard.css",
+        "admin/contact-submissions.css"
+      ]
+    },
+    {
+      "page": "admin contact submission detail",
+      "php": "admin/contact-submission-detail.php",
+      "sheets": [
+        "base.css",
+        "navbar.css",
+        "admin/dashboard.css",
+        "admin/contact-submission-detail.css",
+        "navbar.css"
+      ],
+      "html": "lang=\"en\"",
+      "body": "(no attrs)",
+      "inlineStyles": [],
+      "newDir": "app/(site)/admin/contact-submission-detail",
+      "group": "site",
+      "newCss": [
+        "admin/dashboard.css",
+        "admin/contact-submission-detail.css"
+      ]
+    }
+  ]
+}

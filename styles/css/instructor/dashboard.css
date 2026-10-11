@@ -1,0 +1,495 @@
+/* ============================================================
+   Instructor Dashboard CSS
+   File: /public/assets/css/instructor/dashboard.css
+
+   SCOPING:
+   All dashboard-specific classes use the "indash-" prefix so
+   they never conflict with the navbar (in-) or student (sn-) CSS.
+
+   DEPENDENCIES:
+   - navbar.css must be loaded before this file.
+     It provides the base --in- CSS variables and .in-page-wrap.
+============================================================ */
+
+/* ================================================================
+   RESET & BASE
+================================================================ */
+
+:root {
+    --in-nav-height: 64px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    background: #f1f5f9;
+    color: #1e1e2e;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+/* ================================================================
+   PAGE INNER CONTAINER
+   Max-width wrapper with safe horizontal padding on all devices.
+================================================================ */
+.in-page-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+/* ================================================================
+   PAGE HEADER
+================================================================ */
+.indash-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.indash-page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    line-height: 1.25;
+    margin-bottom: 0.3rem;
+}
+
+.indash-page-subtitle {
+    font-size: 0.95rem;
+    color: #64748b;
+}
+
+/* Primary CTA button */
+.indash-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.65rem 1.25rem;
+    background: #5c6ef8;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    line-height: 1;
+}
+
+.indash-btn-primary:hover {
+    background: #4355e8;
+    box-shadow: 0 4px 16px rgba(92, 110, 248, 0.35);
+    transform: translateY(-1px);
+    text-decoration: none;
+    color: #ffffff;
+}
+
+/* ================================================================
+   STATS GRID – 4 cards across, collapses gracefully
+================================================================ */
+.indash-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+}
+
+.indash-stat-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 1.4rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.indash-stat-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
+    transform: translateY(-2px);
+}
+
+/* Icon wrapper – colour variants */
+.indash-stat-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.indash-stat-icon--blue   { background: #eef0ff; color: #5c6ef8; }
+.indash-stat-icon--green  { background: #ecfdf5; color: #059669; }
+.indash-stat-icon--purple { background: #f3e8ff; color: #7c3aed; }
+.indash-stat-icon--amber  { background: #fffbeb; color: #d97706; }
+
+.indash-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.indash-stat-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.indash-stat-value {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    line-height: 1.1;
+}
+
+.indash-stat-value small {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #94a3b8;
+    margin-left: 1px;
+}
+
+.indash-stat-sub {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    margin-top: 0.1rem;
+}
+
+/* ================================================================
+   TWO-COLUMN LAYOUT – top courses + recent enrollments
+================================================================ */
+.indash-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+}
+
+/* ================================================================
+   CARD (shared by all sections)
+================================================================ */
+.indash-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+    overflow: hidden;
+}
+
+.indash-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.indash-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    line-height: 1;
+}
+
+.indash-card-title svg {
+    color: #5c6ef8;
+    flex-shrink: 0;
+}
+
+.indash-card-action {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #5c6ef8;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+}
+
+.indash-card-action:hover {
+    color: #4355e8;
+    text-decoration: underline;
+}
+
+/* ================================================================
+   TABLE
+================================================================ */
+.indash-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.indash-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.indash-table thead {
+    background: #f8fafc;
+}
+
+.indash-table th {
+    padding: 0.75rem 1.5rem;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.indash-table td {
+    padding: 0.875rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.indash-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.indash-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.indash-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Special cell types */
+.indash-td-title {
+    font-weight: 600;
+    color: #1e1e2e;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.indash-td-money {
+    font-weight: 700;
+    color: #059669;
+    white-space: nowrap;
+}
+
+/* Rating badge */
+.indash-rating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 2px 8px;
+    background: #fffbeb;
+    color: #d97706;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Student cell with avatar initial */
+.indash-td-student {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 500;
+}
+
+.indash-student-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #eef0ff;
+    color: #5c6ef8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+/* Progress bar */
+.indash-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.indash-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+    min-width: 60px;
+}
+
+.indash-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #5c6ef8, #7c3aed);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.indash-progress-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #64748b;
+    white-space: nowrap;
+    min-width: 30px;
+    text-align: right;
+}
+
+/* ================================================================
+   EMPTY STATE
+================================================================ */
+.indash-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+.indash-empty-state svg {
+    color: #cbd5e1;
+}
+
+.indash-empty-state p {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.indash-empty-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #5c6ef8;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.indash-empty-link:hover {
+    color: #4355e8;
+    text-decoration: underline;
+}
+
+/* ================================================================
+   RESPONSIVE BREAKPOINTS
+================================================================ */
+
+/* Large tablet: stats 2x2 */
+@media (max-width: 1100px) {
+    .indash-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablet: two-col stacks to one-col */
+@media (max-width: 900px) {
+    .in-page-inner {
+        padding: 1.5rem 1.25rem 2.5rem;
+    }
+
+    .indash-two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .indash-page-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Mobile: single column stats */
+@media (max-width: 640px) {
+    .in-page-inner {
+        padding: 1.25rem 1rem 2rem;
+    }
+
+    .indash-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .indash-stat-card {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.1rem 1rem;
+    }
+
+    .indash-stat-value {
+        font-size: 1.5rem;
+    }
+
+    .indash-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .indash-btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .indash-card-header {
+        padding: 1rem 1.25rem;
+    }
+
+    .indash-table th,
+    .indash-table td {
+        padding: 0.75rem 1rem;
+    }
+
+    /* On very small screens truncate long titles more aggressively */
+    .indash-td-title {
+        max-width: 120px;
+    }
+}
+
+/* Very small screens: 1-column stats */
+@media (max-width: 400px) {
+    .indash-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .indash-stat-card {
+        flex-direction: row;
+        align-items: center;
+    }
+}

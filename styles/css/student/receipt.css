@@ -1,0 +1,424 @@
+:root {
+    --primary:           #6c63ff;
+    --primary-dark:      #5449e6;
+    --primary-light:     #ede9fe;
+    --primary-glow:      rgba(108, 99, 255, 0.35);
+    --secondary:         #10b981;
+    --secondary-light:   #d1fae5;
+    --accent-red:        #ef4444;
+    --accent-red-lt:     #fef2f2;
+
+    --bg:                #f5f6fa;
+    --surface:           #ffffff;
+    --surface-2:         #f9fafb;
+
+    --text-primary:      #111827;
+    --text-secondary:    #6b7280;
+    --text-muted:        #9ca3af;
+    --text-inverse:      #ffffff;
+
+    --border:            #e5e7eb;
+    --border-light:      #f3f4f6;
+
+    --shadow-sm:         0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-lg:         0 10px 25px -5px rgba(0,0,0,0.1), 0 4px 10px -5px rgba(0,0,0,0.06);
+
+    --radius-sm:         6px;
+    --radius-md:         10px;
+    --radius-lg:         16px;
+    --radius-full:       9999px;
+
+    --font-sans:        'Inter', system-ui, -apple-system, sans-serif;
+    --font-display:     'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    --font-mono:        'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+    --transition:        0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+.rcpt-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 32px 20px 60px;
+    min-height: 100vh;
+}
+
+.rcpt-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 720px;
+}
+
+.rcpt-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.rcpt-btn--back {
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-sm);
+}
+
+.rcpt-btn--back:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.rcpt-btn--download {
+    margin-left: auto;
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    color: var(--text-inverse);
+    box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+.rcpt-btn--download:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 22px var(--primary-glow);
+}
+
+.rcpt-btn--download:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.rcpt-card {
+    width: 100%;
+    max-width: 720px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    padding: 0 40px;
+}
+
+.rcpt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 36px 0 28px;
+    border-bottom: 1px solid var(--border-light);
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.rcpt-brand {
+    flex-shrink: 0;
+}
+
+.rcpt-logo-img {
+    display: block;
+    max-height: 44px;
+    width: auto;
+}
+
+.rcpt-title-group {
+    text-align: right;
+}
+
+.rcpt-title {
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.rcpt-subtitle {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.rcpt-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0 20px;
+    border-bottom: 1px solid var(--border-light);
+    flex-wrap: wrap;
+}
+
+.rcpt-meta-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rcpt-meta-col--right {
+    text-align: right;
+}
+
+.rcpt-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rcpt-meta-col--right .rcpt-meta-row {
+    justify-content: flex-end;
+}
+
+.rcpt-meta-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-width: 80px;
+}
+
+.rcpt-meta-value {
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.rcpt-meta-value--mono {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--primary-dark);
+    font-weight: 600;
+    word-break: break-all;
+}
+
+.rcpt-meta-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.rcpt-meta-badge--paid {
+    background: var(--secondary-light);
+    color: #065f46;
+    border: 1px solid rgba(16,185,129,0.2);
+}
+
+.rcpt-meta-badge--refunded {
+    background: var(--border-light);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.rcpt-section-title {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+}
+
+.rcpt-billto {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.rcpt-billto-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rcpt-billto-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.rcpt-billto-email {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+.rcpt-items {
+    padding: 20px 0 24px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.rcpt-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rcpt-th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1.5px solid var(--border);
+}
+
+.rcpt-th--price {
+    text-align: right;
+    width: 120px;
+}
+
+.rcpt-td {
+    padding: 12px 12px;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+.rcpt-tr {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.rcpt-tr:last-child {
+    border-bottom: none;
+}
+
+.rcpt-td--item {
+    font-weight: 500;
+}
+
+.rcpt-td--price {
+    text-align: right;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.rcpt-tr--total .rcpt-td {
+    padding-top: 16px;
+    border-top: 2px solid var(--border);
+    font-size: 1rem;
+}
+
+.rcpt-tr--total .rcpt-td--item {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.rcpt-total-amount {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.rcpt-currency-code {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.rcpt-footer {
+    padding: 24px 0 32px;
+    text-align: center;
+}
+
+.rcpt-footer-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 4px;
+}
+
+.rcpt-footer-site {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.no-print {}
+
+@media (max-width: 640px) {
+    .rcpt-page {
+        padding: 20px 12px 40px;
+        gap: 16px;
+    }
+
+    .rcpt-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .rcpt-btn--download {
+        margin-left: 0;
+    }
+
+    .rcpt-card {
+        padding: 0 20px;
+    }
+
+    .rcpt-header {
+        padding: 24px 0 20px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .rcpt-title-group {
+        text-align: center;
+    }
+
+    .rcpt-meta {
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px 0;
+    }
+
+    .rcpt-meta-col--right {
+        text-align: left;
+    }
+
+    .rcpt-meta-col--right .rcpt-meta-row {
+        justify-content: flex-start;
+    }
+
+    .rcpt-billto {
+        padding: 16px 0;
+    }
+
+    .rcpt-items {
+        padding: 16px 0;
+    }
+
+    .rcpt-footer {
+        padding: 20px 0 24px;
+    }
+
+    .rcpt-meta-label {
+        min-width: 70px;
+    }
+}

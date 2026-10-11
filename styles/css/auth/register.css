@@ -1,0 +1,749 @@
+/* ============================================================
+   REGISTER PAGE — Edulari
+   Design system: matches homepage (home.css) navy/purple/emerald
+   Font: Plus Jakarta Sans (headings) + Inter (body) via Google Fonts
+   ============================================================ */
+
+/* ── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design Tokens — identical to home.css + student pages ── */
+:root {
+    /* Brand palette */
+    --primary:           #6c63ff;
+    --primary-dark:      #5449e6;
+    --primary-light:     #ede9fe;
+    --primary-glow:      rgba(108, 99, 255, 0.35);
+    --secondary:         #10b981;
+    --secondary-light:   #d1fae5;
+    --accent-orange:     #f59e0b;
+    --accent-orange-lt:  #fef3c7;
+    --accent-red:        #ef4444;
+    --accent-red-lt:     #fef2f2;
+    --accent-pink:       #ec4899;
+    --accent-purple:     #8b5cf6;
+
+    /* Panel (left side) — hero dark navy from homepage */
+    --panel-bg:          #0d1b2e;
+    --panel-bg-2:        #0f2040;
+    --panel-bg-3:        #1a2744;
+
+    /* Surfaces */
+    --bg:                #f5f6fa;
+    --surface:           #ffffff;
+    --surface-2:         #f9fafb;
+    --surface-3:         #f0f1f8;
+
+    /* Text */
+    --text-primary:      #111827;
+    --text-secondary:    #6b7280;
+    --text-muted:        #9ca3af;
+    --text-inverse:      #ffffff;
+
+    /* Borders */
+    --border:            #e5e7eb;
+    --border-hover:      #d1d5db;
+
+    /* Status */
+    --error:             #ef4444;
+    --error-bg:          #fef2f2;
+    --error-border:      #fecaca;
+    --success:           #10b981;
+    --success-bg:        #f0fdf4;
+    --success-border:    #a7f3d0;
+
+    /* Shadows */
+    --shadow-xs:         0 1px 2px rgba(0,0,0,0.05);
+    --shadow-sm:         0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+    --shadow-lg:         0 10px 25px -5px rgba(0,0,0,0.1), 0 4px 10px -5px rgba(0,0,0,0.06);
+    --shadow-xl:         0 20px 40px -10px rgba(0,0,0,0.15);
+    --shadow-primary:    0 8px 24px rgba(108, 99, 255, 0.28);
+    --shadow-card:       0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+
+    /* Radius */
+    --radius-sm:         6px;
+    --radius-md:         10px;
+    --radius-lg:         16px;
+    --radius-xl:         24px;
+    --radius-full:       9999px;
+
+    /* Transitions */
+    --transition:        0.2s ease;
+    --transition-slow:   0.35s ease;
+    --transition-bounce: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+body {
+
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ── Layout Wrapper ───────────────────────────────────────── */
+.auth-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================================================================
+   LEFT DECORATIVE PANEL
+   Mirrors the homepage hero section's dark navy aesthetic
+================================================================ */
+.auth-panel {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 40%;
+    min-height: 100vh;
+    background: linear-gradient(
+        155deg,
+        var(--panel-bg)   0%,
+        var(--panel-bg-3) 40%,
+        var(--panel-bg-2) 70%,
+        #12112e           100%
+    );
+    padding: 24px 52px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* Decorative grid overlay — matches homepage hero__grid */
+.auth-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(108, 99, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108, 99, 255, 0.06) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Purple glow blob — top-right */
+.auth-panel::after {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 440px;
+    height: 440px;
+    background: radial-gradient(circle, rgba(108, 99, 255, 0.22) 0%, transparent 68%);
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Violet blob — bottom-left */
+.auth-panel .panel-blob-bottom {
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, transparent 68%);
+    border-radius: 50%;
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Green accent blob — mid panel */
+.auth-panel .panel-blob-mid {
+    position: absolute;
+    top: 55%;
+    left: 25%;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.10) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Panel Logo ───────────────────────────────────────────── */
+.panel-logo {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.panel-logo img {
+    height: 50px;
+    width: auto;
+    display: block;
+}
+
+/* ── Panel Body (headline) ────────────────────────────────── */
+.panel-body {
+    position: relative;
+    z-index: 1;
+    margin-top: 64px;
+}
+
+.panel-body h2 {
+
+    font-size: clamp(26px, 2.8vw, 36px);
+    font-weight: 800;
+    color: var(--text-inverse);
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -0.04em;
+}
+
+.panel-body h2 span {
+    background: linear-gradient(135deg, var(--secondary) 0%, #34d399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Panel Features List ──────────────────────────────────── */
+.panel-features {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 32px;
+    margin-bottom: 64px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: color var(--transition);
+}
+
+.feature-item:last-child {
+    border-bottom: none;
+}
+
+.feature-item:hover {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.feature-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    transition: background var(--transition), border-color var(--transition);
+}
+
+.feature-item:hover .feature-icon {
+    background: rgba(108, 99, 255, 0.18);
+    border-color: rgba(108, 99, 255, 0.35);
+}
+
+/* ================================================================
+   RIGHT FORM SIDE
+================================================================ */
+.auth-form-side {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 28px;
+    min-height: 100vh;
+    background: var(--surface);
+    overflow-y: auto;
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 428px;
+    padding: 4px 0;
+}
+
+/* ── Mobile Logo (hidden on desktop) ─────────────────────── */
+.auth-logo-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    text-decoration: none;
+}
+
+.auth-logo-mobile img {
+    height: 45px;
+    width: auto;
+    display: block;
+}
+
+/* ── Auth Header ──────────────────────────────────────────── */
+.auth-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.auth-header h1 {
+
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
+    margin-bottom: 7px;
+    line-height: 1.2;
+}
+
+.auth-header p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* ================================================================
+   ALERTS
+================================================================ */
+.alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 22px;
+    border: 1px solid transparent;
+    font-weight: 400;
+}
+
+.alert-error {
+    background: var(--error-bg);
+    color: #b91c1c;
+    border-color: var(--error-border);
+}
+
+.alert-success {
+    background: var(--success-bg);
+    color: #065f46;
+    border-color: var(--success-border);
+}
+
+.alert-icon {
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    line-height: 1.4;
+}
+
+.alert strong {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.alert p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: inherit;
+    opacity: 0.85;
+}
+
+/* ================================================================
+   FORM ELEMENTS
+================================================================ */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+}
+
+/* All text-like inputs */
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-primary);
+    background: var(--surface-2);
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background var(--transition);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    line-height: 1.5;
+}
+
+.form-group input[type="email"]::placeholder,
+.form-group input[type="password"]::placeholder,
+.form-group input[type="text"]::placeholder {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.form-group input[type="email"]:hover,
+.form-group input[type="password"]:hover,
+.form-group input[type="text"]:hover {
+    border-color: var(--border-hover);
+}
+
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="text"]:focus {
+    border-color: var(--primary);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12);
+}
+
+.form-group input[type="email"]:disabled,
+.form-group input[type="password"]:disabled,
+.form-group input[type="text"]:disabled {
+    background: #f3f4f6;
+    color: var(--text-muted);
+    cursor: not-allowed;
+    border-color: var(--border);
+    opacity: 0.7;
+}
+
+/* ── Password Field Hint ──────────────────────────────────── */
+.field-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+/* ── Terms Checkbox ───────────────────────────────────────── */
+.form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding: 14px 16px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition), background var(--transition);
+}
+
+.form-check:focus-within {
+    border-color: var(--primary);
+    background: var(--surface);
+}
+
+.form-check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    border-radius: var(--radius-sm);
+}
+
+.form-check label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    line-height: 1.55;
+    font-weight: 400;
+    user-select: none;
+}
+
+.form-check label a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition);
+}
+
+.form-check label a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* ================================================================
+   PASSWORD SHOW/HIDE TOGGLE
+================================================================ */
+.input-password-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-password-wrap input[type="password"],
+.input-password-wrap input[type="text"] {
+    width: 100%;
+    padding-right: 46px !important;
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 44px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.55;
+    color: var(--text-muted);
+    transition: opacity var(--transition), color var(--transition);
+    z-index: 2;
+    flex-shrink: 0;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+    color: var(--primary);
+}
+
+.toggle-password:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.toggle-password svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* ================================================================
+   BUTTONS
+================================================================ */
+
+/* Primary — gradient matching homepage btn--primary */
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 13px 24px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+    color: var(--text-inverse);
+
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition:
+        background var(--transition),
+        transform var(--transition-bounce),
+        box-shadow var(--transition);
+    letter-spacing: 0.01em;
+    text-align: center;
+    box-shadow: 0 4px 16px var(--primary-glow);
+    position: relative;
+    overflow: hidden;
+    line-height: 1.4;
+}
+
+/* Shimmer overlay on hover */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.14);
+    transition: opacity var(--transition);
+}
+
+.btn-primary:hover::after {
+    opacity: 1;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #7c3aed 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(108, 99, 255, 0.42);
+}
+
+.btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.btn-primary:disabled {
+    background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+/* ================================================================
+   AUTH FOOTER
+================================================================ */
+.auth-footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition);
+}
+
+.auth-footer a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.auth-divider {
+    text-align: center;
+    margin: 8px 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+/* ================================================================
+   RESPONSIVE — updated to match homepage breakpoint approach
+================================================================ */
+
+/* Desktop — show left panel */
+@media (min-width: 960px) {
+    .auth-panel {
+        display: flex;
+    }
+
+    .auth-form-side {
+        background: var(--bg);
+    }
+
+    .auth-logo-mobile {
+        display: none;
+    }
+}
+
+/* Tablet / mobile */
+@media (max-width: 959px) {
+    .auth-form-side {
+        padding: 40px 22px;
+        align-items: flex-start;
+        padding-top: 20px;
+        background: var(--surface);
+    }
+
+    .auth-form-container {
+        max-width: 460px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .auth-header h1 {
+        font-size: 25px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .auth-form-side {
+        padding: 28px 16px;
+        padding-top: 16px;
+    }
+
+    .auth-header {
+        margin-bottom: 24px;
+    }
+
+    .auth-header h1 {
+        font-size: 23px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-check {
+        padding: 12px 14px;
+    }
+
+    .btn-primary {
+        padding: 13px 20px;
+        font-size: 14px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+    .auth-header h1 {
+        font-size: 21px;
+    }
+
+    .form-check {
+        padding: 10px 12px;
+    }
+}
+
+/* Tall desktop panels */
+@media (min-width: 960px) and (min-height: 800px) {
+    .auth-panel {
+        padding: 24px 52px;
+    }
+
+    .feature-item {
+        padding: 12px 0;
+    }
+}

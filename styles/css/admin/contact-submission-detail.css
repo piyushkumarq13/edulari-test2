@@ -1,0 +1,587 @@
+/* ============================================================
+   Admin Contact Submission Detail CSS  —  prefix: acsd-
+   File: /public/assets/css/admin/contact-submission-detail.css
+   Depends on: navbar.css, admin/dashboard.css
+============================================================ */
+
+/* ── Page layout ── */
+.acsd-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3.5rem;
+}
+
+/* ── Breadcrumb / back link ── */
+.acsd-breadcrumb {
+    margin-bottom: 1.5rem;
+}
+.acsd-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .83rem;
+    font-weight: 600;
+    color: #64748b;
+    text-decoration: none;
+    transition: color .15s;
+}
+.acsd-back:hover {
+    color: #e84545;
+}
+
+/* ── Flash messages ── */
+.acsd-flash {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: .9rem 1.1rem;
+    border-radius: 10px;
+    font-size: .875rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    animation: acsdFadeIn .3s ease;
+}
+@keyframes acsdFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.acsd-flash--success { background: #dcfce7; border: 1px solid #86efac; color: #15803d; }
+.acsd-flash--error   { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
+
+/* ── Two-column layout: main + sidebar ── */
+.acsd-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* ── Ticket header ── */
+.acsd-ticket-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: .75rem;
+}
+.acsd-ticket-head-left {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+.acsd-ticket-date {
+    font-size: .78rem;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+/* ── Ticket ref (monospace pill) ── */
+.acsd-ref {
+    font-family: 'DM Mono', monospace, ui-monospace;
+    font-size: .78rem;
+    font-weight: 700;
+    color: #e84545;
+    background: #fff5f5;
+    border: 1px solid #fecaca;
+    border-radius: 5px;
+    padding: 2px 8px;
+    white-space: nowrap;
+}
+.acsd-ref-sm {
+    font-family: 'DM Mono', monospace, ui-monospace;
+    font-size: .75rem;
+    font-weight: 600;
+    color: #e84545;
+    background: #fff5f5;
+    border: 1px solid #fecaca;
+    border-radius: 4px;
+    padding: 1px 6px;
+}
+
+/* ── Subject heading ── */
+.acsd-subject {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #1e1e2e;
+    line-height: 1.3;
+    margin-bottom: 1.25rem;
+}
+
+/* ── Status badges ── */
+.acsd-status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: .7rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+.acsd-status--open     { background: #fef9c3; color: #854d0e; border-color: #fde68a; }
+.acsd-status--progress { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
+.acsd-status--waiting  { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+.acsd-status--resolved { background: #dcfce7; color: #15803d; border-color: #86efac; }
+.acsd-status--closed   { background: #f3f4f6; color: #374151; border-color: #d1d5db; }
+
+/* ── Priority chips ── */
+.acsd-pri {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 99px;
+    font-size: .68rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+.acsd-pri--low    { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.acsd-pri--normal { background: #e0f2fe; color: #075985; border-color: #7dd3fc; }
+.acsd-pri--high   { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+.acsd-pri--urgent { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+
+/* ── Conversation thread ── */
+.acsd-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ── Individual message bubble ── */
+.acsd-msg {
+    display: flex;
+    gap: .9rem;
+    align-items: flex-start;
+}
+
+/* User message */
+.acsd-msg--user .acsd-msg-body {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    border-top-left-radius: 4px;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Admin reply */
+.acsd-msg--admin .acsd-msg-body {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    border-top-left-radius: 4px;
+    flex: 1;
+    overflow: hidden;
+}
+.acsd-msg--admin {
+    flex-direction: row-reverse;
+}
+.acsd-msg--admin .acsd-msg-body {
+    border-radius: 14px;
+    border-top-right-radius: 4px;
+    background: #fdf8ff;
+    border-color: #e9d5ff;
+}
+
+/* Internal note */
+.acsd-msg--internal .acsd-msg-body {
+    background: #fffbeb;
+    border: 1.5px dashed #fcd34d;
+    border-radius: 14px;
+    border-top-left-radius: 4px;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ── Avatar ── */
+.acsd-msg-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .9rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+.acsd-msg-avatar--user {
+    background: #e84545;
+    color: #fff;
+}
+.acsd-msg-avatar--admin {
+    background: #7c3aed;
+    color: #fff;
+}
+.acsd-msg-avatar--internal {
+    background: #d97706;
+    color: #fff;
+}
+
+/* ── Message head (name + time) ── */
+.acsd-msg-head {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+    padding: .75rem 1rem .5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+.acsd-msg--internal .acsd-msg-head {
+    border-bottom-color: #fef3c7;
+}
+.acsd-msg-head strong {
+    font-size: .875rem;
+    font-weight: 700;
+    color: #1e1e2e;
+}
+.acsd-msg-role {
+    font-size: .72rem;
+    font-weight: 600;
+    color: #fff;
+    background: #94a3b8;
+    border-radius: 4px;
+    padding: 1px 6px;
+}
+.acsd-msg-time {
+    font-size: .72rem;
+    color: #94a3b8;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* ── Message body text ── */
+.acsd-msg-text {
+    padding: .9rem 1rem;
+    font-size: .875rem;
+    color: #374151;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ── Message meta (order ref, course ref) ── */
+.acsd-msg-meta {
+    padding: .4rem 1rem .75rem;
+    font-size: .78rem;
+    color: #64748b;
+}
+.acsd-msg-meta code {
+    font-family: 'DM Mono', monospace, ui-monospace;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: .75rem;
+}
+
+/* ── Status change note inside reply ── */
+.acsd-status-change {
+    padding: .4rem 1rem .75rem;
+    font-size: .78rem;
+    color: #64748b;
+    border-top: 1px solid #f1f5f9;
+}
+.acsd-status-change strong {
+    color: #374151;
+}
+
+/* ── Reply box ── */
+.acsd-reply-box {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.25rem;
+}
+.acsd-reply-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    margin-bottom: 1rem;
+}
+
+/* Reply type toggle */
+.acsd-reply-type {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+.acsd-reply-type-opt {
+    cursor: pointer;
+}
+.acsd-reply-type-opt input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.acsd-reply-type-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: .82rem;
+    font-weight: 600;
+    border: 1.5px solid #e2e8f0;
+    color: #64748b;
+    background: #fff;
+    transition: all .15s;
+    cursor: pointer;
+    user-select: none;
+}
+.acsd-reply-type-opt input:checked + .acsd-reply-type-label--public {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    color: #1d4ed8;
+}
+.acsd-reply-type-opt input:checked + .acsd-reply-type-label--internal {
+    background: #fffbeb;
+    border-color: #f59e0b;
+    color: #92400e;
+}
+.acsd-reply-type-label:hover {
+    border-color: #9ca3af;
+    color: #374151;
+}
+
+/* Reply textarea */
+.acsd-reply-textarea {
+    width: 100%;
+    padding: .75rem 1rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: .875rem;
+    font-family: inherit;
+    color: #374151;
+    resize: vertical;
+    min-height: 140px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+.acsd-reply-textarea:focus {
+    border-color: #e84545;
+    box-shadow: 0 0 0 3px rgba(232, 69, 69, .12);
+}
+.acsd-reply-textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* Character counter */
+.acsd-reply-char {
+    font-size: .72rem;
+    color: #94a3b8;
+    text-align: right;
+    margin-top: 3px;
+    margin-bottom: .75rem;
+}
+
+/* Reply footer: status + send button */
+.acsd-reply-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: .5rem;
+}
+.acsd-reply-status-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.acsd-label {
+    font-size: .72rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+.acsd-select {
+    padding: 8px 32px 8px 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: .875rem;
+    font-family: inherit;
+    color: #374151;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    transition: border-color .15s;
+}
+.acsd-select:focus {
+    border-color: #e84545;
+}
+.acsd-select--full {
+    width: 100%;
+}
+
+/* Closed note */
+.acsd-closed-note {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: .875rem;
+    color: #64748b;
+    text-align: center;
+}
+.acsd-link {
+    color: #e84545;
+    text-decoration: none;
+    font-weight: 600;
+}
+.acsd-link:hover {
+    text-decoration: underline;
+}
+
+/* ── Sidebar ── */
+.acsd-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: sticky;
+    top: 84px;
+}
+.acsd-sidebar-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+}
+.acsd-sidebar-card--danger {
+    border-color: #fca5a5;
+}
+.acsd-sidebar-card-title {
+    padding: .85rem 1.1rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: .78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #64748b;
+    margin: 0;
+}
+.acsd-sidebar-card-title--danger {
+    color: #dc2626;
+    border-bottom-color: #fee2e2;
+}
+.acsd-sidebar-card > form,
+.acsd-sidebar-card > .acsd-dl,
+.acsd-sidebar-card > dl {
+    padding: 1rem 1.1rem;
+}
+
+/* ── Definition list ── */
+.acsd-dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .35rem .75rem;
+    padding: 1rem 1.1rem;
+    margin: 0;
+    font-size: .82rem;
+}
+.acsd-dl dt {
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-size: .68rem;
+    letter-spacing: .05em;
+    padding-top: 1px;
+    white-space: nowrap;
+}
+.acsd-dl dd {
+    color: #374151;
+    font-weight: 500;
+    margin: 0;
+    word-break: break-word;
+}
+.acsd-dl dd code {
+    font-family: 'DM Mono', monospace, ui-monospace;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: .75rem;
+}
+
+/* ── Utility spacing ── */
+.mt-2 {
+    margin-top: .5rem;
+}
+.acsd-btn-full {
+    width: 100%;
+    justify-content: center;
+}
+
+/* ── Responsive: tablet ── */
+@media (max-width: 960px) {
+    .acsd-layout {
+        grid-template-columns: 1fr;
+    }
+    .acsd-sidebar {
+        position: static;
+    }
+    /* Reorder: sidebar meta above thread on mobile */
+    .acsd-sidebar {
+        order: -1;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+    .acsd-sidebar-card--danger {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 640px) {
+    .acsd-page {
+        padding: 1.25rem 1rem 2.5rem;
+    }
+    .acsd-subject {
+        font-size: 1.15rem;
+    }
+    .acsd-sidebar {
+        display: flex;
+        flex-direction: column;
+    }
+    .acsd-ticket-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .5rem;
+    }
+    .acsd-reply-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .acsd-reply-footer .addash-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .acsd-msg--admin {
+        flex-direction: row; /* keep left-aligned on mobile */
+    }
+    .acsd-msg--admin .acsd-msg-body {
+        border-radius: 14px;
+        border-top-left-radius: 4px;
+    }
+    .acsd-msg-time {
+        display: none; /* hide time on very small screens */
+    }
+}
+
+@media (max-width: 400px) {
+    .acsd-reply-type {
+        flex-direction: column;
+    }
+    .acsd-reply-type-label {
+        justify-content: center;
+    }
+}

@@ -1,0 +1,979 @@
+/* ============================================================
+   Instructor Profile Page  —  profile.css
+   File: /public/assets/css/instructor/profile.css
+
+   Scoping prefix : ipf-   (instructor profile)
+   Design tokens  : matches the instructor theme (#5c6ef8 primary,
+                    #f1f5f9 background, Inter font).
+   Dependencies   : navbar.css must load before this file.
+   Breakpoints    : 1200 | 960 | 768 | 640 | 480 | 360
+============================================================ */
+
+/* ================================================================
+   1. CSS CUSTOM PROPERTIES
+================================================================ */
+:root {
+    /* Brand – mirrors instructor dashboard palette */
+    --ipf-primary:        #5c6ef8;
+    --ipf-primary-dark:   #4355e8;
+    --ipf-primary-light:  #eef0ff;
+    --ipf-primary-glow:   rgba(92, 110, 248, 0.30);
+
+    /* Accent colours */
+    --ipf-green:          #059669;
+    --ipf-green-lt:       #ecfdf5;
+    --ipf-amber:          #d97706;
+    --ipf-amber-lt:       #fffbeb;
+    --ipf-red:            #ef4444;
+    --ipf-red-lt:         #fef2f2;
+    --ipf-purple:         #7c3aed;
+    --ipf-purple-lt:      #f3e8ff;
+
+    /* Surfaces */
+    --ipf-bg:             #f1f5f9;
+    --ipf-surface:        #ffffff;
+    --ipf-surface-2:      #f8fafc;
+
+    /* Text */
+    --ipf-text:           #1e1e2e;
+    --ipf-text-2:         #475569;
+    --ipf-text-3:         #94a3b8;
+
+    /* Borders */
+    --ipf-border:         #e2e8f0;
+    --ipf-border-hover:   #cbd5e1;
+    --ipf-border-focus:   #b0b8f0;
+
+    /* Shadows */
+    --ipf-shadow-sm:      0 1px 4px rgba(0,0,0,.04);
+    --ipf-shadow-md:      0 4px 16px rgba(0,0,0,.08);
+    --ipf-shadow-lg:      0 12px 32px rgba(0,0,0,.12);
+    --ipf-shadow-primary: 0 6px 20px rgba(92,110,248,.30);
+
+    /* Layout */
+    --ipf-max-w:          900px;
+    --ipf-nav-height:     64px;
+
+    /* Radius */
+    --ipf-r-sm:           6px;
+    --ipf-r-md:           10px;
+    --ipf-r-lg:           16px;
+    --ipf-r-xl:           22px;
+    --ipf-r-full:         9999px;
+
+    /* Transitions */
+    --ipf-t:              0.18s ease;
+    --ipf-t-slow:         0.32s ease;
+    --ipf-t-bounce:       0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ================================================================
+   2. RESET & BASE
+================================================================ */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+
+    background: var(--ipf-bg);
+    color: var(--ipf-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+/* ================================================================
+   3. PAGE WRAPPER  (comes from in-page-wrap in navbar.css)
+================================================================ */
+.ipf-main {
+    min-height: calc(100vh - var(--ipf-nav-height));
+    padding-bottom: 4rem;
+}
+
+/* ================================================================
+   4. HERO SECTION
+================================================================ */
+.ipf-hero {
+    background: linear-gradient(135deg, #1a1b3e 0%, #2d2f6e 55%, #1e3a5f 100%);
+    padding: 2.75rem 1.5rem 2.25rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative orbs */
+.ipf-hero::before,
+.ipf-hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.ipf-hero::before {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(92,110,248,.18) 0%, transparent 70%);
+    top: -120px; right: -80px;
+}
+.ipf-hero::after {
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(124,58,237,.15) 0%, transparent 70%);
+    bottom: -60px; left: 10%;
+}
+
+.ipf-hero__inner {
+    max-width: var(--ipf-max-w);
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+}
+
+/* ── Avatar ── */
+.ipf-hero__avatar-wrap {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.ipf-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,.2);
+    background: var(--ipf-primary-light);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 0 5px rgba(255,255,255,.08), var(--ipf-shadow-lg);
+    transition: border-color var(--ipf-t), box-shadow var(--ipf-t);
+}
+.ipf-avatar:hover {
+    border-color: rgba(255,255,255,.45);
+    box-shadow: 0 0 0 5px rgba(255,255,255,.14), var(--ipf-shadow-lg);
+}
+
+.ipf-avatar__img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.ipf-avatar__initials {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--ipf-primary);
+    background: var(--ipf-primary-light);
+    letter-spacing: .04em;
+    user-select: none;
+}
+
+.ipf-avatar__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,30,.55);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity var(--ipf-t);
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    letter-spacing: .04em;
+}
+.ipf-avatar:hover .ipf-avatar__overlay { opacity: 1; }
+
+.ipf-avatar__remove-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,.55);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    border-radius: var(--ipf-r-sm);
+    transition: color var(--ipf-t), background var(--ipf-t);
+    white-space: nowrap;
+}
+.ipf-avatar__remove-btn:hover {
+    color: #fca5a5;
+    background: rgba(255,255,255,.07);
+}
+
+.ipf-avatar-form { display: none; }
+
+/* ── Identity ── */
+.ipf-hero__info {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-top: 0.25rem;
+}
+
+.ipf-hero__name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.ipf-hero__name {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -.02em;
+}
+
+.ipf-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.75rem;
+    background: var(--ipf-primary);
+    color: #fff;
+    border-radius: var(--ipf-r-full);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.ipf-hero__headline {
+    font-size: 0.975rem;
+    color: rgba(255,255,255,.75);
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.ipf-hero__email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,.55);
+}
+
+.ipf-hero__social {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.15rem;
+}
+
+.ipf-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.1);
+    color: rgba(255,255,255,.7);
+    transition: background var(--ipf-t), color var(--ipf-t), transform var(--ipf-t-bounce);
+}
+.ipf-social-link:hover {
+    background: rgba(255,255,255,.22);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* ── Stats ── */
+.ipf-hero__stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: var(--ipf-r-lg);
+    padding: 1rem 1.5rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 0.25rem;
+}
+
+.ipf-hero__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.ipf-hero__stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: -.01em;
+}
+
+.ipf-hero__stat-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,.55);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    white-space: nowrap;
+}
+
+.ipf-hero__stat-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255,255,255,.15);
+    flex-shrink: 0;
+}
+
+/* ================================================================
+   5. STICKY TAB BAR
+================================================================ */
+.ipf-tabs-bar {
+    position: sticky;
+    top: var(--ipf-nav-height);
+    z-index: 100;
+    background: var(--ipf-surface);
+    border-bottom: 1px solid var(--ipf-border);
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    transition: box-shadow var(--ipf-t);
+}
+.ipf-tabs-bar::-webkit-scrollbar { display: none; }
+.ipf-tabs-bar--stuck { box-shadow: 0 4px 16px rgba(0,0,0,.10); }
+
+.ipf-tabs-bar::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 32px;
+    background: linear-gradient(to left, var(--ipf-surface), transparent);
+    pointer-events: none;
+    display: none;
+}
+@media (max-width: 640px) { .ipf-tabs-bar::after { display: block; } }
+
+.ipf-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0 1.15rem;
+    height: 52px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ipf-text-2);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color var(--ipf-t), border-color var(--ipf-t), background var(--ipf-t);
+    position: relative;
+}
+.ipf-tab svg { flex-shrink: 0; transition: transform var(--ipf-t-bounce); }
+
+.ipf-tab:hover {
+    color: var(--ipf-primary);
+    background: var(--ipf-primary-light);
+}
+.ipf-tab:hover svg { transform: translateY(-1px); }
+
+.ipf-tab--active {
+    color: var(--ipf-primary);
+    border-bottom-color: var(--ipf-primary);
+}
+.ipf-tab--active svg { color: var(--ipf-primary); }
+
+/* ================================================================
+   6. CONTENT WRAPPER
+================================================================ */
+.ipf-content-wrap {
+    max-width: var(--ipf-max-w);
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* ================================================================
+   7. ALERT BANNER
+================================================================ */
+.ipf-alert {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.1rem;
+    border-radius: var(--ipf-r-md);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    animation: ipfSlideDown 0.28s ease both;
+    transition: opacity var(--ipf-t), transform var(--ipf-t);
+}
+
+@keyframes ipfSlideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.ipf-alert--success {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+    color: #065f46;
+}
+.ipf-alert--success svg { color: #059669; }
+
+.ipf-alert--error {
+    background: var(--ipf-red-lt);
+    border-color: #fecaca;
+    color: #991b1b;
+}
+.ipf-alert--error svg { color: var(--ipf-red); }
+
+.ipf-alert span { flex: 1; }
+
+.ipf-alert__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: inherit;
+    opacity: 0.5;
+    line-height: 1;
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    transition: opacity var(--ipf-t);
+    flex-shrink: 0;
+}
+.ipf-alert__close:hover { opacity: 1; }
+
+/* ================================================================
+   8. PANEL
+================================================================ */
+.ipf-panel {
+    display: none;
+    background: var(--ipf-surface);
+    border-radius: var(--ipf-r-lg);
+    border: 1px solid var(--ipf-border);
+    box-shadow: var(--ipf-shadow-sm);
+    overflow: hidden;
+    animation: ipfFadeIn 0.22s ease both;
+}
+
+@keyframes ipfFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.ipf-panel--active { display: block; }
+
+.ipf-panel__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem 1.75rem 1.25rem;
+    border-bottom: 1px solid var(--ipf-border);
+}
+
+.ipf-panel__icon {
+    width: 44px; height: 44px;
+    border-radius: var(--ipf-r-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.ipf-panel__icon--blue   { background: var(--ipf-primary-light); color: var(--ipf-primary); }
+.ipf-panel__icon--green  { background: var(--ipf-green-lt);       color: var(--ipf-green); }
+.ipf-panel__icon--amber  { background: var(--ipf-amber-lt);       color: var(--ipf-amber); }
+
+.ipf-panel__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ipf-text);
+    line-height: 1.25;
+    margin-bottom: 0.2rem;
+}
+
+.ipf-panel__subtitle {
+    font-size: 0.85rem;
+    color: var(--ipf-text-2);
+    line-height: 1.4;
+}
+
+.ipf-panel__footer {
+    padding: 1.25rem 1.75rem;
+    border-top: 1px solid var(--ipf-border);
+    background: var(--ipf-surface-2);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.ipf-panel__footer--spaced {
+    justify-content: flex-end;
+}
+
+/* ================================================================
+   9. FORM ELEMENTS
+================================================================ */
+.ipf-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem 1.5rem;
+    padding: 1.5rem 1.75rem;
+}
+.ipf-form-grid--mt  { padding-top: 0; margin-top: -0.25rem; }
+.ipf-form-grid--narrow { grid-template-columns: 1fr 1fr; }
+
+.ipf-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.ipf-field--span2 { grid-column: 1 / -1; }
+
+/* Label */
+.ipf-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ipf-text);
+    letter-spacing: .01em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.ipf-required { color: var(--ipf-red); font-size: 0.85em; }
+
+.ipf-hint {
+    font-size: 0.78rem;
+    color: var(--ipf-text-3);
+    margin-top: 0.1rem;
+    line-height: 1.4;
+}
+
+/* Char counter */
+.ipf-char-counter {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--ipf-text-3);
+    margin-left: auto;
+}
+
+/* Input */
+.ipf-input,
+.ipf-textarea,
+.ipf-select {
+    width: 100%;
+    padding: 0.65rem 0.875rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: var(--ipf-text);
+    background: var(--ipf-surface);
+    border: 1.5px solid var(--ipf-border);
+    border-radius: var(--ipf-r-md);
+    outline: none;
+    transition: border-color var(--ipf-t), box-shadow var(--ipf-t), background var(--ipf-t);
+    line-height: 1.5;
+}
+
+.ipf-input::placeholder,
+.ipf-textarea::placeholder { color: var(--ipf-text-3); }
+
+.ipf-input:hover,
+.ipf-textarea:hover,
+.ipf-select:hover { border-color: var(--ipf-border-hover); }
+
+.ipf-input:focus,
+.ipf-textarea:focus,
+.ipf-select:focus {
+    border-color: var(--ipf-primary);
+    box-shadow: 0 0 0 3px var(--ipf-primary-glow);
+    background: var(--ipf-surface);
+}
+
+.ipf-textarea { resize: vertical; min-height: 90px; }
+
+.ipf-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' width='16' height='16'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.25rem;
+    cursor: pointer;
+}
+
+/* Read-only / locked */
+.ipf-input--readonly {
+    background: var(--ipf-surface-2);
+    color: var(--ipf-text-2);
+    cursor: not-allowed;
+    border-color: var(--ipf-border);
+}
+.ipf-input--readonly:hover,
+.ipf-input--readonly:focus {
+    border-color: var(--ipf-border);
+    box-shadow: none;
+}
+
+.ipf-input-locked-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.ipf-lock-icon {
+    position: absolute;
+    right: 0.875rem;
+    color: var(--ipf-text-3);
+    pointer-events: none;
+}
+.ipf-input-locked-wrap .ipf-input {
+    padding-right: 2.5rem;
+}
+
+/* Icon-prefixed input */
+.ipf-input-icon-wrap { position: relative; }
+.ipf-input-icon {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ipf-text-3);
+    pointer-events: none;
+}
+.ipf-input--with-icon { padding-left: 2.5rem; }
+
+/* Section divider */
+.ipf-section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1.75rem;
+    margin: 0.25rem 0 -0.75rem;
+}
+.ipf-section-divider::before,
+.ipf-section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ipf-border);
+}
+.ipf-section-divider span {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--ipf-text-3);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    white-space: nowrap;
+}
+
+/* ================================================================
+   10. FIELDSET / RADIO CARDS
+================================================================ */
+.ipf-fieldset {
+    border: none;
+    padding: 0 1.75rem 1.5rem;
+}
+.ipf-fieldset--mt { padding-top: 1rem; }
+
+.ipf-radio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+    margin-top: 0.6rem;
+}
+
+.ipf-radio-card {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 0.9rem;
+    background: var(--ipf-surface-2);
+    border: 1.5px solid var(--ipf-border);
+    border-radius: var(--ipf-r-md);
+    cursor: pointer;
+    transition: border-color var(--ipf-t), background var(--ipf-t), box-shadow var(--ipf-t), transform var(--ipf-t-bounce);
+    user-select: none;
+}
+.ipf-radio-card input[type="radio"] {
+    accent-color: var(--ipf-primary);
+    width: 15px; height: 15px;
+    flex-shrink: 0;
+}
+.ipf-radio-card:hover {
+    border-color: var(--ipf-primary);
+    background: var(--ipf-primary-light);
+    transform: translateY(-1px);
+}
+.ipf-radio-card--selected {
+    border-color: var(--ipf-primary);
+    background: var(--ipf-primary-light);
+    box-shadow: 0 0 0 3px var(--ipf-primary-glow);
+}
+.ipf-radio-card__label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ipf-text);
+}
+
+/* ================================================================
+   11. LEVEL CARDS (expertise)
+================================================================ */
+.ipf-level-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.65rem;
+    margin-top: 0.6rem;
+}
+
+.ipf-level-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 1rem 0.75rem;
+    background: var(--ipf-surface-2);
+    border: 1.5px solid var(--ipf-border);
+    border-radius: var(--ipf-r-md);
+    cursor: pointer;
+    text-align: center;
+    transition: border-color var(--ipf-t), background var(--ipf-t), transform var(--ipf-t-bounce);
+    user-select: none;
+}
+.ipf-level-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.ipf-level-card:hover {
+    border-color: var(--ipf-primary);
+    background: var(--ipf-primary-light);
+    transform: translateY(-2px);
+}
+.ipf-level-card--selected {
+    border-color: var(--ipf-primary);
+    background: var(--ipf-primary-light);
+    box-shadow: 0 0 0 3px var(--ipf-primary-glow);
+}
+.ipf-level-card__title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--ipf-text);
+}
+
+/* ================================================================
+   12. BUTTONS
+================================================================ */
+.ipf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.65rem 1.35rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-family: inherit;
+    border-radius: var(--ipf-r-md);
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: background var(--ipf-t), box-shadow var(--ipf-t), transform var(--ipf-t-bounce), border-color var(--ipf-t), color var(--ipf-t);
+    white-space: nowrap;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.ipf-btn--primary {
+    background: var(--ipf-primary);
+    color: #fff;
+}
+.ipf-btn--primary:hover {
+    background: var(--ipf-primary-dark);
+    box-shadow: var(--ipf-shadow-primary);
+    transform: translateY(-1px);
+}
+.ipf-btn--primary:active { transform: translateY(0); }
+
+.ipf-btn--danger {
+    background: var(--ipf-red);
+    color: #fff;
+}
+.ipf-btn--danger:hover {
+    background: #dc2626;
+    box-shadow: 0 6px 20px rgba(239,68,68,.30);
+    transform: translateY(-1px);
+}
+
+.ipf-btn--ghost {
+    background: transparent;
+    color: var(--ipf-text-2);
+    border-color: var(--ipf-border);
+}
+.ipf-btn--ghost:hover {
+    background: var(--ipf-surface-2);
+    border-color: var(--ipf-border-hover);
+    color: var(--ipf-text);
+}
+
+.ipf-btn--sm {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8rem;
+}
+
+/* ================================================================
+   15. EMPTY STATE
+================================================================ */
+.ipf-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+.ipf-empty-state svg { color: #cbd5e1; }
+.ipf-empty-state p {
+    font-size: 0.95rem;
+    color: var(--ipf-text-3);
+    font-style: italic;
+}
+
+/* ================================================================
+   16. RESPONSIVE  –  1200px
+================================================================ */
+@media (max-width: 1200px) {
+    .ipf-content-wrap { max-width: 840px; }
+}
+
+/* ================================================================
+   17. RESPONSIVE  –  960px
+================================================================ */
+@media (max-width: 960px) {
+    .ipf-hero__inner { gap: 1.5rem; }
+    .ipf-hero__stats { gap: 1.1rem; padding: 0.875rem 1.15rem; }
+    .ipf-hero__stat-value { font-size: 1.3rem; }
+    .ipf-radio-grid { grid-template-columns: repeat(2, 1fr); }
+    .ipf-level-grid  { grid-template-columns: repeat(2, 1fr); }
+    .ipf-content-wrap { padding: 1.5rem 1.25rem; }
+}
+
+/* ================================================================
+   18. RESPONSIVE  –  768px  (tablet portrait)
+================================================================ */
+@media (max-width: 768px) {
+    .ipf-hero { padding: 2rem 1.25rem 1.75rem; }
+
+    .ipf-hero__inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.25rem;
+    }
+
+    .ipf-hero__info {
+        align-items: center;
+        min-width: 0;
+    }
+
+    .ipf-hero__name-row { justify-content: center; }
+
+    .ipf-hero__stats {
+        align-self: stretch;
+        justify-content: center;
+    }
+
+    .ipf-hero__social { justify-content: center; }
+
+    .ipf-tab span { font-size: 0.82rem; }
+    .ipf-tab { padding: 0 0.85rem; gap: 0.35rem; }
+
+    .ipf-panel__header { padding: 1.25rem 1.25rem 1rem; }
+    .ipf-form-grid { padding: 1.25rem 1.25rem; gap: 0.85rem 1.1rem; }
+    .ipf-fieldset { padding: 0 1.25rem 1.25rem; }
+    .ipf-section-divider { padding: 0 1.25rem; }
+    .ipf-panel__footer { padding: 1rem 1.25rem; }
+}
+
+/* ================================================================
+   19. RESPONSIVE  –  640px  (large mobile)
+================================================================ */
+@media (max-width: 640px) {
+    .ipf-form-grid { grid-template-columns: 1fr; }
+    .ipf-form-grid--narrow { grid-template-columns: 1fr; }
+    .ipf-field--span2 { grid-column: auto; }
+
+    .ipf-radio-grid { grid-template-columns: 1fr 1fr; }
+    .ipf-level-grid  { grid-template-columns: 1fr 1fr; }
+
+    .ipf-hero__name { font-size: 1.55rem; }
+
+    .ipf-hero__stats {
+        gap: 0.9rem;
+        padding: 0.8rem 1rem;
+    }
+    .ipf-hero__stat-divider { height: 28px; }
+    .ipf-hero__stat-value { font-size: 1.2rem; }
+
+    .ipf-tab svg { display: none; }
+    .ipf-tab { padding: 0 0.75rem; height: 46px; font-size: 0.8rem; }
+
+    .ipf-btn { justify-content: center; }
+    .ipf-panel__footer { justify-content: stretch; }
+    .ipf-panel__footer .ipf-btn { flex: 1; justify-content: center; }
+}
+
+/* ================================================================
+   20. RESPONSIVE  –  480px  (small mobile)
+================================================================ */
+@media (max-width: 480px) {
+    .ipf-hero { padding: 1.75rem 1rem 1.5rem; }
+    .ipf-content-wrap { padding: 1.25rem 0.875rem; }
+
+    .ipf-avatar { width: 90px; height: 90px; }
+    .ipf-avatar__initials { font-size: 1.85rem; }
+
+    .ipf-hero__stats {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem 1.1rem;
+    }
+    .ipf-hero__stat-divider { display: none; }
+
+    .ipf-radio-grid { grid-template-columns: 1fr; }
+    .ipf-level-grid  { grid-template-columns: 1fr 1fr; }
+
+    .ipf-panel__header { flex-direction: column; gap: 0.75rem; }
+}
+
+/* ================================================================
+   21. RESPONSIVE  –  360px  (very small)
+================================================================ */
+@media (max-width: 360px) {
+    .ipf-hero__name { font-size: 1.35rem; }
+    .ipf-content-wrap { padding: 1rem 0.75rem; }
+    .ipf-form-grid { padding: 1rem 1rem; }
+    .ipf-fieldset { padding: 0 1rem 1rem; }
+    .ipf-panel__header { padding: 1rem 1rem 0.875rem; }
+    .ipf-panel__footer { padding: 0.875rem 1rem; }
+    .ipf-section-divider { padding: 0 1rem; }
+
+    .ipf-level-grid { grid-template-columns: 1fr; }
+    .ipf-tab { padding: 0 0.6rem; font-size: 0.75rem; }
+}

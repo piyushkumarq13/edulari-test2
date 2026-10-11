@@ -1,0 +1,846 @@
+/* ============================================================
+   Edit Course Page – /public/assets/css/instructor/edit-course.css
+   Namespace: ec-*
+   Depends on navbar.css being loaded first.
+============================================================ */
+
+/* ── Local tokens ─────────────────────────────────────────── */
+:root {
+    --ec-primary:       #5c6ef8;
+    --ec-primary-dark:  #4355e8;
+    --ec-primary-light: #eef0ff;
+    --ec-success:       #22c55e;
+    --ec-success-light: #dcfce7;
+    --ec-error:         #ef4444;
+    --ec-error-light:   #fee2e2;
+    --ec-danger:        #ef4444;
+    --ec-danger-light:  #fee2e2;
+    --ec-text:          #1e1e2e;
+    --ec-text-2:        #64748b;
+    --ec-border:        #e2e8f0;
+    --ec-border-focus:  #5c6ef8;
+    --ec-bg:            #f8fafc;
+    --ec-white:         #ffffff;
+    --ec-radius:        12px;
+    --ec-radius-sm:     8px;
+    --ec-shadow:        0 2px 12px rgba(0, 0, 0, .06);
+    --ec-shadow-md:     0 6px 24px rgba(0, 0, 0, .09);
+}
+
+/* ── Base font ────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+    background: #f8fafc;
+    color: #1e1e2e;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Page wrapper ─────────────────────────────────────────── */
+.ec-wrap {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 2rem 1.5rem 5rem;
+}
+
+/* ── Page header ──────────────────────────────────────────── */
+.ec-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.ec-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.ec-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ec-text-2);
+    text-decoration: none;
+    margin-bottom: 0.25rem;
+    transition: color 0.15s;
+}
+
+.ec-back-link:hover {
+    color: var(--ec-primary);
+    text-decoration: none;
+}
+
+.ec-page-title {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--ec-text);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.ec-page-sub {
+    font-size: 0.9rem;
+    color: var(--ec-text-2);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 480px;
+}
+
+/* ── Header quick stats ───────────────────────────────────── */
+.ec-header-stats {
+    display: flex;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+.ec-hstat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--ec-white);
+    border: 1px solid var(--ec-border);
+    border-radius: var(--ec-radius-sm);
+    padding: 0.6rem 1.1rem;
+    box-shadow: var(--ec-shadow);
+    min-width: 72px;
+}
+
+.ec-hstat-val {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ec-primary);
+    line-height: 1.1;
+}
+
+.ec-hstat-label {
+    font-size: 0.7rem;
+    color: var(--ec-text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+}
+
+/* ── Status bar ───────────────────────────────────────────── */
+.ec-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.ec-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.ec-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.ec-status--published { background: #dcfce7; color: #166534; }
+.ec-status--published .ec-status-dot { background: #22c55e; }
+
+.ec-status--draft     { background: #f1f5f9; color: #475569; }
+.ec-status--draft .ec-status-dot { background: #94a3b8; }
+
+.ec-status--archived  { background: #fef3c7; color: #92400e; }
+.ec-status--archived .ec-status-dot { background: #f59e0b; }
+
+.ec-preview-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.825rem;
+    font-weight: 500;
+    color: var(--ec-primary);
+    text-decoration: none;
+    border: 1.5px solid var(--ec-primary);
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.ec-preview-link:hover {
+    background: var(--ec-primary);
+    color: var(--ec-white);
+    text-decoration: none;
+}
+
+/* ── Alerts ───────────────────────────────────────────────── */
+.ec-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--ec-radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    animation: ecSlideIn 0.25s ease;
+}
+
+@keyframes ecSlideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.ec-alert svg { flex-shrink: 0; margin-top: 1px; }
+
+.ec-alert--error   { background: var(--ec-error-light);   color: #991b1b; border-left: 4px solid var(--ec-error);   }
+.ec-alert--success { background: var(--ec-success-light); color: #166534; border-left: 4px solid var(--ec-success); }
+
+/* ── Form grid ────────────────────────────────────────────── */
+.ec-form {}
+
+.ec-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.ec-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.ec-card {
+    background: var(--ec-white);
+    border: 1px solid var(--ec-border);
+    border-radius: var(--ec-radius);
+    padding: 1.5rem;
+    box-shadow: var(--ec-shadow);
+}
+
+.ec-card--danger {
+    border-color: #fca5a5;
+    background: #fff5f5;
+}
+
+.ec-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ec-text);
+    margin: 0 0 1.25rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--ec-border);
+}
+
+.ec-card-title--danger {
+    color: var(--ec-danger);
+    border-bottom-color: #fca5a5;
+}
+
+.ec-card--danger .ec-card-title {
+    border-bottom-color: #fca5a5;
+}
+
+.ec-card-num {
+    width: 26px;
+    height: 26px;
+    background: var(--ec-primary-light);
+    color: var(--ec-primary);
+    border-radius: 50%;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ── Field ────────────────────────────────────────────────── */
+.ec-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1.1rem;
+}
+
+.ec-field:last-child {
+    margin-bottom: 0;
+}
+
+.ec-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ec-text);
+}
+
+.ec-required {
+    color: var(--ec-error);
+}
+
+.ec-field-hint {
+    font-size: 0.78rem;
+    color: var(--ec-text-2);
+}
+
+/* ── Inputs ───────────────────────────────────────────────── */
+.ec-input {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--ec-border);
+    border-radius: var(--ec-radius-sm);
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: var(--ec-text);
+    background: var(--ec-white);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+}
+
+.ec-input:focus {
+    outline: none;
+    border-color: var(--ec-border-focus);
+    box-shadow: 0 0 0 3px rgba(92, 110, 248, .12);
+}
+
+.ec-input::placeholder {
+    color: #a0aec0;
+}
+
+.ec-textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.6;
+}
+
+.ec-textarea--sm {
+    min-height: 80px;
+}
+
+.ec-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.1rem;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+/* ── Two side-by-side fields ──────────────────────────────── */
+.ec-two-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+}
+
+.ec-two-fields .ec-field {
+    margin-bottom: 0;
+}
+
+/* ── Price field ──────────────────────────────────────────── */
+.ec-price-wrap {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--ec-border);
+    border-radius: var(--ec-radius-sm);
+    overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ec-price-wrap:focus-within {
+    border-color: var(--ec-border-focus);
+    box-shadow: 0 0 0 3px rgba(92, 110, 248, .12);
+}
+
+.ec-price-sym {
+    padding: 0.7rem 0.75rem;
+    background: var(--ec-bg);
+    border-right: 1.5px solid var(--ec-border);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ec-text-2);
+    flex-shrink: 0;
+}
+
+.ec-input--price {
+    border: none;
+    border-radius: 0;
+    flex: 1;
+}
+
+.ec-input--price:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+/* ── Current thumbnail ────────────────────────────────────── */
+.ec-current-thumb {
+    margin-bottom: 1rem;
+}
+
+.ec-thumb-img {
+    width: 100%;
+    max-width: 240px;
+    border-radius: var(--ec-radius-sm);
+    object-fit: cover;
+    border: 1.5px solid var(--ec-border);
+    margin-top: 0.5rem;
+    display: block;
+}
+
+.ec-thumb-wrap {
+    position: relative;
+    display: inline-block;
+    max-width: 240px;
+}
+
+.ec-remove-thumb-btn {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    padding: 0;
+    line-height: 1;
+}
+
+.ec-remove-thumb-btn:hover {
+    background: rgba(220, 53, 69, 0.85);
+}
+
+/* ── Upload box ───────────────────────────────────────────── */
+.ec-upload-box {
+    position: relative;
+    border: 2px dashed var(--ec-border);
+    border-radius: var(--ec-radius-sm);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--ec-bg);
+    overflow: hidden;
+}
+
+.ec-upload-box:hover,
+.ec-upload-box--drag {
+    border-color: var(--ec-primary);
+    background: var(--ec-primary-light);
+}
+
+.ec-upload-box--has-image {
+    padding: 0.5rem;
+    border-style: solid;
+    border-color: var(--ec-primary);
+}
+
+.ec-upload-icon {
+    color: var(--ec-text-2);
+    margin-bottom: 0.4rem;
+}
+
+.ec-upload-text {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ec-text-2);
+    margin: 0 0 0.2rem;
+}
+
+.ec-upload-hint {
+    font-size: 0.73rem;
+    color: #a0aec0;
+    margin: 0;
+}
+
+.ec-upload-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    font-size: 0;
+}
+
+.ec-upload-preview {
+    display: none;
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+}
+
+/* ── Toggle switch ────────────────────────────────────────── */
+.ec-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    background: var(--ec-bg);
+    border: 1.5px solid var(--ec-border);
+    border-radius: var(--ec-radius-sm);
+    transition: border-color 0.15s;
+}
+
+.ec-toggle-label:hover {
+    border-color: var(--ec-primary);
+}
+
+.ec-toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.ec-toggle-track {
+    width: 42px;
+    height: 24px;
+    background: var(--ec-border);
+    border-radius: 99px;
+    flex-shrink: 0;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.ec-toggle-input:checked + .ec-toggle-track {
+    background: var(--ec-primary);
+}
+
+.ec-toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: var(--ec-white);
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+}
+
+.ec-toggle-input:checked + .ec-toggle-track .ec-toggle-thumb {
+    transform: translateX(18px);
+}
+
+.ec-toggle-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ec-text);
+}
+
+/* ── Danger zone ──────────────────────────────────────────── */
+.ec-danger-desc {
+    font-size: 0.875rem;
+    color: var(--ec-text-2);
+    margin: 0 0 1rem;
+}
+
+.ec-danger-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* ── Action bar ───────────────────────────────────────────── */
+.ec-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--ec-border);
+    flex-wrap: wrap;
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.ec-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border-radius: var(--ec-radius-sm);
+    font-size: 0.925rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    font-family: inherit;
+    line-height: 1;
+}
+
+.ec-btn--primary {
+    background: var(--ec-primary);
+    color: var(--ec-white);
+    border-color: var(--ec-primary);
+    box-shadow: 0 3px 10px rgba(92, 110, 248, .3);
+}
+
+.ec-btn--primary:hover {
+    background: var(--ec-primary-dark);
+    border-color: var(--ec-primary-dark);
+    box-shadow: 0 6px 16px rgba(92, 110, 248, .4);
+    transform: translateY(-1px);
+    text-decoration: none;
+    color: var(--ec-white);
+}
+
+.ec-btn--ghost {
+    background: transparent;
+    color: var(--ec-text-2);
+    border-color: var(--ec-border);
+}
+
+.ec-btn--ghost:hover {
+    border-color: var(--ec-primary);
+    color: var(--ec-primary);
+    background: var(--ec-primary-light);
+    text-decoration: none;
+}
+
+.ec-btn--danger {
+    background: transparent;
+    color: var(--ec-danger);
+    border-color: #fca5a5;
+    font-size: 0.85rem;
+    padding: 0.55rem 1rem;
+}
+
+.ec-btn--danger:hover {
+    background: var(--ec-danger);
+    color: var(--ec-white);
+    border-color: var(--ec-danger);
+    text-decoration: none;
+}
+
+/* ── Custom Select (replaces native select) ────────────────── */
+.ec-custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.ec-custom-select select {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+}
+
+.ec-custom-select__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--ec-border);
+    border-radius: var(--ec-radius-sm);
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: var(--ec-text);
+    background: var(--ec-white);
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+    text-align: left;
+    line-height: 1.4;
+    gap: 0.5rem;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.ec-custom-select__trigger:focus {
+    outline: none;
+    border-color: var(--ec-border-focus);
+    box-shadow: 0 0 0 3px rgba(92, 110, 248, .12);
+}
+
+.ec-custom-select__trigger .ec-chevron {
+    flex-shrink: 0;
+    width: 1.1rem;
+    height: 1.1rem;
+    color: #64748b;
+    transition: transform 0.2s;
+}
+
+.ec-custom-select--open .ec-custom-select__trigger .ec-chevron {
+    transform: rotate(180deg);
+}
+
+.ec-custom-select__options {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: #fff;
+    border: 1.5px solid var(--ec-border);
+    border-radius: var(--ec-radius-sm);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.2s ease, opacity 0.15s ease, visibility 0.15s;
+    top: 100%;
+    margin-top: 4px;
+}
+
+.ec-custom-select--open .ec-custom-select__options {
+    max-height: var(--ec-dropdown-max-height, 240px);
+    overflow-y: auto;
+    opacity: 1;
+    visibility: visible;
+}
+
+.ec-custom-select--up .ec-custom-select__options {
+    bottom: 100%;
+    top: auto;
+    margin-top: 0;
+    margin-bottom: 4px;
+}
+
+.ec-custom-select__option {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    color: var(--ec-text);
+    cursor: pointer;
+    transition: background 0.1s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ec-custom-select__option:hover,
+.ec-custom-select__option--highlighted {
+    background: var(--ec-primary-light);
+}
+
+.ec-custom-select__option--selected {
+    font-weight: 600;
+    color: var(--ec-primary);
+    background: #f0f0ff;
+}
+
+.ec-custom-select__option--placeholder {
+    color: var(--ec-text-2);
+    font-weight: 400;
+}
+
+.ec-custom-select--error .ec-custom-select__trigger {
+    border-color: var(--ec-error);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, .12);
+}
+
+/* ── Screen-reader only ───────────────────────────────────── */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+
+@media (max-width: 1024px) {
+    .ec-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .ec-wrap {
+        padding: 1.25rem 1rem 4rem;
+    }
+
+    .ec-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ec-header-stats {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .ec-page-title {
+        font-size: 1.35rem;
+    }
+
+    .ec-page-sub {
+        max-width: 100%;
+    }
+
+    .ec-card {
+        padding: 1.1rem;
+    }
+
+    .ec-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .ec-btn {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 540px) {
+    .ec-two-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .ec-header-stats {
+        gap: 0.6rem;
+    }
+
+    .ec-hstat {
+        flex: 1;
+        min-width: 0;
+    }
+}

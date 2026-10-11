@@ -1,0 +1,899 @@
+/* ============================================================
+   Edulari – Security & Password Page (security.css)
+   File: /public/assets/css/security.css
+
+   Covers: hero, alert, grid layout, password-health card,
+   change-password form, active-sessions list, login-history list.
+
+   Matches the navy/purple/amber design system from profile.css.
+   Breakpoints: 1400 | 1200 | 1024 | 768 | 640 | 480 | 360
+   ============================================================ */
+
+
+/* ================================================================
+   1. DESIGN TOKENS  (mirrors profile.css exactly)
+================================================================ */
+:root {
+    --primary:            #6c63ff;
+    --primary-dark:       #5449e6;
+    --primary-light:      #ede9fe;
+    --primary-glow:       rgba(108, 99, 255, 0.35);
+    --secondary:          #10b981;
+    --secondary-light:    #d1fae5;
+    --accent-orange:      #f59e0b;
+    --accent-orange-lt:   #fef3c7;
+    --accent-red:         #ef4444;
+    --accent-red-lt:      #fef2f2;
+    --accent-purple:      #8b5cf6;
+    --accent-blue:        #3b82f6;
+    --accent-blue-lt:     #eff6ff;
+
+    --bg:                 #f5f6fa;
+    --surface:            #ffffff;
+    --surface-2:          #f9fafb;
+    --surface-3:          #f0f1f8;
+
+    --text-primary:       #111827;
+    --text-secondary:     #6b7280;
+    --text-muted:         #9ca3af;
+    --text-inverse:       #ffffff;
+
+    --border:             #e5e7eb;
+    --border-hover:       #d1d5db;
+    --border-focus:       #c9cae8;
+
+    --shadow-xs:          0 1px 2px rgba(0,0,0,.05);
+    --shadow-sm:          0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+    --shadow-md:          0 4px 6px -1px rgba(0,0,0,.08), 0 2px 4px -1px rgba(0,0,0,.04);
+    --shadow-lg:          0 10px 25px -5px rgba(0,0,0,.1), 0 4px 10px -5px rgba(0,0,0,.06);
+    --shadow-card:        0 2px 12px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.04);
+    --shadow-card-hover:  0 8px 32px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
+    --shadow-primary:     0 8px 24px rgba(108,99,255,.28);
+
+    --success:            #10b981;
+    --success-light:      #ecfdf5;
+    --danger:             #ef4444;
+    --danger-light:       #fef2f2;
+    --warning:            #f59e0b;
+    --warning-light:      #fffbeb;
+    --info:               #3b82f6;
+    --info-light:         #eff6ff;
+
+    --radius-sm:          6px;
+    --radius-md:          10px;
+    --radius-lg:          16px;
+    --radius-xl:          24px;
+    --radius-full:        9999px;
+
+    --container-max:      1280px;
+    --navbar-height:      68px;
+    --transition:         0.2s ease;
+    --transition-slow:    0.35s ease;
+}
+
+
+/* ================================================================
+   2. RESET & BASE
+================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* ================================================================
+   3. MAIN WRAPPER
+================================================================ */
+.sec-main {
+    min-height: calc(100vh - var(--navbar-height));
+    padding-bottom: 60px;
+}
+
+
+/* ================================================================
+   4. HERO BANNER
+================================================================ */
+.sec-hero {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+    padding: 44px 24px 40px;
+}
+
+.sec-hero__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sec-hero__icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, .12);
+    border: 1.5px solid rgba(255, 255, 255, .2);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    flex-shrink: 0;
+    backdrop-filter: blur(8px);
+}
+
+.sec-hero__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -.02em;
+    margin-bottom: 4px;
+}
+
+.sec-hero__subtitle {
+    font-size: .9375rem;
+    color: rgba(255, 255, 255, .7);
+    line-height: 1.5;
+    max-width: 600px;
+}
+
+
+/* ================================================================
+   5. ALERT BANNER
+================================================================ */
+.sec-alert {
+    max-width: var(--container-max);
+    margin: 20px auto 0;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: .875rem;
+    font-weight: 500;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.sec-alert--success {
+    background: var(--success-light);
+    border: 1px solid #6ee7b7;
+    color: #065f46;
+}
+.sec-alert--error {
+    background: var(--danger-light);
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+}
+
+.sec-alert svg { flex-shrink: 0; }
+.sec-alert span { flex: 1; }
+
+.sec-alert__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+    opacity: .6;
+    color: inherit;
+    padding: 0 2px;
+    transition: opacity var(--transition);
+}
+.sec-alert__close:hover { opacity: 1; }
+
+
+/* ================================================================
+   6. TWO-COLUMN GRID
+================================================================ */
+.sec-grid {
+    max-width: var(--container-max);
+    margin: 28px auto 0;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+
+/* ================================================================
+   7. CARD BASE
+================================================================ */
+.sec-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: box-shadow var(--transition);
+}
+.sec-card + .sec-card { margin-top: 24px; }
+
+/* Card header */
+.sec-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--surface-3);
+}
+
+.sec-card__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.sec-card__icon--blue   { background: var(--accent-blue-lt);   color: var(--accent-blue);   }
+.sec-card__icon--amber  { background: var(--accent-orange-lt); color: var(--accent-orange); }
+.sec-card__icon--red    { background: var(--danger-light);     color: var(--danger);        }
+.sec-card__icon--purple { background: var(--primary-light);    color: var(--primary);       }
+
+.sec-card__title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -.01em;
+    margin-bottom: 3px;
+}
+.sec-card__subtitle {
+    font-size: .8125rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Card footer */
+.sec-card__footer {
+    padding: 20px 28px 24px;
+    border-top: 1px solid var(--surface-3);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+.sec-card__footer-note {
+    font-size: .8rem;
+    color: var(--text-muted);
+}
+
+
+/* ================================================================
+   8. PASSWORD HEALTH CARD
+================================================================ */
+.sec-ph {
+    padding: 22px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Badge row */
+.sec-ph__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: .875rem;
+}
+.sec-ph__row--badge { padding: 11px 14px; }
+
+.sec-ph__row-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: .8125rem;
+}
+.sec-ph__row-label svg { flex-shrink: 0; color: var(--text-muted); }
+
+.sec-ph__row-value {
+    font-weight: 600;
+    font-size: .875rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.sec-ph__row-value--warn { color: var(--warning); }
+
+/* Strength badge */
+.sec-ph__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+.sec-ph__badge--strong  { background: #d1fae5; color: #065f46; }
+.sec-ph__badge--fair    { background: var(--accent-orange-lt); color: #92400e; }
+.sec-ph__badge--weak    { background: var(--danger-light); color: #991b1b; }
+.sec-ph__badge--unknown { background: var(--surface-3); color: var(--text-muted); }
+
+/* Strength progress bar */
+.sec-ph__bar-track {
+    height: 7px;
+    background: var(--surface-3);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+.sec-ph__bar-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width .5s cubic-bezier(.4,0,.2,1), background .3s ease;
+}
+.sec-ph__bar-fill--strong  { background: var(--success); }
+.sec-ph__bar-fill--fair    { background: var(--warning); }
+.sec-ph__bar-fill--weak    { background: var(--danger);  }
+.sec-ph__bar-fill--unknown { background: var(--text-muted); }
+
+/* Age warning strip */
+.sec-ph__warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--warning-light);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius-md);
+    font-size: .8125rem;
+    color: #92400e;
+    font-weight: 500;
+    line-height: 1.5;
+}
+.sec-ph__warning svg { flex-shrink: 0; margin-top: 1px; color: var(--warning); }
+
+/* Recommendation tips */
+.sec-ph__tips {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+}
+.sec-ph__tips-label {
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+.sec-ph__tips-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.sec-ph__tips-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: .8125rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+.sec-ph__tips-list svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--primary);
+}
+
+
+/* ================================================================
+   9. CHANGE-PASSWORD FORM
+================================================================ */
+.sec-form-stack {
+    padding: 24px 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.sec-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.sec-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.sec-label {
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: .01em;
+}
+
+.sec-pw-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.sec-input {
+    width: 100%;
+    padding: 11px 44px 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: .9375rem;
+    color: var(--text-primary);
+    background: var(--surface);
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.sec-input::placeholder { color: var(--text-muted); }
+.sec-input:hover  { border-color: var(--border-hover); }
+.sec-input:focus  {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.sec-pw-toggle {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition);
+}
+.sec-pw-toggle:hover { color: var(--text-primary); }
+
+/* Strength meter (inline, below input) */
+.sec-strength {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 28px;
+    margin-top: 14px;
+}
+.sec-strength__track {
+    flex: 1;
+    height: 6px;
+    background: var(--surface-3);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+.sec-strength__fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width .35s ease, background .25s ease;
+}
+.sec-strength__label {
+    font-size: .75rem;
+    font-weight: 700;
+    min-width: 44px;
+    text-align: right;
+    letter-spacing: .02em;
+}
+
+/* Requirements checklist */
+.sec-reqs {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    padding: 14px 28px 0;
+}
+.sec-req {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: .8rem;
+    color: var(--text-muted);
+    transition: color var(--transition);
+}
+.sec-req svg { flex-shrink: 0; color: var(--border-hover); transition: color var(--transition); }
+.sec-req--met { color: var(--success); }
+.sec-req--met svg { color: var(--success); }
+
+
+/* ================================================================
+   10. BUTTONS
+================================================================ */
+.sec-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    font-size: .9rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition);
+    letter-spacing: .01em;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+.sec-btn svg { flex-shrink: 0; }
+
+.sec-btn--danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(239,68,68,.35);
+}
+.sec-btn--danger:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    box-shadow: 0 6px 20px rgba(239,68,68,.45);
+    transform: translateY(-1px);
+}
+.sec-btn--danger:active { transform: translateY(0); }
+
+.sec-btn--ghost {
+    background: transparent;
+    color: var(--danger);
+    border: 1.5px solid var(--danger);
+}
+.sec-btn--ghost:hover {
+    background: var(--danger-light);
+    border-color: #dc2626;
+}
+
+.sec-btn--sm {
+    padding: 7px 14px;
+    font-size: .8125rem;
+}
+
+
+/* ================================================================
+   11. SESSIONS LIST
+================================================================ */
+.sec-sessions-list {
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sec-session {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.sec-session:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-sm);
+}
+.sec-session--current {
+    border-color: var(--primary);
+    background: #faf9ff;
+    box-shadow: 0 0 0 3px rgba(108,99,255,.1);
+}
+.sec-session--inactive {
+    opacity: .55;
+}
+
+.sec-session__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text-secondary);
+}
+.sec-session--current .sec-session__icon { background: var(--primary-light); color: var(--primary); }
+
+.sec-session__body { flex: 1; min-width: 0; }
+
+.sec-session__top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
+
+.sec-session__device {
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sec-session__os {
+    font-weight: 400;
+    color: var(--text-secondary);
+    font-size: .8125rem;
+}
+
+.sec-session__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 9px;
+    border-radius: var(--radius-full);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+.sec-session__badge--current  { background: var(--primary-light); color: var(--primary); }
+.sec-session__badge--active   { background: var(--success-light);  color: #065f46; }
+.sec-session__badge--inactive { background: var(--surface-3);      color: var(--text-muted); }
+
+.sec-session__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+}
+.sec-session__meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .75rem;
+    color: var(--text-muted);
+}
+.sec-session__meta-item svg { color: var(--text-muted); flex-shrink: 0; }
+
+.sec-session__action { flex-shrink: 0; }
+
+
+/* ================================================================
+   12. LOGIN HISTORY LIST
+================================================================ */
+.sec-history {
+    padding: 10px 20px 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sec-history__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--surface-3);
+    transition: background var(--transition);
+}
+.sec-history__row:last-child { border-bottom: none; padding-bottom: 6px; }
+.sec-history__row:hover { background: var(--surface-2); border-radius: var(--radius-sm); }
+
+.sec-history__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text-muted);
+}
+
+.sec-history__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sec-history__device {
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sec-history__os {
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.sec-history__meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: .75rem;
+    color: var(--text-muted);
+}
+.sec-history__sep { opacity: .5; }
+.sec-history__ip  { font-family: 'SF Mono', 'Fira Mono', monospace; font-size: .72rem; }
+
+.sec-history__status {
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    letter-spacing: .02em;
+    flex-shrink: 0;
+}
+.sec-history__status--ok      { background: var(--success-light); color: #065f46; }
+.sec-history__status--warn    { background: var(--warning-light); color: #92400e; }
+.sec-history__status--neutral { background: var(--surface-3); color: var(--text-muted); }
+
+
+/* ================================================================
+   13. EMPTY STATE
+================================================================ */
+.sec-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 40px 24px;
+    color: var(--text-muted);
+    text-align: center;
+}
+.sec-empty svg { opacity: .35; }
+.sec-empty p { font-size: .9rem; }
+
+
+/* ================================================================
+   14. RESPONSIVE — 1200px
+================================================================ */
+@media (max-width: 1200px) {
+    .sec-grid {
+        grid-template-columns: 380px 1fr;
+    }
+}
+
+
+/* ================================================================
+   15. RESPONSIVE — 1024px (single column)
+================================================================ */
+@media (max-width: 1024px) {
+    .sec-grid {
+        grid-template-columns: 1fr;
+        max-width: 780px;
+    }
+
+    .sec-col--right {
+        display: contents; /* cards flow naturally */
+    }
+
+    /* Re-order: health, change-password, sessions, history */
+    .sec-card--health { order: 1; }
+}
+
+
+/* ================================================================
+   16. RESPONSIVE — 768px
+================================================================ */
+@media (max-width: 768px) {
+    .sec-hero { padding: 32px 20px 28px; }
+    .sec-hero__title { font-size: 1.4375rem; }
+    .sec-hero__icon  { width: 50px; height: 50px; }
+
+    .sec-alert { margin: 16px 20px 0; }
+
+    .sec-grid { padding: 0 20px; margin-top: 20px; gap: 20px; }
+
+    .sec-card__header { padding: 20px 20px 16px; }
+    .sec-card__footer { padding: 16px 20px 20px; }
+
+    .sec-ph      { padding: 18px 20px; }
+    .sec-form-stack { padding: 18px 20px 0; }
+    .sec-strength   { padding: 0 20px; }
+    .sec-reqs       { padding: 12px 20px 0; }
+
+    .sec-form-row { grid-template-columns: 1fr; }
+
+    .sec-sessions-list { padding: 10px 16px; }
+    .sec-history { padding: 8px 16px 10px; }
+}
+
+
+/* ================================================================
+   17. RESPONSIVE — 640px
+================================================================ */
+@media (max-width: 640px) {
+    .sec-hero__inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .sec-hero__subtitle { font-size: .875rem; }
+
+    .sec-session {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .sec-session__action {
+        width: 100%;
+    }
+    .sec-session__action .sec-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .sec-history__status { display: none; } /* too narrow — hide badge, keep meta */
+    .sec-history__row { gap: 10px; }
+
+    .sec-reqs { grid-template-columns: 1fr; }
+
+    .sec-btn { width: 100%; justify-content: center; }
+    .sec-card__footer { flex-direction: column; align-items: stretch; }
+    .sec-card__footer-note { text-align: center; }
+}
+
+
+/* ================================================================
+   18. RESPONSIVE — 480px
+================================================================ */
+@media (max-width: 480px) {
+    .sec-hero { padding: 24px 16px 22px; }
+    .sec-grid  { padding: 0 16px; }
+
+    .sec-hero__title   { font-size: 1.25rem; }
+    .sec-hero__icon    { width: 44px; height: 44px; }
+    .sec-hero__icon svg{ width: 22px; height: 22px; }
+
+    .sec-card__title   { font-size: 1rem; }
+    .sec-card__header  { padding: 16px 16px 14px; gap: 12px; }
+    .sec-card__footer  { padding: 14px 16px 18px; }
+    .sec-card__icon    { width: 38px; height: 38px; }
+
+    .sec-ph        { padding: 14px 16px; gap: 10px; }
+    .sec-form-stack { padding: 14px 16px 0; }
+    .sec-strength   { padding: 0 16px; }
+    .sec-reqs       { padding: 10px 16px 0; }
+
+    .sec-sessions-list { padding: 8px 12px; }
+    .sec-history { padding: 6px 12px 8px; }
+
+    .sec-ph__row-label { font-size: .75rem; }
+    .sec-ph__row-value { font-size: .8125rem; }
+}
+
+
+/* ================================================================
+   19. RESPONSIVE — 360px
+================================================================ */
+@media (max-width: 360px) {
+    .sec-hero__title { font-size: 1.125rem; }
+    .sec-card__title { font-size: .9375rem; }
+    .sec-input { font-size: .875rem; padding: 10px 40px 10px 12px; }
+}
+
+
+/* ================================================================
+   20. REDUCED MOTION
+================================================================ */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}

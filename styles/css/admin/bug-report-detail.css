@@ -1,0 +1,196 @@
+/* ============================================================
+   Admin Bug Report Detail CSS  —  prefix: abrd-
+   File: /public/assets/css/admin/bug-report-detail.css
+   Depends on: navbar.css, admin/dashboard.css
+============================================================ */
+
+.abrd-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3.5rem;
+}
+
+/* ── Back link ── */
+.abrd-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: .83rem; font-weight: 600; color: #64748b;
+    text-decoration: none; margin-bottom: 1.5rem;
+    transition: color .15s;
+}
+.abrd-back:hover { color: #6c63ff; }
+
+/* ── Page header ── */
+.abrd-header {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 1rem;
+    margin-bottom: 2rem; flex-wrap: wrap;
+}
+.abrd-ref   { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #94a3b8; margin-bottom: .3rem; }
+.abrd-title { font-size: 1.5rem; font-weight: 800; color: #1e1e2e; line-height: 1.3; }
+.abrd-badges { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .6rem; }
+.abrd-badge {
+    display: inline-block; padding: 4px 12px;
+    border-radius: 99px; font-size: .72rem;
+    font-weight: 700; border: 1px solid transparent;
+}
+
+/* ── Layout: main + sidebar ── */
+.abrd-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* ── Cards ── */
+.abrd-card {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 14px; overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+.abrd-card:last-child { margin-bottom: 0; }
+.abrd-card-head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: .82rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; color: #64748b;
+}
+.abrd-card-head-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .85rem; flex-shrink: 0;
+}
+.abrd-card-body { padding: 1.25rem; }
+
+/* ── Details grid ── */
+.abrd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: .75rem 1.25rem;
+}
+.abrd-detail-label {
+    font-size: .7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; color: #94a3b8; margin-bottom: 2px;
+}
+.abrd-detail-value {
+    font-size: .875rem; font-weight: 600; color: #1e1e2e;
+}
+
+/* ── Description/steps text ── */
+.abrd-text-block {
+    font-size: .875rem; color: #475569; line-height: 1.75;
+    white-space: pre-wrap;
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 8px; padding: .9rem 1rem;
+    margin-top: .5rem;
+}
+.abrd-text-label {
+    font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; color: #94a3b8; margin-bottom: 4px;
+}
+.abrd-text-na { color: #cbd5e1; font-style: italic; }
+
+/* ── Sidebar action card ── */
+.abrd-action-card {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 14px; overflow: hidden;
+    margin-bottom: 1.25rem;
+    position: sticky; top: 84px;
+}
+.abrd-action-head {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: .82rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; color: #64748b;
+}
+.abrd-action-body { padding: 1.25rem; display: flex; flex-direction: column; gap: .75rem; }
+
+/* Current status display */
+.abrd-current-status {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: .75rem 1rem;
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 8px; margin-bottom: .25rem;
+}
+.abrd-current-label { font-size: .72rem; font-weight: 600; color: #64748b; text-transform: uppercase; }
+.abrd-current-val   { font-size: .82rem; font-weight: 700; }
+
+/* Action buttons */
+.abrd-action-btn {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    width: 100%; padding: 10px 16px; border-radius: 8px;
+    font-size: .875rem; font-weight: 600; font-family: inherit;
+    cursor: pointer; border: 1.5px solid transparent;
+    transition: all .15s; text-align: center;
+}
+.abrd-action-btn:disabled { opacity: .4; cursor: not-allowed; }
+.abrd-btn--resolve  { background: #16a34a; color: #fff; border-color: #16a34a; }
+.abrd-btn--resolve:hover:not(:disabled)  { background: #15803d; }
+.abrd-btn--progress { background: #6c63ff; color: #fff; border-color: #6c63ff; }
+.abrd-btn--progress:hover:not(:disabled) { background: #5449e6; }
+.abrd-btn--reopen   { background: #fff; color: #374151; border-color: #d1d5db; }
+.abrd-btn--reopen:hover:not(:disabled)   { background: #f9fafb; border-color: #9ca3af; }
+.abrd-btn--wontfix  { background: #fff; color: #dc2626; border-color: #dc2626; }
+.abrd-btn--wontfix:hover:not(:disabled)  { background: #fef2f2; }
+.abrd-btn--duplicate{ background: #fff; color: #374151; border-color: #d1d5db; }
+.abrd-btn--duplicate:hover:not(:disabled){ background: #f9fafb; }
+
+/* Notes textarea */
+.abrd-notes-wrap { margin-top: .25rem; }
+.abrd-notes-label {
+    font-size: .72rem; font-weight: 700; color: #64748b;
+    text-transform: uppercase; letter-spacing: .06em;
+    margin-bottom: .4rem; display: block;
+}
+.abrd-notes-textarea {
+    width: 100%; padding: 9px 11px;
+    border: 1.5px solid #e2e8f0; border-radius: 8px;
+    font-size: .85rem; font-family: inherit; color: #374151;
+    resize: vertical; min-height: 90px; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    line-height: 1.6;
+}
+.abrd-notes-textarea:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 3px rgba(108,99,255,.15);
+}
+.abrd-notes-hint { font-size: .72rem; color: #94a3b8; margin-top: 3px; }
+
+/* ── Timeline log ── */
+.abrd-log { display: flex; flex-direction: column; gap: 0; }
+.abrd-log-item {
+    display: flex; gap: 10px;
+    padding: .6rem 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: .8rem;
+}
+.abrd-log-item:last-child { border-bottom: none; }
+.abrd-log-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 5px;
+}
+.abrd-log-text  { color: #374151; font-weight: 500; }
+.abrd-log-time  { color: #94a3b8; font-size: .72rem; margin-top: 1px; }
+
+/* ── Flash ── */
+.abrd-flash {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: .9rem 1.1rem; border-radius: 10px;
+    font-size: .875rem; font-weight: 500;
+    margin-bottom: 1.25rem;
+    animation: abrdFade .3s ease;
+}
+@keyframes abrdFade { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+.abrd-flash.success { background:#dcfce7; border:1px solid #86efac; color:#15803d; }
+.abrd-flash.error   { background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .abrd-layout { grid-template-columns: 1fr; }
+    .abrd-action-card { position: static; }
+}
+@media (max-width: 600px) {
+    .abrd-page { padding: 1.25rem 1rem 2.5rem; }
+    .abrd-title { font-size: 1.2rem; }
+}

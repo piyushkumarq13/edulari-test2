@@ -1,0 +1,1205 @@
+/* ============================================================
+   UNIFIED NAVBAR — navbar.css
+   All class names prefixed "unav-"
+   File: /public/assets/css/navbar.css
+   ============================================================ */
+
+/* ── Base variables ─────────────────────────────────────────── */
+:root {
+  --unav-h:           64px;
+  --unav-bg:          #ffffff;
+  --unav-border:      #e5e7eb;
+  --unav-text:        #374151;
+  --unav-muted:       #6b7280;
+  --unav-accent:      #2563eb;
+  --unav-accent-hov:  #1d4ed8;
+  --unav-hover-bg:    #f3f4f6;
+  --unav-active-text: #2563eb;
+  --unav-dd-bg:       #ffffff;
+  --unav-dd-border:   #e5e7eb;
+  --unav-dd-shadow:   0 8px 28px rgba(0, 0, 0, 0.12);
+  --unav-dd-radius:   8px;
+  --unav-danger:      #dc2626;
+  --unav-badge-admin: #7c3aed;
+  --unav-badge-inst:  #0891b2;
+  --unav-badge-stu:   #059669;
+
+  /* Scroll arrow sizing */
+  --unav-arrow-size:  24px;
+}
+
+body {
+  padding-top: var(--unav-h); /* = 64px, matches the navbar height */
+}
+
+/* ── Navbar shell ───────────────────────────────────────────── */
+.unav {
+  position:      fixed;
+  top:           0;
+  left:          0;
+  right:         0;
+  z-index:       999;
+  background:    var(--unav-bg);
+  border-bottom: 1px solid var(--unav-border);
+  height:        var(--unav-h);
+  font-family:   inherit;
+  font-size:     0.9rem;
+  overflow:      visible;
+}
+
+.unav.unav-scrolled {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.unav-inner {
+  max-width:   1280px;
+  margin:      0 auto;
+  padding:     0 24px;
+  height:      100%;
+  display:     flex;
+  align-items: center;
+  gap:         0;
+}
+
+/* ── Brand / logo ───────────────────────────────────────────── */
+.unav-brand {
+  display:         flex;
+  align-items:     center;
+  gap:             8px;
+  font-weight:     700;
+  font-size:       1.1rem;
+  color:           var(--unav-accent);
+  text-decoration: none;
+  white-space:     nowrap;
+  flex-shrink:     0;
+  letter-spacing:  -0.02em;
+  margin-right:    8px;
+}
+
+.unav-brand img {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+@media (min-width: 769px) {
+  .unav-brand img {
+    height: 50px;
+  }
+}
+
+.unav-links-wrap {
+  display:      flex;
+  align-items:  center;
+  flex-shrink:  1;
+  min-width:    0;
+  margin-left:  16px;
+  margin-right: auto;   /* pins .unav-actions to the far right */
+  overflow:     visible;
+  position:     relative;
+}
+
+.unav-links-scroll {
+  display:      flex;
+  align-items:  center;
+  flex-shrink:  1;
+  min-width:    0;
+  overflow:     visible;
+}
+
+.unav-links {
+  display:     flex;
+  align-items: center;
+  gap:         2px;
+  flex-shrink: 0;   /* wrapper shrinks; inner row never shrinks itself */
+  overflow:    visible;
+}
+
+.unav-link {
+  display:         flex;
+  align-items:     center;
+  gap:             4px;
+  padding:         6px 10px;
+  border-radius:   6px;
+  color:           var(--unav-text);
+  font-weight:     500;
+  text-decoration: none;
+  white-space:     nowrap;
+  border:          none;
+  background:      none;
+  cursor:          pointer;
+  font-size:       inherit;
+  font-family:     inherit;
+  line-height:     1;
+  transition:      background 0.15s, color 0.15s;
+}
+
+.unav-link:hover,
+.unav-link:focus-visible {
+  background: var(--unav-hover-bg);
+  outline:    none;
+}
+
+.unav-link.unav-active {
+  color:       var(--unav-active-text);
+  font-weight: 600;
+}
+
+/* ── Scroll arrow buttons ───────────────────────────────────── */
+.unav-scroll-arrow {
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  flex-shrink:      0;
+  width:            0;
+  height:           var(--unav-arrow-size);
+  padding:          0;
+  border:           1px solid var(--unav-border);
+  background:       var(--unav-bg);
+  cursor:           pointer;
+  color:            var(--unav-text);
+  border-radius:    6px;
+  overflow:         hidden;
+  opacity:          0;
+  pointer-events:   none;
+  box-shadow:       0 1px 4px rgba(0, 0, 0, 0.08);
+  transition:       width 0.18s ease, opacity 0.18s ease, color 0.12s,
+                    background 0.12s, border-color 0.12s;
+}
+
+.unav-scroll-arrow--visible {
+  width:          var(--unav-arrow-size);
+  opacity:        1;
+  pointer-events: auto;
+}
+
+.unav-scroll-arrow:hover {
+  color:         var(--unav-accent);
+  background:    rgba(37, 99, 235, 0.06);
+  border-color:  var(--unav-accent);
+}
+
+.unav-scroll-arrow:focus-visible {
+  outline:        2px solid var(--unav-accent);
+  outline-offset: 1px;
+  color:          var(--unav-accent);
+}
+
+/* Small gap between the scroll area and its arrows */
+.unav-scroll-arrow--prev { margin-right: 4px; }
+.unav-scroll-arrow--next { margin-left:  4px; }
+
+/* ── Dropdown wrapper ───────────────────────────────────────── */
+.unav-dd-wrap {
+  position: relative;
+}
+
+.unav-dd {
+  position:      absolute;
+  top:           calc(100% + 8px);
+  left:          0;
+  min-width:     220px;
+  background:    var(--unav-dd-bg);
+  border:        1px solid var(--unav-dd-border);
+  border-radius: var(--unav-dd-radius);
+  box-shadow:    var(--unav-dd-shadow);
+  padding:       6px;
+  opacity:       0;
+  visibility:    hidden;
+  transform:     translateY(-4px);
+  transition:    opacity 0.15s, transform 0.15s, visibility 0.15s;
+  z-index:       200;
+}
+
+.unav-dd.unav-open {
+  opacity:    1;
+  visibility: visible;
+  transform:  translateY(0);
+}
+
+.unav-dd-item {
+  display:         flex;
+  align-items:     center;
+  gap:             10px;
+  padding:         9px 12px;
+  border-radius:   6px;
+  color:           var(--unav-text);
+  font-size:       inherit;
+  font-weight:     500;
+  text-decoration: none;
+  white-space:     nowrap;
+  transition:      background 0.12s;
+}
+
+.unav-dd-item:hover,
+.unav-dd-item:focus-visible {
+  background: var(--unav-hover-bg);
+  outline:    none;
+}
+
+.unav-dd-sep {
+  height:     1px;
+  background: var(--unav-dd-border);
+  margin:     5px 0;
+}
+
+.unav-dd-label {
+  font-size:      0.75rem;
+  font-weight:    600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color:          var(--unav-muted);
+  padding:        8px 12px 3px;
+}
+
+/* Chevron on dropdown triggers */
+.unav-chev {
+  transition: transform 0.15s;
+  flex-shrink: 0;
+}
+
+.unav-link[aria-expanded="true"] .unav-chev {
+  transform: rotate(180deg);
+}
+
+/* ── Right-side actions ─────────────────────────────────────── */
+/*
+  flex-shrink: 0 ensures these are NEVER hidden or squeezed.
+  The links area will shrink before actions ever get affected.
+*/
+.unav-actions {
+  display:     flex;
+  align-items: center;
+  gap:         8px;   /* proper gap between all action items */
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+/* Icon-only buttons */
+.unav-icon-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           36px;
+  height:          36px;
+  border-radius:   50%;
+  border:          none;
+  background:      none;
+  cursor:          pointer;
+  color:           var(--unav-text);
+  position:        relative;
+  transition:      background 0.15s;
+  flex-shrink:     0;
+}
+
+.unav-icon-btn:hover,
+.unav-icon-btn:focus-visible {
+  background: var(--unav-hover-bg);
+  outline:    none;
+}
+
+/* Cart / Wishlist icon link buttons — same sizing as .unav-icon-btn */
+.unav-cart-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           36px;
+  height:          36px;
+  border-radius:   50%;
+  color:           var(--unav-text);
+  text-decoration: none;
+  flex-shrink:     0;
+  transition:      background 0.15s, color 0.15s;
+}
+
+.unav-cart-btn:hover,
+.unav-cart-btn:focus-visible {
+  background: var(--unav-hover-bg);
+  color:      var(--unav-accent);
+  outline:    none;
+}
+
+/* Notification dot */
+.unav-notif-dot {
+  position:      absolute;
+  top:           7px;
+  right:         7px;
+  width:         8px;
+  height:        8px;
+  background:    #ef4444;
+  border-radius: 50%;
+  border:        2px solid var(--unav-bg);
+}
+
+/* ── Notification dropdown ──────────────────────────────────── */
+.unav-notif-wrap {
+  position: relative;
+}
+
+.unav-notif-dd {
+  position:      absolute;
+  top:           calc(100% + 8px);
+  right:         0;
+  width:         300px;
+  background:    var(--unav-dd-bg);
+  border:        1px solid var(--unav-dd-border);
+  border-radius: var(--unav-dd-radius);
+  box-shadow:    var(--unav-dd-shadow);
+  opacity:       0;
+  visibility:    hidden;
+  transform:     translateY(-4px);
+  transition:    opacity 0.15s, transform 0.15s, visibility 0.15s;
+  z-index:       200;
+  overflow:      hidden;
+}
+
+.unav-notif-dd.unav-open {
+  opacity:    1;
+  visibility: visible;
+  transform:  translateY(0);
+}
+
+.unav-notif-head {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         13px 16px 10px;
+  border-bottom:   1px solid var(--unav-dd-border);
+  font-weight:     600;
+  font-size:       0.9rem;
+}
+
+.unav-notif-head-left {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+}
+
+.unav-notif-mark-all {
+  font-size:        0.72rem;
+  font-weight:      600;
+  color:            var(--unav-accent, #6366f1);
+  background:       none;
+  border:           none;
+  cursor:           pointer;
+  padding:          2px 0;
+  white-space:      nowrap;
+  text-decoration:  none;
+  transition:       opacity 0.2s;
+}
+.unav-notif-mark-all:hover { opacity: 0.7; }
+
+.unav-notif-body {
+  max-height: 320px;
+  overflow-y: auto;
+  padding:    4px 0;
+}
+
+/* ── Notification dropdown: count badge ─────────────────────── */
+.unav-notif-count-badge {
+  display:       inline-flex;
+  align-items:   center;
+  font-size:     0.68rem;
+  font-weight:   700;
+  padding:       2px 8px;
+  border-radius: 20px;
+  background:    #ef4444;
+  color:         #fff;
+  letter-spacing: 0.02em;
+}
+
+/* ── Notification dropdown: empty state ─────────────────────── */
+.unav-notif-empty {
+  padding:    24px 16px;
+  text-align: center;
+  color:      var(--unav-muted);
+  font-size:  0.85rem;
+}
+
+/* ── Notification dropdown: each item row ───────────────────── */
+.unav-notif-item {
+  display:         block;
+  padding:         10px 16px;
+  text-decoration: none;
+  color:           var(--unav-text);
+  border-left:     3px solid transparent;
+  border-bottom:   1px solid var(--unav-dd-border);
+  transition:      background 0.12s, border-color 0.12s;
+}
+
+.unav-notif-item:last-child {
+  border-bottom: none;
+}
+
+.unav-notif-item:hover,
+.unav-notif-item:focus-visible {
+  background: var(--unav-hover-bg);
+  outline:    none;
+}
+
+.unav-notif-item--unread {
+  background:        #eff6ff;
+  border-left-color: var(--unav-accent);
+}
+
+.unav-notif-item--unread:hover {
+  background: #dbeafe;
+}
+
+.unav-notif-item-title {
+  font-size:     0.85rem;
+  font-weight:   600;
+  color:         var(--unav-text);
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.unav-notif-item-meta {
+  font-size: 0.75rem;
+  color:     var(--unav-muted);
+}
+
+/* ── Notification dropdown: footer ──────────────────────────── */
+.unav-notif-footer {
+  padding:      10px 16px;
+  border-top:   1px solid var(--unav-dd-border);
+  text-align:   center;
+}
+
+.unav-notif-view-all {
+  font-size:       0.82rem;
+  font-weight:     600;
+  color:           var(--unav-accent);
+  text-decoration: none;
+  transition:      color 0.12s;
+}
+
+.unav-notif-view-all:hover {
+  color:           var(--unav-accent-hov);
+  text-decoration: underline;
+}
+
+/* ── Notification dropdown: wider on larger screens ─────────── */
+@media (min-width: 480px) {
+  .unav-notif-dd {
+    width: 340px;
+  }
+}
+
+/* ── Profile / avatar button ────────────────────────────────── */
+.unav-profile-wrap {
+  position: relative;
+}
+
+.unav-avatar-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           34px;
+  height:          34px;
+  border-radius:   50%;
+  border:          none;
+  cursor:          pointer;
+  background:      var(--unav-accent);
+  color:           #fff;
+  font-size:       0.82rem;
+  font-weight:     700;
+  overflow:        hidden;
+  flex-shrink:     0;
+  transition:      opacity 0.15s, box-shadow 0.15s;
+}
+
+.unav-avatar-btn:hover,
+.unav-avatar-btn:focus-visible {
+  opacity:    0.88;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  outline:    none;
+}
+
+.unav-avatar-btn img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+/* ── Profile dropdown card ──────────────────────────────────── */
+.unav-pd {
+  position:      absolute;
+  top:           calc(100% + 8px);
+  right:         0;
+  width:         240px;
+  background:    var(--unav-dd-bg);
+  border:        1px solid var(--unav-dd-border);
+  border-radius: var(--unav-dd-radius);
+  box-shadow:    var(--unav-dd-shadow);
+  opacity:       0;
+  visibility:    hidden;
+  transform:     translateY(-4px);
+  transition:    opacity 0.15s, transform 0.15s, visibility 0.15s;
+  z-index:       200;
+  overflow-x:                 hidden;
+  overflow-y:                 auto;
+  max-height:                 calc(100vh - var(--unav-h) - 2px);
+  overscroll-behavior:        contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.unav-pd.unav-open {
+  opacity:    1;
+  visibility: visible;
+  transform:  translateY(0);
+}
+
+.unav-pd-head {
+  display:       flex;
+  align-items:   center;
+  gap:           12px;
+  padding:       14px 16px 12px;
+  border-bottom: 1px solid var(--unav-dd-border);
+}
+
+.unav-pd-avatar {
+  width:           40px;
+  height:          40px;
+  border-radius:   50%;
+  background:      var(--unav-accent);
+  color:           #fff;
+  font-size:       0.9rem;
+  font-weight:     700;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+  overflow:        hidden;
+}
+
+.unav-pd-avatar img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+.unav-pd-name {
+  font-size:     0.875rem;
+  font-weight:   500;
+  color:         var(--unav-text);
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  max-width:     150px;
+}
+
+.unav-pd-email {
+  font-size:     0.75rem;
+  color:         var(--unav-muted);
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  max-width:     150px;
+  margin-top:    2px;
+}
+
+.unav-pd-badge {
+  display:       inline-flex;
+  font-size:     0.65rem;
+  font-weight:   700;
+  padding:       2px 7px;
+  border-radius: 20px;
+  color:         #fff;
+  margin-top:    4px;
+}
+
+.unav-pd-badge--admin      { background: var(--unav-badge-admin); }
+.unav-pd-badge--instructor { background: var(--unav-badge-inst);  }
+.unav-pd-badge--student    { background: var(--unav-badge-stu);   }
+
+.unav-pd-body {
+  padding: 6px;
+}
+
+.unav-pd-grp {
+  padding:    4px 0;
+  border-top: 1px solid var(--unav-dd-border);
+  margin-top: 2px;
+}
+
+.unav-pd-grp:first-child {
+  border-top: none;
+  margin-top: 0;
+}
+
+.unav-pd-item {
+  display:         flex;
+  align-items:     center;
+  gap:             10px;
+  padding:         8px 10px;
+  border-radius:   5px;
+  color:           var(--unav-text);
+  font-size:       inherit;
+  font-weight:     500;
+  text-decoration: none;
+  width:           100%;
+  text-align:      left;
+  background:      none;
+  border:          none;
+  cursor:          pointer;
+  font-family:     inherit;
+  transition:      background 0.12s;
+}
+
+.unav-pd-item:hover,
+.unav-pd-item:focus-visible {
+  background: var(--unav-hover-bg);
+  outline:    none;
+}
+
+.unav-pd-item svg {
+  color:       var(--unav-muted);
+  flex-shrink: 0;
+}
+
+.unav-pd-item--danger {
+  color: var(--unav-danger);
+}
+
+.unav-pd-item--danger svg {
+  color: var(--unav-danger);
+}
+
+.unav-pd-item--danger:hover {
+  background: rgba(220, 38, 38, 0.06);
+}
+
+/* Logout form wrapper — invisible, just flows content */
+.unav-logout-form {
+  display: contents;
+}
+
+/* ── Guest action buttons ───────────────────────────────────── */
+.unav-btn-ghost {
+  padding:         7px 14px;
+  border-radius:   6px;
+  border:          1.5px solid var(--unav-border);
+  background:      none;
+  color:           var(--unav-text);
+  font-size:       0.875rem;
+  font-weight:     600;
+  text-decoration: none;
+  white-space:     nowrap;
+  flex-shrink:     0;
+  transition:      border-color 0.15s, color 0.15s;
+}
+
+.unav-btn-ghost:hover {
+  border-color: var(--unav-accent);
+  color:        var(--unav-accent);
+}
+
+.unav-btn-primary {
+  padding:         7px 16px;
+  border-radius:   6px;
+  border:          none;
+  background:      var(--unav-accent);
+  color:           #fff;
+  font-size:       0.875rem;
+  font-weight:     600;
+  text-decoration: none;
+  white-space:     nowrap;
+  cursor:          pointer;
+  flex-shrink:     0;
+  transition:      background 0.15s;
+}
+
+.unav-btn-primary:hover {
+  background: var(--unav-accent-hov);
+}
+
+/* ── Hamburger (mobile only) ────────────────────────────────── */
+.unav-hamburger {
+  display:         none;
+  flex-direction:  column;
+  justify-content: center;
+  gap:             5px;
+  width:           36px;
+  height:          36px;
+  border-radius:   6px;
+  border:          none;
+  background:      none;
+  cursor:          pointer;
+  padding:         0 6px;
+  flex-shrink:     0;
+}
+
+.unav-hamburger span {
+  display:       block;
+  width:         100%;
+  height:        2px;
+  background:    var(--unav-text);
+  border-radius: 2px;
+  transition:    transform 0.2s, opacity 0.2s;
+}
+
+.unav-hamburger.unav-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.unav-hamburger.unav-open span:nth-child(2) { opacity: 0; }
+.unav-hamburger.unav-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.unav-hamburger:hover {
+  background: var(--unav-hover-bg);
+}
+
+/* ── Mobile drawer ──────────────────────────────────────────── */
+.unav-drawer {
+  display:        none;
+  flex-direction: column;
+  background:     var(--unav-bg);
+  border-top:     1px solid var(--unav-border);
+  max-height:     calc(100vh - var(--unav-h));
+  overflow-y:     auto;
+
+  /* Slide-in panel — takes ~65% of screen width, anchored to the left */
+  position:       fixed;
+  top:            var(--unav-h);
+  left:           0;
+  width:          75%;
+  min-width:      260px;
+  max-width:      360px;
+  height:         calc(100vh - var(--unav-h));
+  box-shadow:     4px 0 24px rgba(0, 0, 0, .12);
+  z-index:        1000;
+}
+
+.unav-drawer.unav-open {
+  display: flex;
+}
+
+/* Drawer: user identity row */
+.unav-drawer-user {
+  display:         flex;
+  align-items:     center;
+  gap:             12px;
+  padding:         16px 20px;
+  border-bottom:   1px solid var(--unav-border);
+  text-decoration: none;
+  color:           var(--unav-text);
+}
+
+.unav-drawer-avatar {
+  width:           40px;
+  height:          40px;
+  border-radius:   50%;
+  background:      var(--unav-accent);
+  color:           #fff;
+  font-size:       0.9rem;
+  font-weight:     700;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+  overflow:        hidden;
+}
+
+.unav-drawer-avatar img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+.unav-drawer-username {
+  font-weight: 600;
+  font-size:   0.95rem;
+}
+
+.unav-drawer-role {
+  font-size:  0.75rem;
+  color:      var(--unav-muted);
+  margin-top: 2px;
+}
+
+.unav-drawer-chevron {
+  margin-left: auto;
+  color:       var(--unav-muted);
+}
+
+/* ── Mobile drawer accordion ── */
+.unav-drawer-acc {
+  border-bottom: 1px solid var(--unav-border, rgba(0,0,0,.08));
+}
+.unav-drawer-acc-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 13px 20px;
+  background: none;
+  border: none;
+  font-size: .9375rem;
+  font-weight: 500;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.unav-drawer-acc-btn:hover {
+  background: var(--unav-hover-bg, rgba(0,0,0,.04));
+}
+.unav-drawer-acc-chev {
+  flex-shrink: 0;
+  transition: transform .2s ease;
+}
+.unav-drawer-acc-btn[aria-expanded="true"] .unav-drawer-acc-chev {
+  transform: rotate(180deg);
+}
+.unav-drawer-acc-panel {
+  overflow: hidden;
+  animation: unavAccOpen .18s ease forwards;
+}
+.unav-drawer-acc-panel[hidden] {
+  display: none;
+}
+.unav-drawer-link--sub {
+  padding-left: 36px !important;
+  font-size: .875rem;
+  opacity: .9;
+  position: relative;
+}
+.unav-drawer-link--sub::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--unav-accent);
+}
+@keyframes unavAccOpen {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Drawer: nav links */
+.unav-drawer-links {
+  padding: 8px 0;
+}
+
+.unav-drawer-link {
+  display:         flex;
+  align-items:     center;
+  gap:             12px;
+  padding:         12px 20px;
+  color:           var(--unav-text);
+  font-size:       0.92rem;
+  font-weight:     500;
+  text-decoration: none;
+  width:           100%;
+  text-align:      left;
+  background:      none;
+  border:          none;
+  cursor:          pointer;
+  font-family:     inherit;
+  transition:      background 0.12s, color 0.12s;
+}
+
+.unav-drawer-link:hover {
+  background: var(--unav-hover-bg);
+}
+
+.unav-drawer-link.unav-active {
+  color:       var(--unav-accent);
+  font-weight: 600;
+}
+
+.unav-drawer-sep {
+  height:     1px;
+  background: var(--unav-border);
+  margin:     4px 0;
+}
+
+/* Sign Up CTA in drawer */
+.unav-drawer-link--signup {
+  color:       var(--unav-accent);
+  font-weight: 600;
+}
+
+.unav-drawer-link--signup:hover {
+  background: rgba(37, 99, 235, 0.06);
+}
+
+/* Logout button in drawer */
+.unav-drawer-link--danger {
+  color: var(--unav-danger);
+}
+
+.unav-drawer-link--danger:hover {
+  background: rgba(220, 38, 38, 0.06);
+}
+
+/* ── Search modal ───────────────────────────────────────────── */
+.unav-search-modal {
+  position:        fixed;
+  inset:           0;
+  z-index:         1000;
+  background:      rgba(0, 0, 0, 0.45);
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: center;
+  padding-top:     80px;
+  opacity:         0;
+  visibility:      hidden;
+  transition:      opacity 0.15s, visibility 0.15s;
+}
+
+.unav-search-modal.unav-open {
+  opacity:    1;
+  visibility: visible;
+}
+
+.unav-search-box {
+  width:         100%;
+  max-width:     540px;
+  margin:        0 16px;
+  background:    #fff;
+  border-radius: 10px;
+  box-shadow:    0 20px 60px rgba(0, 0, 0, 0.2);
+  overflow:      hidden;
+  transform:     translateY(-8px) scale(0.98);
+  transition:    transform 0.15s;
+}
+
+.unav-search-modal.unav-open .unav-search-box {
+  transform: translateY(0) scale(1);
+}
+
+.unav-search-field {
+  display:       flex;
+  align-items:   center;
+  gap:           10px;
+  padding:       14px 16px;
+  border-bottom: 1px solid var(--unav-border);
+}
+
+.unav-search-field > svg {
+  color:       var(--unav-muted);
+  flex-shrink: 0;
+}
+
+.unav-search-input {
+  flex:        1;
+  border:      none;
+  outline:     none;
+  font-size:   1rem;
+  font-family: inherit;
+  color:       var(--unav-text);
+  background:  transparent;
+}
+
+.unav-search-input::placeholder {
+  color: var(--unav-muted);
+}
+
+/*
+  Search submit button — ghost icon style.
+  No heavy blue fill; just a muted icon that highlights on hover.
+*/
+.unav-search-submit {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           32px;
+  height:          32px;
+  border-radius:   6px;
+  border:          1.5px solid var(--unav-border);
+  background:      transparent;
+  color:           var(--unav-muted);
+  cursor:          pointer;
+  flex-shrink:     0;
+  transition:      border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.unav-search-submit:hover,
+.unav-search-submit:focus-visible {
+  border-color: var(--unav-accent);
+  color:        var(--unav-accent);
+  background:   rgba(37, 99, 235, 0.05);
+  outline:      none;
+}
+
+.unav-search-hint {
+  padding:         10px 16px;
+  font-size:       0.78rem;
+  color:           var(--unav-muted);
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+}
+
+kbd {
+  background:    #f3f4f6;
+  border:        1px solid var(--unav-border);
+  border-radius: 4px;
+  padding:       1px 6px;
+  font-size:     0.72rem;
+  font-family:   inherit;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ══════════════════════════════════════════════════════════════
+
+   Desktop layout (> 768px) — three-zone flex row:
+     [brand · fixed]  [nav links wrap · scrollable]  [actions · fixed]
+
+   Brand and Actions are always fully visible at their normal size.
+   Nav links scroll horizontally if they don't fit — no font
+   shrinking, no hiding, no clamp tricks.
+
+   The scroll arrows appear/disappear automatically based on the
+   scroll position; the scrollbar itself is hidden visually.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Large desktop (≥ 1025px): comfortable spacing ──────────── */
+@media (min-width: 1025px) {
+  .unav-inner        { padding: 0 32px; }
+  .unav-links-wrap   { margin-left: 24px; }
+  .unav-links        { gap: 4px; }
+  .unav-link         { padding: 6px 12px; }
+  .unav-actions      { gap: 10px; margin-left: 16px; }
+}
+
+/* ── Desktop / tablet (> 768px) ──────────────────────────────
+   APPROACH: keep every element at its full normal size.
+   The scroll wrapper (.unav-links-scroll) becomes horizontally
+   scrollable so links are never clipped or shrunk.
+   The inner .unav-links stays overflow:visible so dropdown
+   panels are never cut off.
+
+   Scroll arrows activate when links overflow.
+   Scrollbar is hidden visually (still touch/drag scrollable).
+
+   DROPDOWN FIX: overflow-x:auto implicitly clips y-axis too,
+   which would hide absolutely-positioned dropdown panels.
+   JS repositions each panel relative to the <nav> element at
+   open-time, and we switch the panel to position:absolute from
+   the <nav> (its nearest positioned ancestor) instead.
+   ──────────────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+
+  .unav-inner {
+    padding: 0 16px;
+    gap:     0;
+  }
+
+  /* Brand — full normal size, just tighten right margin */
+  .unav-brand {
+    flex-shrink:  0;
+    margin-right: 8px;
+  }
+
+  /* Outer wrap: compress within the row */
+  .unav-links-wrap {
+    flex-shrink:  1;
+    min-width:    0;
+    margin-left:  0;
+    margin-right: auto;
+  }
+
+  /* Scroll viewport: scroll horizontally.
+     overflow-x:auto + overflow-y:visible is not valid CSS — browsers
+     force both axes to auto/scroll.  We accept x-scroll clipping of the
+     panel container here; the JS repositionDropdown() fix moves the
+     .unav-dd out to be positioned relative to .unav (the <nav>), so the
+     panel is never actually inside this clipped area when it opens. */
+  .unav-links-scroll {
+    flex-shrink:  1;
+    min-width:    0;
+
+    overflow-x:          auto;
+    overflow-y:          auto;
+    scrollbar-width:     none;   /* Firefox */
+    -ms-overflow-style:  none;   /* IE/Edge */
+  }
+  .unav-links-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Inner link row — no changes to size */
+  .unav-links {
+    gap:      2px;
+    overflow: visible;
+  }
+
+  /* Links: full normal size, untouched */
+  .unav-link {
+    padding:   6px 10px;
+    font-size: inherit;
+  }
+
+  /* Actions — full size, pinned right, gap between buttons */
+  .unav-actions {
+    flex-shrink: 0;
+    margin-left: 12px;
+    gap:         8px;
+  }
+
+  /* Both guest buttons at full normal size */
+  .unav-btn-ghost {
+    padding:   7px 14px;
+    font-size: 0.875rem;
+  }
+  .unav-btn-primary {
+    display:   inline-flex;
+    padding:   7px 16px;
+    font-size: 0.875rem;
+  }
+
+  /* Dropdown panels are moved into <nav> by JS (repositionDropdown),
+     so .unav-dd-wrap needs no special positioning override.
+     The panel's position:absolute is set inline by JS at open-time. */
+  .unav-dd-wrap {
+    position: static;
+  }
+}
+
+/* ── Mobile (≤ 768px): hamburger drawer ─────────────────────── */
+@media (max-width: 768px) {
+  .unav-inner {
+    padding: 0 16px;
+  }
+
+  /* Hide entire links wrap — everything lives in the drawer */
+  .unav-links-wrap {
+    display: none;
+  }
+
+  /* Show hamburger */
+  .unav-hamburger {
+    display: flex;
+  }
+
+  /* With links wrap hidden, push actions to the far right directly */
+  .unav-actions {
+    margin-left: auto;
+    gap:         8px;
+  }
+
+  /* Sign Up lives in the drawer on mobile; keep only Log In in the bar */
+  .unav-btn-primary {
+    display: none;
+  }
+  .unav-btn-ghost {
+    padding:   6px 12px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ── Very small mobile (≤ 380px) ────────────────────────────── */
+@media (max-width: 380px) {
+  .unav-inner {
+    padding: 0 10px;
+  }
+  .unav-actions {
+    gap: 6px;
+  }
+}

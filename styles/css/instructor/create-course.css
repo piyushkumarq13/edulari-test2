@@ -1,0 +1,655 @@
+/* ============================================================
+   Create Course Page – /public/assets/css/instructor/create-course.css
+   Namespace: cc-*
+   Depends on navbar.css being loaded first.
+============================================================ */
+
+/* ── Local tokens ─────────────────────────────────────────── */
+:root {
+    --cc-primary:       #5c6ef8;
+    --cc-primary-dark:  #4355e8;
+    --cc-primary-light: #eef0ff;
+    --cc-success:       #22c55e;
+    --cc-success-light: #dcfce7;
+    --cc-error:         #ef4444;
+    --cc-error-light:   #fee2e2;
+    --cc-text:          #1e1e2e;
+    --cc-text-2:        #64748b;
+    --cc-border:        #e2e8f0;
+    --cc-border-focus:  #5c6ef8;
+    --cc-bg:            #f8fafc;
+    --cc-white:         #ffffff;
+    --cc-radius:        12px;
+    --cc-radius-sm:     8px;
+    --cc-shadow:        0 2px 12px rgba(0, 0, 0, .06);
+    --cc-shadow-md:     0 6px 24px rgba(0, 0, 0, .09);
+}
+
+/* ── Base font ────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+    background: #f8fafc;
+    color: #1e1e2e;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Page wrapper ─────────────────────────────────────────── */
+.cc-wrap {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 2rem 1.5rem 5rem;
+}
+
+/* ── Page header ──────────────────────────────────────────── */
+.cc-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+}
+
+.cc-page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--cc-text);
+    margin: 0 0 0.25rem;
+    line-height: 1.2;
+}
+
+.cc-page-sub {
+    font-size: 0.95rem;
+    color: var(--cc-text-2);
+    margin: 0;
+}
+
+.cc-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border: 1.5px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--cc-text-2);
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+    background: var(--cc-white);
+    white-space: nowrap;
+}
+
+.cc-back-btn:hover {
+    border-color: var(--cc-primary);
+    color: var(--cc-primary);
+    text-decoration: none;
+}
+
+/* ── Alerts ───────────────────────────────────────────────── */
+.cc-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--cc-radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    animation: ccSlideIn 0.25s ease;
+}
+
+@keyframes ccSlideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.cc-alert svg { flex-shrink: 0; margin-top: 1px; }
+
+.cc-alert--error {
+    background: var(--cc-error-light);
+    color: #991b1b;
+    border-left: 4px solid var(--cc-error);
+}
+
+.cc-alert--success {
+    background: var(--cc-success-light);
+    color: #166534;
+    border-left: 4px solid var(--cc-success);
+}
+
+/* ── Two-column form grid ─────────────────────────────────── */
+.cc-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.cc-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.cc-card {
+    background: var(--cc-white);
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius);
+    padding: 1.5rem;
+    box-shadow: var(--cc-shadow);
+}
+
+.cc-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cc-text);
+    margin: 0 0 1.25rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--cc-border);
+}
+
+.cc-card-num {
+    width: 26px;
+    height: 26px;
+    background: var(--cc-primary-light);
+    color: var(--cc-primary);
+    border-radius: 50%;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ── Field ────────────────────────────────────────────────── */
+.cc-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1.1rem;
+}
+
+.cc-field:last-child {
+    margin-bottom: 0;
+}
+
+.cc-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cc-text);
+}
+
+.cc-required {
+    color: var(--cc-error);
+}
+
+.cc-field-hint {
+    font-size: 0.78rem;
+    color: var(--cc-text-2);
+}
+
+/* ── Inputs ───────────────────────────────────────────────── */
+.cc-input {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: var(--cc-text);
+    background: var(--cc-white);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+}
+
+.cc-input:focus {
+    outline: none;
+    border-color: var(--cc-border-focus);
+    box-shadow: 0 0 0 3px rgba(92, 110, 248, .12);
+}
+
+.cc-input::placeholder {
+    color: #a0aec0;
+}
+
+.cc-textarea {
+    resize: vertical;
+    min-height: 130px;
+    line-height: 1.6;
+}
+
+.cc-textarea--sm {
+    min-height: 80px;
+}
+
+/* ── Select ───────────────────────────────────────────────── */
+.cc-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.1rem;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+/* ── Two side-by-side fields ──────────────────────────────── */
+.cc-two-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+}
+
+.cc-two-fields .cc-field {
+    margin-bottom: 0;
+}
+
+/* ── Price field ──────────────────────────────────────────── */
+.cc-price-wrap {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.cc-price-wrap:focus-within {
+    border-color: var(--cc-border-focus);
+    box-shadow: 0 0 0 3px rgba(92, 110, 248, .12);
+}
+
+.cc-price-sym {
+    padding: 0.7rem 0.75rem;
+    background: var(--cc-bg);
+    border-right: 1.5px solid var(--cc-border);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--cc-text-2);
+    flex-shrink: 0;
+}
+
+.cc-input--price {
+    border: none;
+    border-radius: 0;
+    flex: 1;
+}
+
+.cc-input--price:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+/* ── Upload / thumbnail ───────────────────────────────────── */
+.cc-upload-box {
+    position: relative;
+    border: 2px dashed var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    padding: 2rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--cc-bg);
+    overflow: hidden;
+}
+
+.cc-upload-box:hover,
+.cc-upload-box--drag {
+    border-color: var(--cc-primary);
+    background: var(--cc-primary-light);
+}
+
+.cc-upload-box--has-image {
+    padding: 0.5rem;
+    border-style: solid;
+    border-color: var(--cc-primary);
+}
+
+.cc-upload-icon {
+    color: var(--cc-text-2);
+    margin-bottom: 0.5rem;
+}
+
+.cc-upload-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--cc-text-2);
+    margin: 0 0 0.25rem;
+}
+
+.cc-upload-hint {
+    font-size: 0.75rem;
+    color: #a0aec0;
+    margin: 0;
+}
+
+.cc-upload-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    font-size: 0; /* suppress file input label on mobile */
+}
+
+.cc-upload-preview {
+    display: none;
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: 0.75rem;
+}
+
+/* ── Toggle switch ────────────────────────────────────────── */
+.cc-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    background: var(--cc-bg);
+    border: 1.5px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    transition: border-color 0.15s;
+}
+
+.cc-toggle-label:hover {
+    border-color: var(--cc-primary);
+}
+
+.cc-toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.cc-toggle-track {
+    width: 42px;
+    height: 24px;
+    background: var(--cc-border);
+    border-radius: 99px;
+    flex-shrink: 0;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.cc-toggle-input:checked + .cc-toggle-track {
+    background: var(--cc-primary);
+}
+
+.cc-toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: var(--cc-white);
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+}
+
+.cc-toggle-input:checked + .cc-toggle-track .cc-toggle-thumb {
+    transform: translateX(18px);
+}
+
+.cc-toggle-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--cc-text);
+}
+
+/* ── Action bar ───────────────────────────────────────────── */
+.cc-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--cc-border);
+    flex-wrap: wrap;
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.cc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border-radius: var(--cc-radius-sm);
+    font-size: 0.925rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    font-family: inherit;
+    line-height: 1;
+}
+
+.cc-btn--primary {
+    background: var(--cc-primary);
+    color: var(--cc-white);
+    border-color: var(--cc-primary);
+    box-shadow: 0 3px 10px rgba(92, 110, 248, .3);
+}
+
+.cc-btn--primary:hover {
+    background: var(--cc-primary-dark);
+    border-color: var(--cc-primary-dark);
+    box-shadow: 0 6px 16px rgba(92, 110, 248, .4);
+    transform: translateY(-1px);
+    text-decoration: none;
+    color: var(--cc-white);
+}
+
+.cc-btn--ghost {
+    background: transparent;
+    color: var(--cc-text-2);
+    border-color: var(--cc-border);
+}
+
+.cc-btn--ghost:hover {
+    border-color: var(--cc-primary);
+    color: var(--cc-primary);
+    background: var(--cc-primary-light);
+    text-decoration: none;
+}
+
+/* ── Custom Select (replaces native select) ────────────────── */
+.cc-custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.cc-custom-select select {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+}
+
+.cc-custom-select__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: var(--cc-text);
+    background: var(--cc-white);
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+    text-align: left;
+    line-height: 1.4;
+    gap: 0.5rem;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.cc-custom-select__trigger:focus {
+    outline: none;
+    border-color: var(--cc-border-focus);
+    box-shadow: 0 0 0 3px rgba(92, 110, 248, .12);
+}
+
+.cc-custom-select__trigger .cc-chevron {
+    flex-shrink: 0;
+    width: 1.1rem;
+    height: 1.1rem;
+    color: #64748b;
+    transition: transform 0.2s;
+}
+
+.cc-custom-select--open .cc-custom-select__trigger .cc-chevron {
+    transform: rotate(180deg);
+}
+
+.cc-custom-select__options {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: #fff;
+    border: 1.5px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.2s ease, opacity 0.15s ease, visibility 0.15s;
+    top: 100%;
+    margin-top: 4px;
+}
+
+.cc-custom-select--open .cc-custom-select__options {
+    max-height: var(--cc-dropdown-max-height, 240px);
+    overflow-y: auto;
+    opacity: 1;
+    visibility: visible;
+}
+
+.cc-custom-select--up .cc-custom-select__options {
+    bottom: 100%;
+    top: auto;
+    margin-top: 0;
+    margin-bottom: 4px;
+}
+
+.cc-custom-select__option {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    color: var(--cc-text);
+    cursor: pointer;
+    transition: background 0.1s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cc-custom-select__option:hover,
+.cc-custom-select__option--highlighted {
+    background: var(--cc-primary-light);
+}
+
+.cc-custom-select__option--selected {
+    font-weight: 600;
+    color: var(--cc-primary);
+    background: #f0f0ff;
+}
+
+.cc-custom-select__option--placeholder {
+    color: var(--cc-text-2);
+    font-weight: 400;
+}
+
+.cc-custom-select--error .cc-custom-select__trigger {
+    border-color: var(--cc-error);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, .12);
+}
+
+/* ── Screen-reader only ───────────────────────────────────── */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+
+@media (max-width: 1024px) {
+    .cc-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .cc-wrap {
+        padding: 1.25rem 1rem 4rem;
+    }
+
+    .cc-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cc-page-title {
+        font-size: 1.35rem;
+    }
+
+    .cc-card {
+        padding: 1.1rem;
+    }
+
+    .cc-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .cc-btn {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 540px) {
+    .cc-two-fields {
+        grid-template-columns: 1fr;
+    }
+}

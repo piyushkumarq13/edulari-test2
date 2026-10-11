@@ -3,7 +3,7 @@
   "crons": [
     { "path": "/api/cron/token-cleanup", "schedule": "0 3 * * *" },
     { "path": "/api/cron/maintenance", "schedule": "30 3 * * *" },
-    { "path": "/api/cron/reconcile-payments", "schedule": "*/5 * * * *" },
+    { "path": "/api/cron/reconcile-payments", "schedule": "0 3 * * *" },
     { "path": "/api/cron/instructor-maintenance", "schedule": "0 4 * * *" }
   ]
 }

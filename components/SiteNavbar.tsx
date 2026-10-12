@@ -2,9 +2,17 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 type DropdownItem = { label: string; href: string; key?: string };
 type NavItem = { label: string; href?: string; key?: string; dropdown?: DropdownItem[] };
+
+// Helper function to check if current path matches nav item
+function isActive(pathname: string, navHref?: string | null): boolean {
+  if (!navHref) return false;
+  if (navHref === '#') return false;
+  return pathname === navHref || pathname.startsWith(navHref + '/');
+}
 
 function linksFor(role: string | null): NavItem[] {
   if (!role || role === "guest") {
@@ -146,6 +154,8 @@ interface User {
 }
 
 export default function SiteNavbar() {
+  const pathname = usePathname();
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [unreadCount, setUnreadCount] = useState(0);
   const [recentNotifs, setRecentNotifs] = useState<Array<{ id: number; title: string; type: string; created_at: string; is_read: boolean }>>([]);
@@ -322,7 +332,7 @@ export default function SiteNavbar() {
             <div className="unav-links-scroll" id="unavLinksScroll" ref={(el) => { scrollContainerRef.current = el; }}>
               <div className="unav-links" role="list">
                 {items.map((navItem, i) => {
-                  const isActive = window.location.pathname === navItem.href || window.location.pathname.startsWith((navItem.href ?? '#') + '/');
+                  const isActiveState = isActive(pathname, navItem.href);
                   
                   if (navItem.dropdown) {
                     return (
@@ -333,15 +343,15 @@ export default function SiteNavbar() {
                         onMouseEnter={() => window.innerWidth > 768 && setOpenDropdown(i)}
                         onMouseLeave={() => window.innerWidth > 768 && setOpenDropdown(null)}
                       >
-                        <button
-                          className={`unav-link${openDropdown === i ? " unav-open" : ""}`}
-                          id={`unavDd${i}Btn`}
-                          aria-haspopup="true"
-                          aria-expanded={openDropdown === i}
-                          aria-controls={`unavDd${i}`}
-                          onClick={() => toggleDropdown(i)}
-                        >
-                          {navItem.label}
+                      <button 
+                        className={`unav-link${openDropdown === i ? " unav-open" : ""}${isActiveState ? ' unav-active' : ''}`}
+                        id={`unavDd${i}Btn`}
+                        aria-haspopup="true"
+                        aria-expanded={openDropdown === i}
+                        aria-controls={`unavDd${i}`}
+                        onClick={() => toggleDropdown(i)}
+                      >
+                        {navItem.label}
                           <svg className="unav-chev" viewBox="0 0 24 24" fill="none" width="14" height="14" aria-hidden="true">
                             <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
@@ -355,7 +365,7 @@ export default function SiteNavbar() {
                           ref={(el) => { if (el) dropdownRefs.current.push(el); }}
                         >
                           {navItem.dropdown.map((sub, j) => {
-                            const subActive = window.location.pathname === sub.href || window.location.pathname.startsWith(sub.href!.substring(1) + '/');
+                            const subActive = isActive(pathname, sub.href);
                             return (
                               <a 
                                 key={j} 
@@ -380,7 +390,7 @@ export default function SiteNavbar() {
                     <a 
                       key={i} 
                       href={navItem.href}
-                      className={`unav-link${isActive ? " unav-active" : ""}`}
+                      className={`unav-link${isActiveState ? " unav-active" : ""}`}
                       role="listitem"
                     >
                       {navItem.label}
@@ -931,7 +941,7 @@ export default function SiteNavbar() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   const q = searchInputRef.current?.value.trim();
-                  if (q) window.location.href = `/browse-courses?search=${encodeURIComponent(q)}`;
+                  if (q) router.push(`/browse-courses?search=${encodeURIComponent(q)}`);
                 }
               }}
             />
@@ -941,7 +951,7 @@ export default function SiteNavbar() {
               aria-label="Submit search"
               onClick={() => {
                 const q = searchInputRef.current?.value.trim();
-                if (q) window.location.href = `/browse-courses?search=${encodeURIComponent(q)}`;
+                if (q) router.push(`/browse-courses?search=${encodeURIComponent(q)}`);
               }}
             >
               <svg viewBox="0 0 24 24" fill="none" width="16" height="16" aria-hidden="true">

@@ -34,3 +34,24 @@ export async function readCsrfToken(): Promise<string> {
   const jar = await cookies();
   return jar.get(CSRF_COOKIE)?.value ?? "";
 }
+
+/**
+ * Set/Issue a new CSRF token cookie if one doesn't exist, or return existing.
+ * This mirrors the PHP generateCSRFToken() behavior that sets a session cookie.
+ */
+export async function getOrIssueCsrfToken(): Promise<string> {
+  const jar = await cookies();
+  const existing = jar.get(CSRF_COOKIE)?.value;
+  if (existing) return existing;
+  
+  // Issue new token
+  const token = issueCsrfToken();
+  jar.set(CSRF_COOKIE, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7, // 1 week
+  });
+  return token;
+}
